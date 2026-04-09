@@ -8,7 +8,7 @@ Use edge zoning below for deterministic assembly and enclosure wiring.
 
 | Zone | Required content | Notes |
 | --- | --- | --- |
-| Power-entry zone | `J1`, `D1`, `F1`, `C17`, `C6`, `U4`, `C18`, `C19` | Keep as compact chain from `VIN_12V_IN` to `3V3`. |
+| Power-entry zone | `J1`, `D1`, `F1`, `C17`, `C6`, `U4`, `L1`, `C18`, `C19` | Keep as compact buck chain from `VIN_12V_IN` to `3V3`; keep `SW` node short. |
 | RS-485 zone | `J4`, `U2A`, `U2B`, `R27`, 2x SM712 | TVS closest to connector. Termination at RX IC pins. |
 | USB/debug zone | `J5`, `R31/R32`, `R29/R30`, `J6`, `SW1`, `SW2` | Keep SWD probe clearance. Keep BOOT0/NRST reachable. |
 | Input-channel zone | `J2a`, `J2b`, RC cells, `U5/U6` | Replicate geometry CH0..CH7 uniformly. |

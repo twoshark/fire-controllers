@@ -54,8 +54,9 @@ For release, lock one stackup per board in the appendix and keep all impedance c
 
 - Keep the 12V entry path compact: `J1 -> D1 -> F1 -> bulk/HF caps`.
 - Place `C17` and `C6` adjacent to the 12V entry node.
-- Place AMS1117 close to output caps (`C18`, `C19`).
-- Keep the LDO high-dI/dt input loop (`VIN cap -> LDO -> GND`) under ~10 mm perimeter.
+- Place buck stage (`U4`, `L1`, bootstrap cap, output cap) as one tight cluster.
+- Keep the buck hot loop (`VIN cap -> U4 VIN/GND -> return`) and switch loop (`U4 SW -> L1 -> Cout -> GND -> U4`) as short as possible.
+- Keep the `SW` copper island compact and do not route sensitive traces under/near the switch node.
 
 ### Output board
 
@@ -134,13 +135,14 @@ Per-channel block:
 - Place flyback diode physically close to load switching node and 12V rail tie point.
 - Separate high di/dt output-current loops from MCU/USB/RS-485 regions.
 
-### Thermal guidance (output stage + LDO)
+### Thermal guidance (output stage + buck)
 
 - Give each MOSFET drain/source node copper spreading area (target >=100 mm^2 combined local copper, both layers preferred with stitching vias).
 - Keep PTCs thermally separated from each other and from MOSFET bodies (target >=3 mm edge-to-edge) to reduce thermal coupling/nuisance trips.
 - Avoid placing temperature-sensitive logic components in the hot corridor formed by PTC + MOSFET rows.
-- For AMS1117 regions, reserve >=250 mm^2 copper tied to LDO thermal pins/nets, and avoid placing electrolytics directly against the regulator body.
-- If estimated LDO dissipation exceeds ~0.8 W in steady state, treat as thermal risk and re-check copper area, airflow, and load budget before release.
+- Keep buck power-stage thermal spreading on `U4` GND pad/return copper with dense vias to the opposite layer.
+- Keep inductor and output capacitor close to `U4` to minimize ripple current loop heating and EMI.
+- If measured buck case/inductor temperature rise is high in enclosure testing, increase copper area and airflow margin before release.
 
 ## 9) Grounding and return paths
 
@@ -199,7 +201,7 @@ Use the appendices to remove ambiguity during actual layout:
 - [ ] BOOT0 defaults LOW and DFU button wiring is correct.
 - [ ] SWD header pinout/orientation matches documentation.
 - [ ] Output current paths meet quantified width/via targets for peak current.
-- [ ] Thermal review completed for MOSFET/PTC row and LDO dissipation region.
+- [ ] Thermal review completed for MOSFET/PTC row and buck power stage (`U4` + `L1`).
 - [ ] RS-485 shield/chassis entry bond and CHASSIS-GND coupling are implemented per policy.
 - [ ] Low-voltage clearance targets and board-edge copper setbacks are met.
 - [ ] Global/local fiducials, height keepouts, and panelization constraints are checked.

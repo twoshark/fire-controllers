@@ -110,8 +110,10 @@ Note: power LED is not MCU-driven; wire as always-on from `3V3` through resistor
 | --- | --- | --- |
 | `VIN_12V_IN` (`J1.1`) | `D1` then `F1` | `12V_MAIN` |
 | `12V_MAIN` | `C17` (bulk) + `C6` (HF) | `GND` return |
-| `12V_MAIN` | `U4` (`AMS1117-3.3`) | `3V3` |
-| `3V3` | `C18` + `C19` | `GND` return |
+| `12V_MAIN` | `U4.VIN` (`AP63203WU-7`) | buck input stage |
+| `U4.SW` | `L1` | `3V3` |
+| `U4.BST` | `C19` to `U4.SW` | bootstrap drive loop |
+| `3V3` | `C18` + logic decoupling | `GND` return |
 | `3V3` | MCU `VDD` pins + logic loads | digital domain |
 
 ## 4) RS-485 transceiver endpoint map (input board)

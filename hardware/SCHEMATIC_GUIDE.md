@@ -63,11 +63,21 @@ Do not leave any net undefined in the top-level sheet set. If a net is not expli
   - Input board peak `3V3` load budget: `120mA` (require >=`300mA` regulator capacity).
   - Output board peak `3V3` load budget: `140mA` (require >=`350mA` regulator capacity).
 - Any future substitute must remain a buck regulator and preserve or exceed these margins.
+- Required buck support network (minimum):
+  - `U4` = `AP63203WU-7` (or validated equivalent)
+  - `L1` power inductor from `U4.SW` to `3V3`
+  - input bypass on `U4.VIN` (`12V_MAIN` to `GND`) using local HF ceramic + nearby bulk
+  - bootstrap capacitor from `U4.BST` to `U4.SW`
+  - output bulk capacitor on `3V3` near `L1`/`U4`
 
 ## 2) Input-board schematic capture sequence
 
 1. Place connectors (`J1`, `J2a`, `J2b`, `J3`, `J4`, `J5`, `J6`) and assign pin numbers per appendix.
-2. Draw power path: `J1(12V)` -> `D1(SS34)` -> `F1(PTC)` -> `12V_MAIN`, then buck regulator stage (`AP63203WU-7` or validated equivalent) to `3V3`.
+2. Draw power path: `J1(12V)` -> `D1(SS34)` -> `F1(PTC)` -> `12V_MAIN`, then buck stage:
+   - `12V_MAIN` -> `U4.VIN`
+   - `U4.SW` -> `L1` -> `3V3`
+   - `U4.BST` capacitor to `SW`
+   - local input/output capacitors tied to low-impedance `GND`
 3. Add USB-C port and SWD header nets.
 4. Add dual SP3485 transceivers:
    - `U2A`: TX-only path from `PA9`
@@ -82,7 +92,11 @@ All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_INPUT.md`.
 ## 3) Output-board schematic capture sequence
 
 1. Place connectors (`J1`, `J2`, `J3a`, `J3b`, `J4`, `J5a`, `J5b`, `J6`, `J7`, `J8`) and assign pin numbers per appendix.
-2. Draw `12V_MAIN` input and buck-based `3V3` generation path (`AP63203WU-7` or validated equivalent).
+2. Draw `12V_MAIN` input and buck-based `3V3` generation path:
+   - `12V_MAIN` -> `U4.VIN`
+   - `U4.SW` -> `L1` -> `3V3`
+   - `U4.BST` capacitor to `SW`
+   - local input/output capacitors tied to low-impedance `GND`
 3. Add dual SP3485 transceivers:
    - `U2A`: RX-only from cable to `PA10`
    - `U2B`: TX-only heartbeat from `PA9`

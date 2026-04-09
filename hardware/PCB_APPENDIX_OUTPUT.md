@@ -6,7 +6,7 @@ This appendix defines board-specific placement/routing/test constraints for the 
 
 | Zone | Required content | Notes |
 | --- | --- | --- |
-| Power-entry zone | `J1`, bulk caps, LDO chain (`U4`) | Keep `12V_MAIN` entry and `3V3` generation compact. |
+| Power-entry zone | `J1`, bulk caps, buck chain (`U4`, `L1`, bootstrap/output caps) | Keep `12V_MAIN` entry and `3V3` generation compact; keep `SW` loop short. |
 | High-current output zone | `Q1..Q8`, `F1..F8`, flyback diodes, `J5a/J5b`, `J6` | Dedicated corridor; keep away from USB and MCU. |
 | Override-input zone | `J3a/J3b`, `J4`, RC cells, `U5/U6` | Uniform per-channel topology. |
 | RS-485 zone | `J2`, `U2A/U2B`, `R52`, 2x SM712 | Keep near cable entry. |
@@ -44,9 +44,9 @@ Rules:
 
 - Provide >=100 mm^2 combined local copper (both layers preferred) around each MOSFET drain/source network.
 - Keep PTCs at least 3 mm apart edge-to-edge.
-- Reserve >=250 mm^2 copper for AMS1117 thermal spreading.
-- Do not place electrolytics directly against regulator body.
-- If projected steady-state LDO dissipation >0.8W, treat as design risk and rework copper/airflow/load budget.
+- Keep `U4` GND return copper wide with dense stitching vias to improve buck thermal spread.
+- Keep `L1`, bootstrap cap, and output cap tight to `U4` to control switching loop heating.
+- If enclosure testing shows excessive regulator or inductor temperature rise, increase copper area/airflow margin before release.
 
 ## 5) RS-485 and USB constraints (output board)
 

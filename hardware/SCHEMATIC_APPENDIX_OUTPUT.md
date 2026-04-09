@@ -143,7 +143,9 @@ Note: power LED is not MCU-driven; wire as always-on from `3V3` through resistor
 | --- | --- | --- |
 | `VIN_12V_IN` (`J1.1`) | board input path | `12V_MAIN` |
 | `12V_MAIN` | `C17` + `C18` bulk | `GND` return |
-| `12V_MAIN` | `U4` (`AMS1117-3.3`) | `3V3` |
+| `12V_MAIN` | `U4.VIN` (`AP63203WU-7`) | buck input stage |
+| `U4.SW` | `L1` | `3V3` |
+| `U4.BST` | `C20` to `U4.SW` | bootstrap drive loop |
 | `3V3` | `C19` + decoupling network | digital logic domain |
 | `12V_MAIN` | per-channel `F1..F8` | `LOAD_12V` distributed to each channel |
 

@@ -1,7 +1,8 @@
 Designator,Quantity,Value,Package,LCSC Part#,MPN,Description,Unit Cost
 U1,1,STM32G0B1CBT6,LQFP-48,C2847904,STM32G0B1CBT6,"MCU Cortex-M0+ 64MHz 128KB Flash 36KB SRAM USB DFU",$2.20
 "U2A,U2B",2,SP3485EN-L/TR,SOIC-8,C8963,SP3485EN-L/TR,"RS-485 transceiver pair for full-duplex (RX path + TX heartbeat path)",$0.21
-U4,1,AMS1117-3.3,SOT-223,C6186,AMS1117-3.3,"3.3V LDO Regulator 1A",$0.15
+U4,1,AP63203WU-7,TSOT-23-6,C780769,AP63203WU-7,"3.3V buck regulator 2A (12V -> 3.3V)",$0.14
+L1,1,4.7µH,5.0x5.0mm,C2849485,PNLS5020-4R7M,"Buck power inductor for U4 SW node",$0.05
 U5-U6,2,SN74LVC14APWR,TSSOP-14,C7663,SN74LVC14APWR,"Hex Schmitt-trigger inverter (2 pcs for 8 override channels, logic inverted in firmware)",$0.18
 Q1-Q8,8,IRLML6344TRPbF,SOT-23,C53550,IRLML6344TRPbF,"N-Ch MOSFET 30V 5A Rds(on)=37mΩ@2.5V",$0.15
 D1-D9,9,SS34,SMA,C8678,SS34,"SS34 diodes (reverse polarity + flyback)",$0.08
@@ -19,7 +20,7 @@ C1,1,10µF,0603,C19702,CL10A106KP8NNNC,"MCU VDD bulk decoupling",$0.02
 C15,1,1µF,0603,C15849,CL10A105KB8NNNC,"VDDA decoupling",$0.01
 C17,1,470µF 25V,SMD-10x10.5,C2162977,25TZV470M10X10.5,"Bulk 12V electrolytic primary (SMD)",$0.30
 C18,1,100µF 25V,SMD-6.3x5.4,C4747964,RST100UF25V004,"Bulk 12V electrolytic secondary (SMD)",$0.04
-C19,1,22µF 10V,Tantalum-A,C11366,TAJA226K010RNJ,"LDO output stability (SMD tantalum)",$0.21
+C19,1,22µF 10V,Tantalum-A,C11366,TAJA226K010RNJ,"Buck 3V3 output bulk capacitor (SMD tantalum)",$0.21
 LED1,1,Green,0603,C7496818,F.0603.00025/P2-0603G1TS2-06T-002,"Power indicator LED",$0.01
 LED2,1,Blue,0603,C7496819,F.0603.00026/P2-0603B1TS2-06T-001,"Link indicator LED",$0.01
 LED3-LED10,8,Yellow,0603,C72038,19-217/Y2C-CQ2R2L/3T,"Output state LED",$0.03

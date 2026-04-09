@@ -1,167 +1,114 @@
 # Schematic Entry Guide
 
-This guide defines the current hardware design:
+This is the assembly-executable schematic workflow for the current architecture:
 
-- STM32G0B1 MCU (native USB DFU capable)
-- Full-duplex RS-485 (2x SP3485EN per board)
-- Digital input front-end using RC + Schmitt-trigger buffer
-- SWD retained, plus BOOT0 button for DFU mode
+- `STM32G0B1CBT6` on both boards
+- Full-duplex RS-485 (2x transceivers per board)
+- Native USB on `PA11/PA12`
+- RC + Schmitt digital conditioning for all switch inputs
+- SWD + `PA14-BOOT0` + NRST recovery path
+
+Use this file as the build sequence, then use the appendices for full pin/net/junction tables.
 
 ## BOM convention
 
-- BOMs are normalized to one line per unique part number/MPN.
-- Repeated use of the same part is represented by combined designators and summed quantity.
+- BOM is one line per unique MPN.
+- Combined designators must match quantity.
+- Substitutions must preserve function, package fit, and net behavior.
 
-## MCU and core nets
+## Required supporting appendices
 
-### MCU
+- Input schematic appendix: `hardware/SCHEMATIC_APPENDIX_INPUT.md`
+- Output schematic appendix: `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`
 
-- Part: `STM32G0B1CBT6`
-- Package: LQFP-48
-- Keep SWD header on both boards (`PA13`, `PA14-BOOT0`, `NRST`, `VTref`, `GND`)
-- USB data pins:
+Do not leave any net undefined in the top-level sheet set. If a net is not explicitly listed there, add it before release.
+
+## 1) Shared schematic rules
+
+### MCU and reset/debug
+
+- MCU: `STM32G0B1CBT6`, LQFP-48.
+- USB nets:
   - `PA11` -> `USB_DM`
   - `PA12` -> `USB_DP`
+- SWD nets:
+  - `PA13` -> `SWDIO`
+  - `PA14-BOOT0` -> `SWCLK` / BOOT0 button net
+  - `NRST` -> reset button + SWD header
+- `PA14-BOOT0` is always named exactly `PA14-BOOT0`.
 
-### BOOT0 / reset network
+### BOOT0 and NRST behavior
 
-- Name this shared net `PA14-BOOT0` in schematics and silkscreen.
-- `PA14-BOOT0` is shared with SWD clock (`PA14/SWCLK`) during debug/programming.
-- `PA14-BOOT0` has a **10k pulldown to GND** (normal boot default).
-- `SW2` connects `PA14-BOOT0` to `3V3` when pressed.
-- `SW1` is NRST-to-GND reset button.
-- DFU entry: hold `SW2`, tap/reset with `SW1`, then release.
-- Keep `SW2` as a momentary button only; do not leave BOOT0 asserted while attaching SWD.
+- `PA14-BOOT0` has 10k pulldown to GND.
+- `SW2` drives `PA14-BOOT0` HIGH only while pressed.
+- `SW1` pulls `NRST` LOW.
+- DFU entry sequence: hold `SW2`, tap `SW1`, release.
+- Never latch BOOT0 HIGH during SWD attach.
 
-## Input board
+### RS-485 cable mapping (mandatory)
 
-### Power
+- Signals: `TX+`, `TX-`, `RX+`, `RX-`, `GND`, `SHIELD`.
+- Cable: Belden 9842 (or equivalent dual twisted pair + shield).
+- Point-to-point crossover:
+  - Input `TX+/-` -> Output `RX+/-`
+  - Output `TX+/-` -> Input `RX+/-`
+- Keep in-pair polarity (`+` to `+`, `-` to `-`).
 
-- J1(12V) -> D1 (SS34) -> F1 (PTC) -> 12V rail.
-- 12V rail: `C17` bulk + `C6` HF cap.
-- `AMS1117-3.3` creates 3V3 with `C18` + `C19` output caps.
+### 3.3V regulator selection rule (both boards)
 
-### Input front-end (x8)
+- Do not use `AMS1117-3.3` from `12V_MAIN` in this design revision.
+- Preferred candidate from migration plan is `LMZM23601V33` only if assembly stock is acceptable at release time.
+- Current selected regulator is `AP63203WU-7` (`C780769`) for both boards due to strong stock and sufficient electrical margin.
+- Minimum validated load assumptions:
+  - Input board peak `3V3` load budget: `120mA` (require >=`300mA` regulator capacity).
+  - Output board peak `3V3` load budget: `140mA` (require >=`350mA` regulator capacity).
+- Any future substitute must remain a buck regulator and preserve or exceed these margins.
 
-For each channel:
+## 2) Input-board schematic capture sequence
 
-```text
-3V3 -> R_pullup(10k) -> switch_node -> R_series(10k) -> rc_node -> Schmitt input
-                          |                                 |
-                        switch                           C(100nF)
-                          |                                 |
-                         GND                               GND
-```
+1. Place connectors (`J1`, `J2a`, `J2b`, `J3`, `J4`, `J5`, `J6`) and assign pin numbers per appendix.
+2. Draw power path: `J1(12V)` -> `D1(SS34)` -> `F1(PTC)` -> `12V_MAIN`, then buck regulator stage (`AP63203WU-7` or validated equivalent) to `3V3`.
+3. Add USB-C port and SWD header nets.
+4. Add dual SP3485 transceivers:
+   - `U2A`: TX-only path from `PA9`
+   - `U2B`: RX-only path to `PA10` + 120R termination on RX pair
+5. Add 2x SM712 (one per pair) close to connector net entry.
+6. Add 8 input RC + Schmitt cells and map CH0..CH7 to MCU GPIOs.
+7. Add 8 channel LEDs + power LED + link LED.
+8. Run ERC and verify against input appendix tables.
 
-- `R_pullup`: 10k (default HIGH)
-- `R_series`: 10k
-- `C`: 100nF (tau ~= 1ms)
-- Buffer ICs: `U5/U6 = SN74LVC14APWR` (Schmitt inverter)
-- Firmware interprets buffered HIGH as switch-closed/active.
+All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_INPUT.md`.
 
-Connector mapping:
+## 3) Output-board schematic capture sequence
 
-- `J2a` pins 1..4 -> CH0..CH3
-- `J2b` pins 1..4 -> CH4..CH7
-- `J3` -> input COM/GND
+1. Place connectors (`J1`, `J2`, `J3a`, `J3b`, `J4`, `J5a`, `J5b`, `J6`, `J7`, `J8`) and assign pin numbers per appendix.
+2. Draw `12V_MAIN` input and buck-based `3V3` generation path (`AP63203WU-7` or validated equivalent).
+3. Add dual SP3485 transceivers:
+   - `U2A`: RX-only from cable to `PA10`
+   - `U2B`: TX-only heartbeat from `PA9`
+4. Add RX-pair 120R termination and two SM712 protection devices.
+5. Add 8 override RC + Schmitt cells into CH0..CH7 override GPIOs.
+6. Add 8 MOSFET output channels (gate resistor, pulldown, PTC, flyback).
+7. Add 8 output LEDs + power LED + link LED.
+8. Run ERC and verify against output appendix tables.
 
-Channel-to-GPIO mapping (CH index is protocol bit index):
+All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`.
 
-| Channel | Input board sense GPIO | Output board override GPIO | Output board MOSFET gate GPIO |
-| --- | --- | --- | --- |
-| CH0 | `PA0` | `PA0` | `PB2` |
-| CH1 | `PA1` | `PA1` | `PB10` |
-| CH2 | `PA4` | `PA4` | `PB11` |
-| CH3 | `PA5` | `PA5` | `PB12` |
-| CH4 | `PA6` | `PA6` | `PB13` |
-| CH5 | `PA7` | `PA7` | `PA8` |
-| CH6 | `PB0` | `PB0` | `PA15` |
-| CH7 | `PB1` | `PB1` | `PB3` |
+## 4) Schematic release gate (must pass)
 
-### Full-duplex RS-485
+- Every connector pin appears in a mapping table.
+- Every CH0..CH7 signal has a full chain from connector -> frontend -> MCU -> protocol bit -> output gate/load.
+- `PA9/PA10` used only for USART1 serial link.
+- `PA11/PA12` reserved for USB only.
+- `PA14-BOOT0` naming and behavior are consistent across both boards.
+- RS-485 TX and RX pairs are separated and correctly crossed across the cable.
+- SWD pinout, NRST, and BOOT0 controls are accessible and labeled.
 
-Two transceivers on the input board:
+## 5) Layout handoff
 
-- `U2A` TX path:
-  - `DI <- PA9 (USART1_TX)`
-  - `DE = 3V3`, `RE = 3V3` (always transmit)
-  - Bus pair -> `RS485_TX+ / RS485_TX-`
-- `U2B` RX path:
-  - `RO -> PA10 (USART1_RX)`
-  - `DE = GND`, `RE = GND` (always receive)
-  - Bus pair -> `RS485_RX+ / RS485_RX-`
-  - `R27 = 120R` across RX pair (populated)
+After schematic closure, implement layout using:
 
-Protection:
-
-- One `SM712` per differential pair (2 total).
-
-### USB-C (native USB)
-
-- `PA11/PA12` route to USB D-/D+ through 22R series resistors.
-- Keep CC pull-downs (`5.1k` on CC1/CC2).
-- Keep SWD header.
-
-## Output board
-
-### Power/output stage
-
-- Power chain keeps the same 12V->3V3 logic-rail approach as input board.
-- Output board does **not** include a single high-current board-level input fuse in this BOM.
-- Use an enclosure-level inline fuse on the PSU-to-board feed sized for system current.
-- Keep output MOSFET section unchanged except control source.
-- CH5 gate is moved to `PA8` (frees `PA11` for USB).
-
-### Override front-end (x8)
-
-Same RC + Schmitt approach as input board:
-
-- switch-to-GND override wiring
-- 10k pull-up + 10k series + 100nF
-- `U5/U6 = SN74LVC14APWR`
-- Buffered HIGH means local override active (force ON).
-- Buffered LOW means serial controls channel.
-
-### Full-duplex RS-485
-
-Two transceivers on the output board:
-
-- `U2A` RX path:
-  - `RO -> PA10 (USART1_RX)`
-  - `DE = GND`, `RE = GND`
-  - `R52 = 120R` across RX pair (populated)
-- `U2B` TX path:
-  - `DI <- PA9 (USART1_TX)`
-  - `DE = 3V3`, `RE = 3V3`
-
-Add one `SM712` per pair (2 total).
-
-### USB-C / debug
-
-- Native USB on `PA11/PA12` with 22R series resistors.
-- Keep SWD header and NRST button.
-- Add BOOT0 button + pulldown network identical to input board.
-
-## RS-485 cable and terminal mapping
-
-Use two differential pairs plus GND and shield:
-
-- `TX+`, `TX-`, `RX+`, `RX-`, `GND`, `SHIELD`
-- Recommended cable: Belden 9842 (2-pair shielded twisted pair)
-- PCB terminal: 6-pos screw terminal (`J4` input board, `J2` output board)
-- Required crossover for full-duplex point-to-point wiring:
-  - Input `TX+` -> Output `RX+`
-  - Input `TX-` -> Output `RX-`
-  - Input `RX+` <- Output `TX+`
-  - Input `RX-` <- Output `TX-`
-- Keep pair polarity consistent end-to-end (`+` to `+`, `-` to `-`); never swap polarity within a pair.
-
-## Layout checklist
-
-- Route USB D+/D- as a short differential pair.
-- Keep each RS-485 pair tightly coupled and short to transceiver.
-- Place 100nF decoupling directly at each IC VCC pin.
-- Keep SWD and BOOT0/NRST controls accessible near board edge.
-- Wide copper for output current paths on output board.
-- Keep LEDs in a single edge-aligned block for enclosure light-pipe/window use.
+- `hardware/PCB_LAYOUT_GUIDE.md`
+- `hardware/PCB_APPENDIX_INPUT.md`
+- `hardware/PCB_APPENDIX_OUTPUT.md`
 

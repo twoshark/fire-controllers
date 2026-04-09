@@ -5,7 +5,7 @@ U4,1,AMS1117-3.3,SOT-223,C6186,AMS1117-3.3,"3.3V LDO Regulator 1A",$0.15
 U5-U6,2,SN74LVC14APWR,TSSOP-14,C7663,SN74LVC14APWR,"Hex Schmitt-trigger inverter (2 pcs for 8 override channels, logic inverted in firmware)",$0.18
 Q1-Q8,8,IRLML6344TRPbF,SOT-23,C53550,IRLML6344TRPbF,"N-Ch MOSFET 30V 5A Rds(on)=37mΩ@2.5V",$0.15
 D1-D9,9,SS34,SMA,C8678,SS34,"SS34 diodes (reverse polarity + flyback)",$0.08
-D18-D19,2,SM712-02HTG,SOT-23,C7441,SM712-02HTG,"Asymmetric TVS diode (one per RS-485 pair)",$0.15
+D18-D19,2,SM712,SOT-23,C521963,SM712,"Asymmetric TVS diode (one per RS-485 pair)",$0.05
 F1-F8,8,1812L200/12GR,1812,C18198339,1812L200/12GR,"PTC Fuse 2A hold 12V (per-channel)",$0.05
 R1-R8,8,100Ω,0603,C22775,0603WAF1000T5E,"MOSFET gate resistor",$0.01
 "R9-R32,R57",25,10kΩ,0603,C25804,0603WAF1002T5E,"10k resistors (gate pull-down, override pull-up/RC, BOOT0 pull-down)",$0.01
@@ -20,8 +20,8 @@ C15,1,1µF,0603,C15849,CL10A105KB8NNNC,"VDDA decoupling",$0.01
 C17,1,470µF 25V,SMD-10x10.5,C2162977,25TZV470M10X10.5,"Bulk 12V electrolytic primary (SMD)",$0.30
 C18,1,100µF 25V,SMD-6.3x5.4,C4747964,RST100UF25V004,"Bulk 12V electrolytic secondary (SMD)",$0.04
 C19,1,22µF 10V,Tantalum-A,C11366,TAJA226K010RNJ,"LDO output stability (SMD tantalum)",$0.21
-LED1,1,Green,0603,C72043,19-217/GHC-YR1S2/3T,"Power indicator LED",$0.03
-LED2,1,Blue,0603,C72041,19-217/BHC-ZL1M2RY/3T,"Link indicator LED",$0.03
+LED1,1,Green,0603,C7496818,F.0603.00025/P2-0603G1TS2-06T-002,"Power indicator LED",$0.01
+LED2,1,Blue,0603,C7496819,F.0603.00026/P2-0603B1TS2-06T-001,"Link indicator LED",$0.01
 LED3-LED10,8,Yellow,0603,C72038,19-217/Y2C-CQ2R2L/3T,"Output state LED",$0.03
 SW1-SW2,2,Tactile,SMD,C318884,TS-1187A-B-A-B,"NRST and BOOT0 tactile buttons",$0.05
 "J1,J4,J6",3,2-pos 5.08mm,THT,C71370,WJ2EDGK-5.08-02P-14-00A,"Screw terminals: 12V input, override COM/GND, 12V LOAD + GND RTN",$0.10

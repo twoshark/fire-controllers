@@ -11,6 +11,28 @@ The input board reads 8 switch inputs and transmits a channel bitfield to the ou
 | Serial | RS-485 full duplex, 115200 |
 | Debug/programming | USB DFU + SWD |
 
+## 3.3V current estimate and margin target
+
+Estimated `3V3` draw (input board):
+
+- MCU (`STM32G0B1`) active + USB-capable clocking: ~20mA typical, ~35mA worst-case budget
+- RS-485 (`2x SP3485EN`): ~10mA typical combined, ~20mA worst-case budget
+- LEDs (power + link + up to 8 channel LEDs): ~20mA typical, ~38mA peak
+- Input pull-up network and logic overhead: ~5mA peak budget
+- Miscellaneous digital overhead: ~2mA peak budget
+
+Resulting rail budget:
+
+- Typical: ~55mA
+- Peak: ~120mA
+- Regulator requirement: at least 300mA continuous on `3V3` to maintain >=2.5x peak margin and low thermal stress from `12V_MAIN`.
+
+Regulator decision for this board:
+
+- `LMZM23601V33` was the preferred option in plan, but assembly availability is currently not production-friendly.
+- Selected fallback: `AP63203WU-7` (`C780769`), fixed 3.3V, synchronous buck, 2A rating.
+- This keeps the rail well inside safe operating area and avoids the linear-regulator heat path.
+
 ## Input conditioning
 
 Each channel uses RC conditioning and Schmitt cleanup before GPIO read:
@@ -79,6 +101,7 @@ BOOT0:
 - PCB uses screw terminals
 - Enclosure uses panel-mounted waterproof connectors wired back to PCB terminals
 - RS-485 terminal exposes TX pair, RX pair, GND, shield
+- Full connector pin map is defined in `hardware/SCHEMATIC_APPENDIX_INPUT.md`
 
 ## Layout and implementation notes
 
@@ -90,4 +113,6 @@ BOOT0:
 See also:
 
 - `hardware/SCHEMATIC_GUIDE.md`
+- `hardware/SCHEMATIC_APPENDIX_INPUT.md`
 - `hardware/PCB_LAYOUT_GUIDE.md`
+- `hardware/PCB_APPENDIX_INPUT.md`

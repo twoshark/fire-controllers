@@ -11,6 +11,28 @@ The output board receives channel states over full-duplex RS-485 and controls 8x
 | Overrides | 8x switch-to-GND inputs |
 | Serial | RS-485 full duplex, 115200 |
 
+## 3.3V current estimate and margin target
+
+Estimated `3V3` draw (output board):
+
+- MCU (`STM32G0B1`) active while receiving frames and driving outputs: ~22mA typical, ~35mA worst-case budget
+- RS-485 (`2x SP3485EN`): ~10mA typical combined, ~20mA worst-case budget
+- LEDs (power + link + up to 8 output LEDs): ~22mA typical, ~38mA peak
+- Override pull-up network and gate-drive static components: ~7mA peak budget
+- Miscellaneous digital overhead: ~3mA peak budget
+
+Resulting rail budget:
+
+- Typical: ~65mA
+- Peak: ~140mA
+- Regulator requirement: at least 350mA continuous on `3V3` to preserve >=2.5x margin for startup/transient conditions.
+
+Regulator decision for this board:
+
+- `LMZM23601V33` was checked first per plan, but direct assembly availability is currently constrained.
+- Selected fallback: `AP63203WU-7` (`C780769`), fixed 3.3V synchronous buck with 2A rating and broad stock availability.
+- This materially improves thermal behavior versus linear drop from 12V while keeping cost within target.
+
 ## Output power stage
 
 Per channel:
@@ -60,6 +82,7 @@ Point-to-point cable crossover at installation (required for full duplex):
   - `PA12 = USB_DP`
 - 22R D+/D- series resistors and CC pull-downs retained
 - SWD header retained for debug/recovery
+- Full SWD/connector pin map is defined in `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`
 
 BOOT0:
 
@@ -90,4 +113,6 @@ BOOT0:
 See also:
 
 - `hardware/SCHEMATIC_GUIDE.md`
+- `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`
 - `hardware/PCB_LAYOUT_GUIDE.md`
+- `hardware/PCB_APPENDIX_OUTPUT.md`

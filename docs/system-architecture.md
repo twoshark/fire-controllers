@@ -16,12 +16,45 @@ Target latency remains `<10ms`, with typical low-millisecond behavior.
   - Native USB device support for DFU programming
   - Sufficient flash/SRAM headroom
 
+## 3.3V rail budget and regulator policy
+
+The previous `AMS1117-3.3` linear path from `12V_MAIN` causes avoidable thermal loss. For regulator sizing, the design now budgets board-level 3.3V current with explicit headroom:
+
+| Board | Estimated typical 3.3V load | Estimated peak 3.3V load | Required regulator minimum (with margin) |
+| --- | ---: | ---: | ---: |
+| Input board | ~55mA | ~120mA | >=300mA continuous |
+| Output board | ~65mA | ~140mA | >=350mA continuous |
+
+Assumptions used in peak estimate:
+
+- MCU active at 64MHz plus dual RS-485 transceivers in active link state.
+- Power/link LEDs on and all 8 channel LEDs on simultaneously.
+- Worst-case pull-up/pulldown static current for all channels asserted.
+- Schmitt front-end dynamic current remains small versus LED and transceiver load.
+
+Regulator selection rule:
+
+- Preferred candidate from plan: `LMZM23601V33`.
+- If preferred part is not production-available, use an in-stock fixed 3.3V buck with enough current and thermal headroom.
+- Final selected part for both boards: `AP63203WU-7` (`C780769`), fixed 3.3V synchronous buck, 2A capability.
+
+Why `AP63203WU-7` is selected:
+
+- Live availability is high in both LCSC and JLC part channels (tens of thousands of units at time of check).
+- Input range (`3.8V` to `32V`) comfortably supports `12V_MAIN` with margin.
+- 2A capability is far above both boards' peak demand, giving strong thermal and transient margin.
+- Cost is low enough to keep board BOM targets practical while removing LDO heat risk.
+
 ## BOM sourcing and substitution policy
 
 - Prefer JLCPCB basic parts first for cost and assembly availability.
 - Use extended parts only when no basic part meets the electrical/thermal requirement.
 - Any substitution must preserve function, ratings, footprint compatibility, and protocol timing behavior.
 - Re-verify live LCSC stock for every BOM line before manufacturing release.
+- Current substitutions in use:
+  - RS-485 TVS: `C521963` (`SM712`, SOT-23)
+  - Power LED green 0603: `C7496818`
+  - Link LED blue 0603: `C7496819`
 
 ## Communications architecture
 
@@ -93,3 +126,7 @@ BOOT0 access:
 - SWD remains required for robust manufacturing/debug/recovery flow
 - Detailed schematic capture sequence: `hardware/SCHEMATIC_GUIDE.md`
 - Detailed PCB placement/routing sequence: `hardware/PCB_LAYOUT_GUIDE.md`
+- Input schematic pin/net appendix: `hardware/SCHEMATIC_APPENDIX_INPUT.md`
+- Output schematic pin/net appendix: `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`
+- Input PCB execution appendix: `hardware/PCB_APPENDIX_INPUT.md`
+- Output PCB execution appendix: `hardware/PCB_APPENDIX_OUTPUT.md`

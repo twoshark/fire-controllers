@@ -1,13 +1,26 @@
 # PCB Layout Guide
 
-This guide is the board-layout counterpart to `hardware/SCHEMATIC_GUIDE.md`.
-It assumes the current architecture:
+This guide is the layout execution workflow for both boards.
+It pairs with:
+
+- `hardware/SCHEMATIC_GUIDE.md`
+- `hardware/PCB_APPENDIX_INPUT.md`
+- `hardware/PCB_APPENDIX_OUTPUT.md`
+
+Architecture assumptions:
 
 - STM32G0B1CBT6 MCU
 - Full-duplex RS-485 (2x SP3485EN per board)
 - Native USB on PA11/PA12
 - RC + Schmitt digital input front-end
 - SWD + NRST + BOOT0 debug/recovery controls
+
+## Required appendices
+
+- Input-board executable details: `hardware/PCB_APPENDIX_INPUT.md`
+- Output-board executable details: `hardware/PCB_APPENDIX_OUTPUT.md`
+
+This top-level guide defines common constraints. Appendix files carry board-specific placement maps, net classes, and test-point matrices.
 
 ## 1) Placement order (high-confidence workflow)
 
@@ -21,7 +34,7 @@ It assumes the current architecture:
 8. Place status LED block along one enclosure-visible edge.
 9. Place SWD/NRST/BOOT0 where probe/tool access is easy.
 
-## 2) Layer stack and trace guidance
+## 2) Layer stack and trace guidance (design choice lock)
 
 Recommended minimum:
 
@@ -32,6 +45,8 @@ For 2-layer:
 
 - Top: component + critical routing
 - Bottom: near-continuous GND plane with minimal slotting
+
+For release, lock one stackup per board in the appendix and keep all impedance calculations tied to that stackup.
 
 ## 3) Power routing
 
@@ -67,6 +82,8 @@ Via current criteria (through-layer transitions in high-current paths):
 - 8 A shared segment transition: >=9 vias in parallel.
 - If current must neck down, do it only for very short segments (<5 mm).
 
+Treat these as minima. If enclosure temperature or duty-cycle analysis indicates risk, increase copper width/area.
+
 ## 4) MCU + decoupling
 
 - Place each 100nF decoupler at its IC supply pin with very short loop to GND.
@@ -81,6 +98,8 @@ Via current criteria (through-layer transitions in high-current paths):
 - Place 120R termination directly across receiver A/B pins.
 - Place SM712 as close as practical to connector entry on each pair.
 - Keep pair reference over continuous ground; avoid crossing plane gaps.
+
+Implementation details (pair ordering and connector pin numbers) are in the board appendices.
 
 ## 6) USB layout
 
@@ -157,7 +176,20 @@ Per-channel block:
 - Keep >=2.0 mm between board edge and exposed copper unless edge-plated by design.
 - Avoid acute copper slivers and neck-downs below fab capability; keep trace/space at or above chosen fab class with margin.
 
-## 11) Pre-release layout checklist
+## 11) Board-specific execution references
+
+Use the appendices to remove ambiguity during actual layout:
+
+- `hardware/PCB_APPENDIX_INPUT.md`
+  - Connector-edge placement map
+  - Input channel block replication rules
+  - Input-board net-class table and test matrix
+- `hardware/PCB_APPENDIX_OUTPUT.md`
+  - High-current corridor zoning and branch geometry
+  - Output-stage thermal path and via fences
+  - Output-board net-class table and test matrix
+
+## 12) Pre-release layout checklist
 
 - [ ] Power-entry polarity/protection path matches schematic.
 - [ ] Every IC has local decoupling placed and routed.
@@ -172,3 +204,4 @@ Per-channel block:
 - [ ] Low-voltage clearance targets and board-edge copper setbacks are met.
 - [ ] Global/local fiducials, height keepouts, and panelization constraints are checked.
 - [ ] Mounting holes and connector clearances fit enclosure plan.
+- [ ] Board-specific appendix checklist is fully completed and signed off.

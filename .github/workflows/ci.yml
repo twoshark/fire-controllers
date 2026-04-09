@@ -1,0 +1,110 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    name: Format & Lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./firmware
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt, clippy
+          targets: thumbv6m-none-eabi
+
+      - name: Cache cargo registry & build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            firmware/target
+          key: ${{ runner.os }}-cargo-check-${{ hashFiles('firmware/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-check-
+
+      - name: cargo fmt --check
+        run: cargo fmt --all -- --check
+
+      - name: clippy (hotline-protocol, host target)
+        run: cargo clippy -p hotline-protocol --all-targets --target x86_64-unknown-linux-gnu -- -D warnings
+
+      - name: clippy (input-controller, cross target)
+        run: cargo clippy --target thumbv6m-none-eabi -p input-controller -- -D warnings
+
+      - name: clippy (output-controller, cross target)
+        run: cargo clippy --target thumbv6m-none-eabi -p output-controller -- -D warnings
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./firmware
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@nightly
+
+      - name: Cache cargo registry & build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            firmware/target
+          key: ${{ runner.os }}-cargo-test-${{ hashFiles('firmware/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-test-
+
+      - name: cargo test (hotline-protocol)
+        run: cargo test -p hotline-protocol --target x86_64-unknown-linux-gnu
+
+  build:
+    name: Cross-Compile
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./firmware
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: thumbv6m-none-eabi
+
+      - name: Cache cargo registry & build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            firmware/target
+          key: ${{ runner.os }}-cargo-build-${{ hashFiles('firmware/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-build-
+
+      - name: Build input-controller
+        run: cargo build --release --target thumbv6m-none-eabi -p input-controller
+
+      - name: Build output-controller
+        run: cargo build --release --target thumbv6m-none-eabi -p output-controller
+
+      - name: Report binary sizes
+        run: |
+          echo "## Binary Sizes" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          ls -lh target/thumbv6m-none-eabi/release/input-controller target/thumbv6m-none-eabi/release/output-controller >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

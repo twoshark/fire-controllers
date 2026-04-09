@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = [
+    "hotline-protocol",
+    "input-controller",
+    "output-controller",
+]
+
+[profile.release]
+debug = 2
+lto = true
+opt-level = "s"

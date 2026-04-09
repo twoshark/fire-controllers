@@ -1,0 +1,14 @@
+[package]
+name = "hotline-protocol"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+publish = false
+description = "Hotline v2 serial protocol: frame encoding/decoding and CRC-8 for fire controller system"
+
+[features]
+default = []
+defmt = ["dep:defmt"]
+
+[dependencies]
+defmt = { version = "1.0.1", optional = true }

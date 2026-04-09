@@ -40,14 +40,32 @@ For 2-layer:
 - Keep the 12V entry path compact: `J1 -> D1 -> F1 -> bulk/HF caps`.
 - Place `C17` and `C6` adjacent to the 12V entry node.
 - Place AMS1117 close to output caps (`C18`, `C19`).
+- Keep the LDO high-dI/dt input loop (`VIN cap -> LDO -> GND`) under ~10 mm perimeter.
 
 ### Output board
 
 - Route high-current output path first:
   - 12V rail trunk -> per-channel PTC -> output terminal
   - return path to load ground terminal with low impedance
-- Use wide copper for all high-current segments (size by your current/temperature rise target).
 - Keep MOSFET + flyback + terminal loop tight per channel.
+
+### Quantified current sizing (1 oz outer copper baseline)
+
+Use these as minimum starting widths for <10 C estimated temperature rise, then validate with an IPC-2152 calculator for your exact stackup and ambient.
+
+- Branch trace (one channel, up to 2 A): >=60 mil (1.5 mm) on outer layer.
+- Shared rail up to 4 A: >=150 mil (3.8 mm) or copper pour with equivalent cross-section.
+- Shared rail up to 8 A: >=300 mil (7.6 mm) copper pour.
+- Main 12V trunk up to 16 A peak: use top+bottom pours in parallel with dense stitching vias every 5-10 mm along the trunk.
+- Keep each 2 A branch length as short as practical (target <=50 mm from fuse to terminal).
+
+Via current criteria (through-layer transitions in high-current paths):
+
+- Assume ~1 A per 0.3 mm finished via as a conservative planning value.
+- 2 A branch transition: >=3 vias in parallel.
+- 4 A shared segment transition: >=5 vias in parallel.
+- 8 A shared segment transition: >=9 vias in parallel.
+- If current must neck down, do it only for very short segments (<5 mm).
 
 ## 4) MCU + decoupling
 
@@ -68,8 +86,19 @@ For 2-layer:
 
 - Route PA11/PA12 to USB connector as a coupled differential pair.
 - Place 22R D+/D- resistors near MCU pins.
-- Keep stubs and vias to a minimum.
 - Keep noisy switching nodes (MOSFET drains, PTC branches) away from USB pair.
+
+### USB physical constraints (FS USB)
+
+- Target differential impedance: 90R +/-15% (board-house controlled impedance if available).
+- Keep D+/D- total routed length <=50 mm on this form factor where possible.
+- Keep intra-pair mismatch <=2 mm.
+- Avoid pair stubs (no branch test pads on D+/D-). If test access is required, use in-line pads only.
+- Use at most one via per line; avoid layer swaps unless mechanically required.
+- Place USB ESD protection within 5 mm of connector pins and route ESD return directly to ground.
+- Connector shield policy:
+  - If enclosure/chassis ground exists, bond connector shell to chassis at entry.
+  - If no dedicated chassis net exists, connect shell to PCB GND through RC bleed (`1 nF` in parallel with `1 Mohm`) and keep an optional `0R` DNI footprint for bring-up tuning.
 
 ## 7) RC + Schmitt input/override channels
 
@@ -86,11 +115,26 @@ Per-channel block:
 - Place flyback diode physically close to load switching node and 12V rail tie point.
 - Separate high di/dt output-current loops from MCU/USB/RS-485 regions.
 
+### Thermal guidance (output stage + LDO)
+
+- Give each MOSFET drain/source node copper spreading area (target >=100 mm^2 combined local copper, both layers preferred with stitching vias).
+- Keep PTCs thermally separated from each other and from MOSFET bodies (target >=3 mm edge-to-edge) to reduce thermal coupling/nuisance trips.
+- Avoid placing temperature-sensitive logic components in the hot corridor formed by PTC + MOSFET rows.
+- For AMS1117 regions, reserve >=250 mm^2 copper tied to LDO thermal pins/nets, and avoid placing electrolytics directly against the regulator body.
+- If estimated LDO dissipation exceeds ~0.8 W in steady state, treat as thermal risk and re-check copper area, airflow, and load budget before release.
+
 ## 9) Grounding and return paths
 
 - Maintain a continuous ground reference under MCU, USB, and RS-485.
 - Connect noisy power-return regions with low-impedance stitching to global ground.
 - Avoid narrow necks in return path that force unrelated currents through one segment.
+
+### RS-485 shield and chassis grounding policy
+
+- Terminate cable shield/drain at connector entry to `CHASSIS` (or enclosure bond point), not deep in the board interior.
+- Keep shield-to-chassis path short and wide; avoid routing shield current through digital ground traces.
+- Provide a single-point `CHASSIS` to `GND` coupling near cable entry using RC (`4.7 nF` in parallel with `1 Mohm`) with optional `0R` DNI link for EMI bring-up experiments.
+- Keep TVS return paths referenced to the same local ground/chassis strategy used at the connector.
 
 ## 10) Debuggability and DFM
 
@@ -101,6 +145,17 @@ Per-channel block:
   - USART1 TX/RX logic nodes
   - RS-485 differential pairs (if space allows)
 - Ensure silkscreen includes connector pin labels and channel numbering.
+- Add at least 3 global fiducials (non-collinear, board corners) plus 1 local fiducial near fine-pitch MCU.
+- Keep at least 3 mm component courtyard clearance around mounting holes and connector mechanical keepouts.
+- Respect assembly height limits at enclosure boundaries (define and check max component height zones).
+- If panelized, include tooling rails and breakaway/tab strategy that does not stress connector solder joints.
+
+### Creepage/clearance and manufacturability minima (12V system)
+
+- Electrical clearance minimum for unrelated low-voltage nets: >=0.5 mm; target >=1.0 mm where board area allows.
+- Keep >=1.0 mm between high-current 12V copper and sensitive USB/MCU traces to reduce coupling and simplify rework.
+- Keep >=2.0 mm between board edge and exposed copper unless edge-plated by design.
+- Avoid acute copper slivers and neck-downs below fab capability; keep trace/space at or above chosen fab class with margin.
 
 ## 11) Pre-release layout checklist
 
@@ -108,7 +163,12 @@ Per-channel block:
 - [ ] Every IC has local decoupling placed and routed.
 - [ ] RS-485 TVS + termination are on the correct pair and close enough.
 - [ ] USB pair is short, coupled, and clear of noisy nodes.
+- [ ] USB ESD device is within 5 mm of connector and shield grounding policy is implemented.
 - [ ] BOOT0 defaults LOW and DFU button wiring is correct.
 - [ ] SWD header pinout/orientation matches documentation.
-- [ ] Output current paths sized for expected load current and temperature rise.
+- [ ] Output current paths meet quantified width/via targets for peak current.
+- [ ] Thermal review completed for MOSFET/PTC row and LDO dissipation region.
+- [ ] RS-485 shield/chassis entry bond and CHASSIS-GND coupling are implemented per policy.
+- [ ] Low-voltage clearance targets and board-edge copper setbacks are met.
+- [ ] Global/local fiducials, height keepouts, and panelization constraints are checked.
 - [ ] Mounting holes and connector clearances fit enclosure plan.

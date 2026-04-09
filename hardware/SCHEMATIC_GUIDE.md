@@ -18,17 +18,20 @@ This guide defines the current hardware design:
 
 - Part: `STM32G0B1CBT6`
 - Package: LQFP-48
-- Keep SWD header on both boards (`PA13`, `PA14`, `NRST`, `VTref`, `GND`)
+- Keep SWD header on both boards (`PA13`, `PA14-BOOT0`, `NRST`, `VTref`, `GND`)
 - USB data pins:
   - `PA11` -> `USB_DM`
   - `PA12` -> `USB_DP`
 
 ### BOOT0 / reset network
 
-- `PA14/BOOT0` has a **10k pulldown to GND** (normal boot default).
-- `SW2` connects `PA14/BOOT0` to `3V3` when pressed.
+- Name this shared net `PA14-BOOT0` in schematics and silkscreen.
+- `PA14-BOOT0` is shared with SWD clock (`PA14/SWCLK`) during debug/programming.
+- `PA14-BOOT0` has a **10k pulldown to GND** (normal boot default).
+- `SW2` connects `PA14-BOOT0` to `3V3` when pressed.
 - `SW1` is NRST-to-GND reset button.
 - DFU entry: hold `SW2`, tap/reset with `SW1`, then release.
+- Keep `SW2` as a momentary button only; do not leave BOOT0 asserted while attaching SWD.
 
 ## Input board
 
@@ -61,6 +64,19 @@ Connector mapping:
 - `J2a` pins 1..4 -> CH0..CH3
 - `J2b` pins 1..4 -> CH4..CH7
 - `J3` -> input COM/GND
+
+Channel-to-GPIO mapping (CH index is protocol bit index):
+
+| Channel | Input board sense GPIO | Output board override GPIO | Output board MOSFET gate GPIO |
+| --- | --- | --- | --- |
+| CH0 | `PA0` | `PA0` | `PB2` |
+| CH1 | `PA1` | `PA1` | `PB10` |
+| CH2 | `PA4` | `PA4` | `PB11` |
+| CH3 | `PA5` | `PA5` | `PB12` |
+| CH4 | `PA6` | `PA6` | `PB13` |
+| CH5 | `PA7` | `PA7` | `PA8` |
+| CH6 | `PB0` | `PB0` | `PA15` |
+| CH7 | `PB1` | `PB1` | `PB3` |
 
 ### Full-duplex RS-485
 
@@ -133,6 +149,12 @@ Use two differential pairs plus GND and shield:
 - `TX+`, `TX-`, `RX+`, `RX-`, `GND`, `SHIELD`
 - Recommended cable: Belden 9842 (2-pair shielded twisted pair)
 - PCB terminal: 6-pos screw terminal (`J4` input board, `J2` output board)
+- Required crossover for full-duplex point-to-point wiring:
+  - Input `TX+` -> Output `RX+`
+  - Input `TX-` -> Output `RX-`
+  - Input `RX+` <- Output `TX+`
+  - Input `RX-` <- Output `TX-`
+- Keep pair polarity consistent end-to-end (`+` to `+`, `-` to `-`); never swap polarity within a pair.
 
 ## Layout checklist
 

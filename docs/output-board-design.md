@@ -46,6 +46,13 @@ Two SP3485EN devices:
 - One 120R termination on receiver pair
 - One SM712 TVS per pair
 
+Point-to-point cable crossover at installation (required for full duplex):
+
+- Input `TX+` -> Output `RX+`
+- Input `TX-` -> Output `RX-`
+- Output `TX+` -> Input `RX+`
+- Output `TX-` -> Input `RX-`
+
 ## USB DFU and SWD
 
 - Native USB:
@@ -56,6 +63,7 @@ Two SP3485EN devices:
 
 BOOT0:
 
+- Net naming follows `PA14-BOOT0` (shared with SWCLK during SWD attach)
 - 10k pulldown default
 - `SW2` asserts BOOT0 high
 - `SW1` resets NRST
@@ -74,6 +82,7 @@ BOOT0:
 ## Layout and implementation notes
 
 - Route high-current output paths first (12V trunk, PTC branches, load returns).
+- Use the quantified width/via targets from `hardware/PCB_LAYOUT_GUIDE.md` for 2A branches and shared rails.
 - Keep each MOSFET + flyback + terminal loop compact to minimize switching noise.
 - Keep RS-485 and USB routing away from high di/dt output switching regions.
 - Keep SWD/NRST/BOOT0 physically accessible for bring-up and field recovery.

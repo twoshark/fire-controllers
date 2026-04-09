@@ -5,6 +5,12 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 publish = false
 
+[[bin]]
+name = "output-controller"
+path = "src/main.rs"
+test = false
+bench = false
+
 [dependencies]
 hotline-protocol = { path = "../hotline-protocol", features = ["defmt"] }
 

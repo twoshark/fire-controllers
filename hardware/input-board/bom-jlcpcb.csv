@@ -1,18 +1,18 @@
 Designator,Quantity,Value,Package,LCSC Part#,MPN,Description,Unit Cost
-U1,1,STM32G0B1CBT6,LQFP-48,C2847904,STM32G0B1CBT6,"MCU Cortex-M0+ 64MHz 128KB Flash 144KB SRAM USB DFU",$2.20
-U2A-U2B,2,SP3485EN-L/TR,SOIC-8,C8963,SP3485EN-L/TR,"RS-485 transceiver pair for full-duplex (TX path + RX path)",$0.21
+U1,1,STM32G0B1CBT6,LQFP-48,C2847904,STM32G0B1CBT6,"MCU Cortex-M0+ 64MHz 128KB Flash 36KB SRAM USB DFU",$2.20
+"U2A,U2B",2,SP3485EN-L/TR,SOIC-8,C8963,SP3485EN-L/TR,"RS-485 transceiver pair for full-duplex (TX path + RX path)",$0.21
 U4,1,AMS1117-3.3,SOT-223,C6186,AMS1117-3.3,"3.3V LDO Regulator 1A",$0.15
 U5-U6,2,SN74LVC14APWR,TSSOP-14,C7663,SN74LVC14APWR,"Hex Schmitt-trigger inverter (2 pcs for 8 channels, logic inverted in firmware)",$0.18
 D1,1,SS34,SMA,C8678,SS34,"3A 40V Schottky (reverse polarity protection)",$0.08
 D10-D11,2,SM712-02HTG,SOT-23,C7441,SM712-02HTG,"Asymmetric TVS diode (one per RS-485 pair)",$0.15
-"R1-R8,R9-R16,R33",17,10kΩ 1%,0603,C25804,0603WAF1002T5E,"Input RC/pull-up/BOOT0 pull-down resistors",$0.01
+"R1-R16,R33",17,10kΩ 1%,0603,C25804,0603WAF1002T5E,"Input RC/pull-up/BOOT0 pull-down resistors",$0.01
 R17-R26,10,330Ω,0603,C23138,0603WAF3300T5E,"LED current limit (green/yellow)",$0.01
 R27,1,120Ω,0603,C22787,0603WAF1200T5E,"RS-485 RX-pair termination (populated)",$0.01
 R28,1,150Ω,0603,C22808,0603WAF1500T5E,"Blue LED current limit",$0.01
 R29-R30,2,5.1kΩ,0603,C23186,0603WAF5101T5E,"USB-C CC1/CC2 pull-down",$0.01
-R31-R32,2,22Ω 1%,0603,C23345,0603WAF220JT5E,"USB D+/D- series resistors",$0.01
+R31-R32,2,22Ω,0603,C23345,0603WAF220JT5E,"USB D+/D- series resistors",$0.01
 C1,1,10µF,0603,C19702,CL10A106KP8NNNC,"MCU VDD bulk decoupling",$0.02
-"C2-C7,C19-C21",16,100nF,0603,C14663,CL10B104KB8NNNC,"Decoupling and RC caps (MCU/RS-485/Schmitt/LDO/12V/input RC)",$0.01
+"C2-C7,C19-C21",9,100nF,0603,C14663,CL10B104KB8NNNC,"Decoupling and RC caps (MCU/RS-485/Schmitt/LDO/12V/input RC)",$0.01
 C15,1,1µF,0603,C15849,CL10A105KB8NNNC,"VDDA decoupling",$0.01
 C17,1,100µF 25V,SMD-6.3x5.4,C4747964,RST100UF25V004,"Bulk 12V electrolytic (SMD)",$0.04
 C18,1,22µF 10V,Tantalum-A,C11366,TAJA226K010RNJ,"LDO output stability (SMD tantalum)",$0.21
@@ -20,7 +20,7 @@ LED1,1,Green,0603,C72043,19-217/GHC-YR1S2/3T,"Power indicator LED",$0.03
 LED2,1,Blue,0603,C72041,19-217/BHC-ZL1M2RY/3T,"Link indicator LED",$0.03
 LED3-LED10,8,Yellow,0603,C72038,19-217/Y2C-CQ2R2L/3T,"Channel state LED",$0.03
 F1,1,3A PTC,1812,C883162,BSMD1812-300-16V,"12V input PTC fuse (16V max, 3A hold)",$0.08
-"SW1,SW2",2,Tactile,SMD,C318884,TS-1187A-B-A-B,"NRST and BOOT0 tactile buttons",$0.05
+SW1-SW2,2,Tactile,SMD,C318884,TS-1187A-B-A-B,"NRST and BOOT0 tactile buttons",$0.05
 "J1,J3",2,2-pos 5.08mm,THT,C71370,WJ2EDGK-5.08-02P-14-00A,"Screw terminals: 12V input and input COM/GND",$0.10
 "J2a,J2b",2,4-pos 5.08mm,THT,C71372,WJ2EDGK-5.08-04P-14-00A,"Screw terminals: CH0-CH3 and CH4-CH7 inputs",$0.15
 J4,1,6-pos 5.08mm,THT,C71374,WJ2EDGK-5.08-06P-14-00A,"Screw terminal: RS485_TX+/TX-/RX+/RX-/GND/SHIELD",$0.22

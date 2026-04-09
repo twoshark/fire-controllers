@@ -6,6 +6,10 @@ license = "MIT OR Apache-2.0"
 publish = false
 description = "Hotline v2 serial protocol: frame encoding/decoding and CRC-8 for fire controller system"
 
+[lib]
+test = false
+bench = false
+
 [features]
 default = []
 defmt = ["dep:defmt"]

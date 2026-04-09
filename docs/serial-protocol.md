@@ -25,6 +25,9 @@ Hotline v2 uses **full-duplex** RS-485.
 - Signals: `TX+`, `TX-`, `RX+`, `RX-`, `GND`, `SHIELD`
 - One 120R termination on each receiver pair
 - One SM712 TVS per differential pair
+- Point-to-point wiring crossover:
+  - Input `TX+/-` -> Output `RX+/-`
+  - Output `TX+/-` -> Input `RX+/-`
 
 No DE/RE firmware bus-turnaround logic is used.
 
@@ -38,6 +41,7 @@ No DE/RE firmware bus-turnaround logic is used.
 
 - `channels` is 8 bits (`bit0=CH0 ... bit7=CH7`)
 - `1` means channel active
+- Frame represents current channel state only (no edge/event history)
 
 ### Heartbeat frame (output -> input)
 

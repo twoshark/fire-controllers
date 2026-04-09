@@ -10,7 +10,9 @@ use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
 use embassy_sync::watch::Watch;
 use embassy_time::{Instant, Ticker, Timer};
 
-use hotline_protocol::{DecoderEvent, FrameDecoder, StateFrame, POLL_INTERVAL_MS};
+use hotline_protocol::{
+    DecoderEvent, FrameDecoder, StateFrame, HEARTBEAT_LOSS_TIMEOUT_MS, POLL_INTERVAL_MS,
+};
 
 use defmt_rtt as _;
 use panic_probe as _;
@@ -135,9 +137,10 @@ type UartRx = embassy_stm32::usart::UartRx<'static, embassy_stm32::mode::Async>;
 async fn heartbeat_monitor(mut rx: UartRx) {
     defmt::info!("heartbeat_monitor: started");
     let mut decoder = FrameDecoder::new();
-    let mut last_hb = Instant::now();
+    let mut last_hb: Option<Instant> = None;
     let mut buf = [0u8; 1];
     let sender = LINK_HEALTHY.sender();
+    let mut link_healthy = false;
 
     loop {
         match embassy_time::with_timeout(
@@ -148,8 +151,7 @@ async fn heartbeat_monitor(mut rx: UartRx) {
         {
             Ok(Ok(())) => match decoder.feed(buf[0]) {
                 DecoderEvent::Heartbeat(hb) => {
-                    last_hb = Instant::now();
-                    sender.send(true);
+                    last_hb = Some(Instant::now());
                     defmt::debug!(
                         "hb: healthy={} failsafe={}",
                         hb.is_healthy(),
@@ -164,11 +166,17 @@ async fn heartbeat_monitor(mut rx: UartRx) {
             Ok(Err(e)) => {
                 defmt::warn!("hb RX err: {:?}", e);
             }
-            Err(_) => {
-                if last_hb.elapsed().as_millis() > 500 {
-                    sender.send(false);
-                }
-            }
+            Err(_) => {}
+        }
+
+        // Evaluate heartbeat age every pass so link health updates even when RX
+        // keeps returning non-heartbeat bytes or transient UART errors.
+        let now_healthy = last_hb
+            .map(|ts| ts.elapsed().as_millis() <= HEARTBEAT_LOSS_TIMEOUT_MS)
+            .unwrap_or(false);
+        if now_healthy != link_healthy {
+            link_healthy = now_healthy;
+            sender.send(link_healthy);
         }
     }
 }

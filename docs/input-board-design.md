@@ -36,6 +36,13 @@ Two SP3485EN devices:
 - Receiver pair has populated 120R termination
 - One SM712 TVS per differential pair
 
+Point-to-point cable crossover at installation (required for full duplex):
+
+- Input `TX+` -> Output `RX+`
+- Input `TX-` -> Output `RX-`
+- Input `RX+` <- Output `TX+`
+- Input `RX-` <- Output `TX-`
+
 ## USB DFU and SWD
 
 - Native USB data:
@@ -47,6 +54,7 @@ Two SP3485EN devices:
 
 BOOT0:
 
+- Net naming follows `PA14-BOOT0` (shared with SWCLK during SWD attach)
 - 10k pulldown keeps normal boot default
 - `SW2` pushes BOOT0 high
 - `SW1` is NRST
@@ -62,6 +70,7 @@ BOOT0:
 
 - Poll digital inputs every 1ms
 - Pack into 8-bit state payload
+- Payload is current-state only (no edge/event counters)
 - Transmit `[0xAA][state][CRC8]`
 - Continuously receive heartbeat frames in parallel
 

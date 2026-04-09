@@ -16,6 +16,13 @@ Target latency remains `<10ms`, with typical low-millisecond behavior.
   - Native USB device support for DFU programming
   - Sufficient flash/SRAM headroom
 
+## BOM sourcing and substitution policy
+
+- Prefer JLCPCB basic parts first for cost and assembly availability.
+- Use extended parts only when no basic part meets the electrical/thermal requirement.
+- Any substitution must preserve function, ratings, footprint compatibility, and protocol timing behavior.
+- Re-verify live LCSC stock for every BOM line before manufacturing release.
+
 ## Communications architecture
 
 ### RS-485

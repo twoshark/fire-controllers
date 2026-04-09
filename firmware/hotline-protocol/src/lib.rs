@@ -22,6 +22,9 @@ pub const COMM_WATCHDOG_TIMEOUT_MS: u64 = 100;
 /// Heartbeat transmission interval in milliseconds.
 pub const HEARTBEAT_INTERVAL_MS: u64 = 100;
 
+/// Maximum allowed age of the latest heartbeat before link is considered unhealthy.
+pub const HEARTBEAT_LOSS_TIMEOUT_MS: u64 = 500;
+
 /// Polling interval in milliseconds.
 pub const POLL_INTERVAL_MS: u64 = 1;
 

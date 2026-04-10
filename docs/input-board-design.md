@@ -38,7 +38,7 @@ Regulator decision for this board:
 Each channel uses RC conditioning and Schmitt cleanup before GPIO read:
 
 ```text
-3V3 -> 10k pull-up -> switch_node -> 10k series -> rc_node -> SN74LVC14A input
+3V3 -> 10k pull-up -> switch_node -> 10k series -> rc_node -> SN74LV14A input
                              |                             |
                            switch                        100nF
                              |                             |
@@ -46,7 +46,7 @@ Each channel uses RC conditioning and Schmitt cleanup before GPIO read:
 ```
 
 - `tau = 10k * 100nF = 1ms`
-- `SN74LVC14A` provides Schmitt-trigger input thresholding
+- `SN74LV14A` provides Schmitt-trigger input thresholding
 - Output is inverted; firmware interprets buffered HIGH as active/pressed
 
 ## RS-485 architecture

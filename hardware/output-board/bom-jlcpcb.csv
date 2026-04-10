@@ -3,7 +3,7 @@ U1,1,STM32G0B1CBT6,LQFP-48,C2847904,STM32G0B1CBT6,"MCU Cortex-M0+ 64MHz 128KB Fl
 "U2A,U2B",2,SP3485EN-L/TR,SOIC-8,C8963,SP3485EN-L/TR,"RS-485 transceiver pair for full-duplex (RX path + TX heartbeat path)",$0.21
 U4,1,AP63203WU-7,TSOT-23-6,C780769,AP63203WU-7,"3.3V buck regulator 2A (12V -> 3.3V)",$0.14
 L1,1,4.7µH,5.0x5.0mm,C2849485,PNLS5020-4R7M,"Buck power inductor for U4 SW node",$0.05
-U5-U6,2,SN74LVC14APWR,TSSOP-14,C7663,SN74LVC14APWR,"Hex Schmitt-trigger inverter (2 pcs for 8 override channels, logic inverted in firmware)",$0.18
+U5-U6,2,SN74LV14APWR,TSSOP-14,C7780,SN74LV14APWR,"Hex Schmitt-trigger inverter (2 pcs for 8 override channels, logic inverted in firmware)",$0.16
 Q1-Q8,8,IRLML6344TRPbF,SOT-23,C53550,IRLML6344TRPbF,"N-Ch MOSFET 30V 5A Rds(on)=37mΩ@2.5V",$0.15
 D1-D9,9,SS34,SMA,C8678,SS34,"SS34 diodes (reverse polarity + flyback)",$0.08
 D18-D19,2,SM712,SOT-23,C521963,SM712,"Asymmetric TVS diode (one per RS-485 pair)",$0.05
@@ -16,7 +16,7 @@ R52,1,120Ω,0603,C22787,0603WAF1200T5E,"RS-485 RX-pair termination (populated)",
 R53-R54,2,22Ω,0603,C23345,0603WAF220JT5E,"USB D+/D- series resistors",$0.01
 R55-R56,2,5.1kΩ,0603,C23186,0603WAF5101T5E,"USB-C CC1/CC2 pull-down",$0.01
 C1,1,10µF,0603,C19702,CL10A106KP8NNNC,"MCU VDD bulk decoupling",$0.02
-"C2-C7,C21",7,100nF,0603,C14663,CL10B104KB8NNNC,"Decoupling and RC caps (MCU/RS-485/Schmitt/12V/override RC)",$0.01
+"C2-C7,C21-C29",15,100nF,0603,C14663,CL10B104KB8NNNC,"Decoupling and override RC caps (MCU/RS-485/Schmitt/12V + 8x override RC + VIN HF bypass)",$0.01
 C20,1,100nF,0603,C14663,CL10B104KB8NNNC,"Buck bootstrap capacitor (U4.BST to U4.SW)",$0.01
 C15,1,1µF,0603,C15849,CL10A105KB8NNNC,"VDDA decoupling",$0.01
 C17,1,470µF 25V,SMD-10x10.5,C2162977,25TZV470M10X10.5,"Bulk 12V electrolytic primary (SMD)",$0.30

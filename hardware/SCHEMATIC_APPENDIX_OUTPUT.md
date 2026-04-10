@@ -79,11 +79,11 @@ Note: power LED is not MCU-driven; wire as always-on from `3V3` through resistor
 | 3 | `OVR_CH6_RAW` |
 | 4 | `OVR_CH7_RAW` |
 
-### `J4` (2-pos, override COM/GND)
+### `J4` (2-pos, override GND/GND)
 
 | Pin | Net |
 | --- | --- |
-| 1 | `OVERRIDE_COM_GND` |
+| 1 | `GND` |
 | 2 | `GND` |
 
 ### `J5a` (4-pos, OUT0..OUT3 switched outputs)
@@ -142,7 +142,7 @@ Note: power LED is not MCU-driven; wire as always-on from `3V3` through resistor
 | Source | Through | Destination |
 | --- | --- | --- |
 | `VIN_12V_IN` (`J1.1`) | board input path | `12V_MAIN` |
-| `12V_MAIN` | `C17` + `C18` bulk | `GND` return |
+| `12V_MAIN` | `C17` + `C18` bulk + `C29` HF bypass | `GND` return |
 | `12V_MAIN` | `U4.VIN` (`AP63203WU-7`) | buck input stage |
 | `U4.SW` | `L1` | `3V3` |
 | `U4.BST` | `C20` to `U4.SW` | bootstrap drive loop |
@@ -176,12 +176,17 @@ Protection devices:
 
 ## 5) Override CH0..CH7 junction map
 
+Schmitt stage pin convention for `U5/U6` (`SN74LV14APWR`):
+
+- `A` pins are inputs (from RC node), `Y` pins are outputs (to `_SENSE` net).
+- Pin map: `1A/1Y=1/2`, `2A/2Y=3/4`, `3A/3Y=5/6`, `4A/4Y=9/8`, `5A/5Y=11/10`, `6A/6Y=13/12`.
+
 Per channel override chain:
 
 ```text
 J3x.OVR_CHn -> OVR_CHn_RAW -> 10k pull-up to 3V3, switch to GND
-              -> 10k series -> RC node with 100nF to GND
-              -> SN74LVC14 output -> OVR_CHn_SENSE (MCU GPIO)
+              -> 10k series -> RC node with channel capacitor C21..C28 to GND
+              -> SN74LV14 A-input -> SN74LV14 Y-output -> OVR_CHn_SENSE (MCU GPIO)
 ```
 
 | Channel | Override connector pin | MCU GPIO |
@@ -194,6 +199,19 @@ J3x.OVR_CHn -> OVR_CHn_RAW -> 10k pull-up to 3V3, switch to GND
 | CH5 | `J3b.2` | `PA7` |
 | CH6 | `J3b.3` | `PB0` |
 | CH7 | `J3b.4` | `PB1` |
+
+Override RC capacitor assignment (output board):
+
+| Channel | RC capacitor |
+| --- | --- |
+| CH0 | `C21` |
+| CH1 | `C22` |
+| CH2 | `C23` |
+| CH3 | `C24` |
+| CH4 | `C25` |
+| CH5 | `C26` |
+| CH6 | `C27` |
+| CH7 | `C28` |
 
 ## 6) Output-channel endpoint map (serial/override to load terminal)
 

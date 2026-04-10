@@ -82,7 +82,7 @@ Both boards now use the same digital front-end style:
 - 10k pull-up
 - 10k series resistor
 - 100nF shunt capacitor
-- Schmitt-trigger inverter stage (`SN74LVC14A`)
+- Schmitt-trigger inverter stage (`SN74LV14A`)
 
 The design uses digital RC + Schmitt conditioning on all input and override channels.
 

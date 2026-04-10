@@ -48,7 +48,7 @@ Per channel:
 Per override channel:
 
 ```text
-3V3 -> 10k pull-up -> switch_node -> 10k series -> rc_node -> SN74LVC14A input
+3V3 -> 10k pull-up -> switch_node -> 10k series -> rc_node -> SN74LV14A input
                              |                             |
                            switch                        100nF
                              |                             |

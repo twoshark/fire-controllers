@@ -11,7 +11,7 @@ Real-time two-board control system:
 - MCU: `STM32G0B1CBT6`
 - USB: native USB DFU on `PA11/PA12`
 - RS-485: two SP3485EN per board (dedicated TX and RX paths)
-- Inputs/overrides: 10k pull-up + 10k series + 100nF + Schmitt (`SN74LVC14APWR`)
+- Inputs/overrides: 10k pull-up + 10k series + 100nF + Schmitt (`SN74LV14APWR`)
 - Debug/recovery: SWD header retained + NRST + BOOT0 button flow
 
 ## Repository layout

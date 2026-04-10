@@ -45,6 +45,23 @@ Do not leave any net undefined in the top-level sheet set. If a net is not expli
 - DFU entry sequence: hold `SW2`, tap `SW1`, release.
 - Never latch BOOT0 HIGH during SWD attach.
 
+### Schmitt inverter convention (`U5`, `U6`)
+
+- Device: `SN74LV14APWR` (hex inverting Schmitt trigger).
+- Gate naming rule is explicit: `A` = input, `Y` = output.
+- Wire rule for all channels:
+  - RC node -> `A` pin
+  - `_SENSE` net -> matching `Y` pin
+- Pin map (TSSOP-14):
+  - `1A` pin 1, `1Y` pin 2
+  - `2A` pin 3, `2Y` pin 4
+  - `3A` pin 5, `3Y` pin 6
+  - `GND` pin 7
+  - `4Y` pin 8, `4A` pin 9
+  - `5Y` pin 10, `5A` pin 11
+  - `6Y` pin 12, `6A` pin 13
+  - `VCC` pin 14
+
 ### RS-485 cable mapping (mandatory)
 
 - Signals: `TX+`, `TX-`, `RX+`, `RX-`, `GND`, `SHIELD`.
@@ -68,7 +85,7 @@ Do not leave any net undefined in the top-level sheet set. If a net is not expli
   - `L1` power inductor from `U4.SW` to `3V3`
   - input bypass on `U4.VIN` (`12V_MAIN` to `GND`):
     - input board: `C6` (HF) with `C17` (bulk)
-    - output board: `C17` + `C18` (bulk), with `C21` (100nF) near `U4.VIN`
+    - output board: `C17` + `C18` (bulk), with `C29` (100nF) near `U4.VIN`
   - bootstrap capacitor from `U4.BST` to `U4.SW`:
     - input board: `C19`
     - output board: `C20`
@@ -89,7 +106,7 @@ Do not leave any net undefined in the top-level sheet set. If a net is not expli
    - `U2A`: TX-only path from `PA9`
    - `U2B`: RX-only path to `PA10` + `R27` (120R) termination on RX pair
 5. Add `D10` and `D11` (`SM712`, one per RS-485 pair) close to `J4` net entry.
-6. Add 8 input RC + Schmitt cells (`R1-R16`, `C20-C21`, `U5/U6`) and map CH0..CH7 to MCU GPIOs.
+6. Add 8 input RC + Schmitt cells (`R1-R16`, `C20-C27`, `U5/U6`) and map CH0..CH7 to MCU GPIOs.
 7. Add status LEDs (`LED1-LED10`) with current-limit resistors (`R17-R28`).
 8. Run ERC and verify against input appendix tables.
 
@@ -107,7 +124,7 @@ All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_INPUT.md`.
    - `U2A`: RX-only from cable to `PA10`
    - `U2B`: TX-only heartbeat from `PA9`
 4. Add RX-pair termination `R52` (120R) and two RS-485 TVS devices (`D18`, `D19`).
-5. Add 8 override RC + Schmitt cells (`R17-R32`, `C20-C21`, `U5/U6`) into CH0..CH7 override GPIOs.
+5. Add 8 override RC + Schmitt cells (`R17-R32`, `C21-C28`, `U5/U6`) into CH0..CH7 override GPIOs.
 6. Add 8 MOSFET output channels (`Q1-Q8`, `R1-R8` gate resistors, `R9-R16` pulldowns, `F1-F8`, `D2-D9` flyback).
 7. Add status LEDs (`LED1-LED10`) with current-limit resistors (`R41-R51`).
 8. Run ERC and verify against output appendix tables.
@@ -171,19 +188,29 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
 
 #### Page 3 - Input conditioning channels (CH0..CH7)
 
-- Place: `J2a`, `J2b`, `J3`, `R1-R16`, channel RC capacitors from `C20-C21`, `U5`, `U6`.
+- Place: `J2a`, `J2b`, `J3`, `R1-R16`, channel RC capacitors `C20-C27`, `U5`, `U6`.
+- Net-label convention (important):
+  - Keep channel frontend wiring local on page 3 (terminal -> RC -> Schmitt input) without extra net labels unless needed for readability.
+  - Use only `IN_CHn_SENSE` as the cross-sheet net label from Schmitt output to MCU input on page 2.
 - Wiring matrix (repeat for n=0..7):
-  - Connector: `J2a` (CH0..CH3) / `J2b` (CH4..CH7) pin n -> `IN_CHn_RAW`
-  - Pull-up resistor (from `R1-R16` set): `IN_CHn_RAW` -> `3V3`
-  - Series resistor (from `R1-R16` set): `IN_CHn_RAW` -> `IN_CHn_RC`
-  - RC capacitor (from `C20-C21` set): `IN_CHn_RC` -> `GND`
-  - Schmitt stage (`U5/U6`): input -> `IN_CHn_RC`; output -> `IN_CHn_SENSE`
+  - Connector: `J2a` (CH0..CH3) / `J2b` (CH4..CH7) channel pin -> local channel node
+  - Pull-up resistor (from `R1-R16` set): local channel node -> `3V3`
+  - Series resistor (from `R1-R16` set): local channel node -> local RC node
+  - RC capacitor (from `C20-C27` set): local RC node -> `GND`
+  - Schmitt stage (`U5/U6`): `A` input <- local RC node; `Y` output -> `IN_CHn_SENSE`
   - MCU: `IN_CHn_SENSE` -> GPIO per appendix table
-  - Common: `J3.1` -> `INPUT_COM_GND`; `J3.2` -> `GND`
+  - Common: `J3.1` -> `GND`; `J3.2` -> `GND`
+- Concrete example (CH0):
+  - `J2a.1` -> local CH0 input node
+  - local CH0 input node -> pull-up resistor to `3V3`
+  - local CH0 input node -> series resistor -> local CH0 RC node
+  - local CH0 RC node -> RC capacitor -> `GND`
+  - local CH0 RC node -> `U5` or `U6` `xA` pin; corresponding `xY` pin net label = `IN_CH0_SENSE`
+  - `IN_CH0_SENSE` -> `U1.PA0`
 - Verify:
   - CH0..CH7 topology is identical.
   - Channel connector-to-GPIO mapping matches appendix table.
-  - `INPUT_COM_GND` on `J3.1` is tied to board `GND` strategy per appendix.
+  - `J3.1` and `J3.2` are both `GND` (same electrical net).
 
 #### Page 4 - RS-485 full duplex
 
@@ -246,11 +273,12 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
 
 #### Page 1 - Power entry, bulk rail, and 3V3 buck
 
-- Place: `J1`, `C17`, `C18`, `U4`, `L1`, `C20`, `C19`.
+- Place: `J1`, `C17`, `C18`, `C29`, `U4`, `L1`, `C20`, `C19`.
 - Wiring matrix:
   - `J1.1` -> `VIN_12V_IN` -> `12V_MAIN`; `J1.2` -> `GND`
   - `C17`: `+` -> `12V_MAIN`; `-` -> `GND`
   - `C18`: `+` -> `12V_MAIN`; `-` -> `GND`
+  - `C29`: one side -> `12V_MAIN` near `U4.VIN`; other side -> `GND`
   - `U4` (`AP63203WU-7`): `VIN` -> `12V_MAIN`; `GND` -> `GND`; `SW` -> `L1` + `C20`; `BST` -> `C20`
   - `C20` (bootstrap): one side -> `U4.BST`; other side -> `U4.SW`
   - `L1`: one side -> `U4.SW`; other side -> `3V3`
@@ -284,18 +312,28 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
 
 #### Page 3 - Override conditioning channels (OVR0..OVR7)
 
-- Place: `J3a`, `J3b`, `J4`, RC cells (`R17-R32`, override RC capacitors in `C20-C21` group), `U5`, `U6`.
+- Place: `J3a`, `J3b`, `J4`, RC cells (`R17-R32`, override RC capacitors `C21-C28`), `U5`, `U6`.
+- Net-label convention (important):
+  - Keep override frontend wiring local on page 3 (terminal -> RC -> Schmitt input) without extra net labels unless needed for readability.
+  - Use only `OVR_CHn_SENSE` as the cross-sheet net label from Schmitt output to MCU input on page 2.
 - Wiring matrix (repeat for n=0..7):
-  - Connector: `J3a` (OVR0..OVR3) / `J3b` (OVR4..OVR7) pin n -> `OVR_CHn_RAW`
-  - Pull-up resistor (from `R17-R32` set): `OVR_CHn_RAW` -> `3V3`
-  - Series resistor (from `R17-R32` set): `OVR_CHn_RAW` -> `OVR_CHn_RC`
-  - RC capacitor (from `C20-C21` set): `OVR_CHn_RC` -> `GND`
-  - Schmitt stage (`U5/U6`): input -> `OVR_CHn_RC`; output -> `OVR_CHn_SENSE`
+  - Connector: `J3a` (OVR0..OVR3) / `J3b` (OVR4..OVR7) channel pin -> local override node
+  - Pull-up resistor (from `R17-R32` set): local override node -> `3V3`
+  - Series resistor (from `R17-R32` set): local override node -> local RC node
+  - RC capacitor (from `C21-C28` set): local RC node -> `GND`
+  - Schmitt stage (`U5/U6`): `A` input <- local RC node; `Y` output -> `OVR_CHn_SENSE`
   - MCU: `OVR_CHn_SENSE` -> GPIO per appendix table
-  - Common: `J4.1` -> `OVERRIDE_COM_GND`; `J4.2` -> `GND`
+  - Common: `J4.1` -> `GND`; `J4.2` -> `GND`
+- Concrete example (OVR0):
+  - `J3a.1` -> local OVR0 input node
+  - local OVR0 input node -> pull-up resistor to `3V3`
+  - local OVR0 input node -> series resistor -> local OVR0 RC node
+  - local OVR0 RC node -> RC capacitor -> `GND`
+  - local OVR0 RC node -> `U5` or `U6` `xA` pin; corresponding `xY` pin net label = `OVR_CH0_SENSE`
+  - `OVR_CH0_SENSE` -> `U1.PA0`
 - Verify:
   - Channel-to-GPIO map matches appendix (`PA0/PA1/PA4/PA5/PA6/PA7/PB0/PB1`).
-  - `OVERRIDE_COM_GND` on `J4.1` follows ground mapping in appendix.
+  - `J4.1` and `J4.2` are both `GND` (same electrical net).
 
 #### Page 4 - RS-485 full duplex
 

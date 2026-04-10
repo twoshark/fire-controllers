@@ -61,11 +61,11 @@ Note: power LED is not MCU-driven; wire as always-on with `3V3 -> R25 -> LED1 ->
 | 3 | `IN_CH6_RAW` |
 | 4 | `IN_CH7_RAW` |
 
-### `J3` (2-pos, input COM/GND)
+### `J3` (2-pos, input GND/GND)
 
 | Pin | Net |
 | --- | --- |
-| 1 | `INPUT_COM_GND` |
+| 1 | `GND` |
 | 2 | `GND` |
 
 ### `J4` (6-pos, RS-485 terminal)
@@ -145,12 +145,17 @@ Protection devices:
 
 ## 5) CH0..CH7 net/junction map (input to protocol)
 
+Schmitt stage pin convention for `U5/U6` (`SN74LV14APWR`):
+
+- `A` pins are inputs (from RC node), `Y` pins are outputs (to `_SENSE` net).
+- Pin map: `1A/1Y=1/2`, `2A/2Y=3/4`, `3A/3Y=5/6`, `4A/4Y=9/8`, `5A/5Y=11/10`, `6A/6Y=13/12`.
+
 Per channel signal chain:
 
 ```text
 J2x.CHn -> IN_CHn_RAW -> 10k pull-up to 3V3, switch to GND
-          -> 10k series -> RC node with 100nF to GND
-          -> SN74LVC14 output -> IN_CHn_SENSE (MCU GPIO)
+          -> 10k series -> RC node with channel capacitor C20..C27 to GND
+          -> SN74LV14 A-input -> SN74LV14 Y-output -> IN_CHn_SENSE (MCU GPIO)
           -> protocol bit n in [0xAA][channels][CRC8]
 ```
 
@@ -164,6 +169,19 @@ J2x.CHn -> IN_CHn_RAW -> 10k pull-up to 3V3, switch to GND
 | CH5 | `J2b.2` | `PA7` | bit5 |
 | CH6 | `J2b.3` | `PB0` | bit6 |
 | CH7 | `J2b.4` | `PB1` | bit7 |
+
+Input RC capacitor assignment (input board):
+
+| Channel | RC capacitor |
+| --- | --- |
+| CH0 | `C20` |
+| CH1 | `C21` |
+| CH2 | `C22` |
+| CH3 | `C23` |
+| CH4 | `C24` |
+| CH5 | `C25` |
+| CH6 | `C26` |
+| CH7 | `C27` |
 
 ## 6) LED endpoint map (input board)
 

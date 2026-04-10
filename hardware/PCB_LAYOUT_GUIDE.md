@@ -125,7 +125,7 @@ Implementation details (pair ordering and connector pin numbers) are in the boar
 Per-channel block:
 
 - Place `R_pullup`, `R_series`, and `C` as a compact repeated cell.
-- Place Schmitt ICs (`U5/U6`, SN74LVC14A) near MCU-side routing transition.
+- Place Schmitt ICs (`U5/U6`, SN74LV14A) near MCU-side routing transition.
 - Keep channel routing topologically identical across channels where possible.
 - Route external switch return currents from `IN_CHn_RAW`/`OVR_CHn_RAW` channel networks to ground without long shared narrow bottlenecks.
 

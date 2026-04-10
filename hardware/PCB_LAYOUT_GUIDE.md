@@ -24,15 +24,15 @@ This top-level guide defines common constraints. Appendix files carry board-spec
 
 ## 1) Placement order (high-confidence workflow)
 
-1. Place connectors and mounting holes (mechanical constraints first).
-2. Place power entry/protection parts and bulk capacitors.
-3. Place MCU and local decoupling.
-4. Place RS-485 transceivers + termination + TVS near RS-485 terminal.
-5. Place USB connector + D+/D- series resistors near MCU pins.
-6. Place Schmitt input conditioning channels as repeated blocks.
+1. Place connectors (`Jx`) and mounting holes (mechanical constraints first).
+2. Place power entry/protection parts and bulk capacitors (`D1`, `F1`, `C17`, `C18`, and board-specific input HF caps).
+3. Place MCU (`U1`) and local decoupling (`C1`, `C2`, `C15` + per-IC 100nF caps).
+4. Place RS-485 transceivers (`U2A`, `U2B`) + termination (`R27` input / `R52` output) + TVS (`D10/D11` input, `D18/D19` output) near RS-485 terminal (`J4` input / `J2` output).
+5. Place USB connector (`J5` input / `J7` output) + D+/D- series resistors (`R31/R32` input, `R53/R54` output) near MCU pins.
+6. Place Schmitt input conditioning channels (`U5/U6` with board-specific `R/C` channel networks) as repeated blocks.
 7. Place output MOSFET/PTC/flyback blocks (output board).
-8. Place status LED block along one enclosure-visible edge.
-9. Place SWD/NRST/BOOT0 where probe/tool access is easy.
+8. Place status LED block (`LED1..LED10` + current-limit resistor banks) along one enclosure-visible edge.
+9. Place SWD/NRST/BOOT0 hardware (`J6` input / `J8` output, `SW1`, `SW2`) where probe/tool access is easy.
 
 ## 2) Layer stack and trace guidance (design choice lock)
 
@@ -54,8 +54,8 @@ For release, lock one stackup per board in the appendix and keep all impedance c
 
 - Keep the 12V entry path compact: `J1 -> D1 -> F1 -> bulk/HF caps`.
 - Place `C17` and `C6` adjacent to the 12V entry node.
-- Place buck stage (`U4`, `L1`, bootstrap cap, output cap) as one tight cluster.
-- Keep the buck hot loop (`VIN cap -> U4 VIN/GND -> return`) and switch loop (`U4 SW -> L1 -> Cout -> GND -> U4`) as short as possible.
+- Place buck stage (`U4`, `L1`, `C19` bootstrap, `C18` output bulk) as one tight cluster.
+- Keep the buck hot loop (`C6/C17 -> U4 VIN/GND -> return`) and switch loop (`U4 SW -> L1 -> C18 -> GND -> U4`) as short as possible.
 - Keep the `SW` copper island compact and do not route sensitive traces under/near the switch node.
 
 ### Output board
@@ -90,14 +90,14 @@ Treat these as minima. If enclosure temperature or duty-cycle analysis indicates
 - Place each 100nF decoupler at its IC supply pin with very short loop to GND.
 - Keep VREF/analog decoupling traces short and quiet.
 - Keep BOOT0 pulldown physically close to MCU pin.
-- Keep NRST network close to MCU NRST pin and SWD header route short.
+- Keep NRST network (`SW1` + `NRST` net to `J6/J8`) close to MCU NRST pin with short SWD routing.
 
 ## 5) RS-485 full-duplex layout
 
-- Place both SP3485EN parts close to the RS-485 terminal connector.
+- Place both SP3485EN parts (`U2A`, `U2B`) close to the RS-485 terminal connector (`J4` input / `J2` output).
 - Keep each differential pair (`TX+/-`, `RX+/-`) tightly coupled and length-matched within each pair.
-- Place 120R termination directly across receiver A/B pins.
-- Place SM712 as close as practical to connector entry on each pair.
+- Place 120R termination (`R27` input / `R52` output) directly across receiver A/B pins.
+- Place SM712 TVS (`D10/D11` input, `D18/D19` output) as close as practical to connector entry on each pair.
 - Keep pair reference over continuous ground; avoid crossing plane gaps.
 
 Implementation details (pair ordering and connector pin numbers) are in the board appendices.
@@ -105,7 +105,7 @@ Implementation details (pair ordering and connector pin numbers) are in the boar
 ## 6) USB layout
 
 - Route PA11/PA12 to USB connector as a coupled differential pair.
-- Place 22R D+/D- resistors near MCU pins.
+- Place 22R D+/D- resistors (`R31/R32` input, `R53/R54` output) near MCU pins.
 - Keep noisy switching nodes (MOSFET drains, PTC branches) away from USB pair.
 
 ### USB physical constraints (FS USB)
@@ -125,14 +125,14 @@ Implementation details (pair ordering and connector pin numbers) are in the boar
 Per-channel block:
 
 - Place `R_pullup`, `R_series`, and `C` as a compact repeated cell.
-- Place Schmitt ICs (`SN74LVC14A`) near MCU-side routing transition.
+- Place Schmitt ICs (`U5/U6`, SN74LVC14A) near MCU-side routing transition.
 - Keep channel routing topologically identical across channels where possible.
-- Route switch return currents to ground without long shared narrow bottlenecks.
+- Route external switch return currents from `IN_CHn_RAW`/`OVR_CHn_RAW` channel networks to ground without long shared narrow bottlenecks.
 
 ## 8) Output stage (output board)
 
 - Keep each gate loop short (`MCU -> R_gate -> MOSFET gate -> R_pd -> GND`).
-- Place flyback diode physically close to load switching node and 12V rail tie point.
+- Place each flyback diode (`D2..D9`) physically close to its load switching node and 12V rail tie point.
 - Separate high di/dt output-current loops from MCU/USB/RS-485 regions.
 
 ### Thermal guidance (output stage + buck)
@@ -141,7 +141,7 @@ Per-channel block:
 - Keep PTCs thermally separated from each other and from MOSFET bodies (target >=3 mm edge-to-edge) to reduce thermal coupling/nuisance trips.
 - Avoid placing temperature-sensitive logic components in the hot corridor formed by PTC + MOSFET rows.
 - Keep buck power-stage thermal spreading on `U4` GND pad/return copper with dense vias to the opposite layer.
-- Keep inductor and output capacitor close to `U4` to minimize ripple current loop heating and EMI.
+- Keep inductor (`L1`) and output capacitor (`C18` input board / `C19` output board) close to `U4` to minimize ripple current loop heating and EMI.
 - If measured buck case/inductor temperature rise is high in enclosure testing, increase copper area and airflow margin before release.
 
 ## 9) Grounding and return paths
@@ -194,12 +194,12 @@ Use the appendices to remove ambiguity during actual layout:
 ## 12) Pre-release layout checklist
 
 - [ ] Power-entry polarity/protection path matches schematic.
-- [ ] Every IC has local decoupling placed and routed.
-- [ ] RS-485 TVS + termination are on the correct pair and close enough.
+- [ ] Every IC has local decoupling placed and routed (`C1`, `C2`, `C15` + all per-IC 100nF decouplers).
+- [ ] RS-485 TVS (`D10/D11` input, `D18/D19` output) + termination (`R27` input, `R52` output) are on the correct pair and close enough.
 - [ ] USB pair is short, coupled, and clear of noisy nodes.
-- [ ] USB ESD device is within 5 mm of connector and shield grounding policy is implemented.
-- [ ] BOOT0 defaults LOW and DFU button wiring is correct.
-- [ ] SWD header pinout/orientation matches documentation.
+- [ ] USB ESD device is within 5 mm of connector (`J5` input / `J7` output) and shield grounding policy is implemented.
+- [ ] BOOT0 defaults LOW and DFU button wiring (`SW2` + `SW1`) is correct.
+- [ ] SWD header pinout/orientation (`J6` input / `J8` output) matches documentation.
 - [ ] Output current paths meet quantified width/via targets for peak current.
 - [ ] Thermal review completed for MOSFET/PTC row and buck power stage (`U4` + `L1`).
 - [ ] RS-485 shield/chassis entry bond and CHASSIS-GND coupling are implemented per policy.

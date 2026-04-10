@@ -31,7 +31,8 @@ This appendix is the pin/net/junction reference for `hardware/SCHEMATIC_GUIDE.md
 | `PB8` | Out | `LED_CH7_N` | CH7 LED cathode (active low) |
 | `PB9` | Out | `LED_LINK_N` | Link LED cathode (active low) |
 
-Note: power LED is not MCU-driven; wire as always-on from `3V3` through resistor to LED.
+Note: power LED is not MCU-driven; wire as always-on with `3V3 -> R25 -> LED1 -> GND`.
+`R25` uses the 330R BOM line (`C23138`, `0603WAF3300T5E`).
 
 ## 2) Connector pin map (input board)
 
@@ -180,6 +181,12 @@ All status/channel LEDs are active-low outputs from MCU.
 | CH7 | `PB8` |
 | LINK | `PB9` |
 | POWER | Always-on from `3V3` |
+
+LED resistor references (input board):
+
+- `R25`: POWER LED series resistor (330R, LCSC `C23138`)
+- `R28`: LINK LED series resistor (150R, LCSC `C22808`)
+- Remaining channel LED series resistors come from `R17-R26` 330R bank.
 
 ## 7) Cable crossover map (input side view)
 

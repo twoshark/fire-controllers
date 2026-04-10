@@ -3,10 +3,10 @@
 This is the assembly-executable schematic workflow for the current architecture:
 
 - `STM32G0B1CBT6` on both boards
-- Full-duplex RS-485 (2x transceivers per board)
-- Native USB on `PA11/PA12`
-- RC + Schmitt digital conditioning for all switch inputs
-- SWD + `PA14-BOOT0` + NRST recovery path
+- Full-duplex RS-485 (`U2A` + `U2B` transceivers on each board)
+- Native USB on `PA11/PA12` via `J5` (input) / `J7` (output)
+- RC + Schmitt digital conditioning for all switch inputs (`U5`/`U6`)
+- SWD + `PA14-BOOT0` + NRST recovery path (`SW1`, `SW2`, `J6`/`J8`)
 
 Use this file as the build sequence, then use the appendices for full pin/net/junction tables.
 
@@ -33,8 +33,8 @@ Do not leave any net undefined in the top-level sheet set. If a net is not expli
   - `PA12` -> `USB_DP`
 - SWD nets:
   - `PA13` -> `SWDIO`
-  - `PA14-BOOT0` -> `SWCLK` / BOOT0 button net
-  - `NRST` -> reset button + SWD header
+  - `PA14-BOOT0` -> `SWCLK` / BOOT0 button net (`SW2`)
+  - `NRST` -> reset button (`SW1`) + SWD header (`J6` on input, `J8` on output)
 - `PA14-BOOT0` is always named exactly `PA14-BOOT0`.
 
 ### BOOT0 and NRST behavior
@@ -66,9 +66,15 @@ Do not leave any net undefined in the top-level sheet set. If a net is not expli
 - Required buck support network (minimum):
   - `U4` = `AP63203WU-7` (or validated equivalent)
   - `L1` power inductor from `U4.SW` to `3V3`
-  - input bypass on `U4.VIN` (`12V_MAIN` to `GND`) using local HF ceramic + nearby bulk
-  - bootstrap capacitor from `U4.BST` to `U4.SW`
-  - output bulk capacitor on `3V3` near `L1`/`U4`
+  - input bypass on `U4.VIN` (`12V_MAIN` to `GND`):
+    - input board: `C6` (HF) with `C17` (bulk)
+    - output board: `C17` + `C18` (bulk), with `C21` (100nF) near `U4.VIN`
+  - bootstrap capacitor from `U4.BST` to `U4.SW`:
+    - input board: `C19`
+    - output board: `C20`
+  - output bulk capacitor on `3V3` near `L1`/`U4`:
+    - input board: `C18`
+    - output board: `C19`
 
 ## 2) Input-board schematic capture sequence
 
@@ -76,15 +82,15 @@ Do not leave any net undefined in the top-level sheet set. If a net is not expli
 2. Draw power path: `J1(12V)` -> `D1(SS34)` -> `F1(PTC)` -> `12V_MAIN`, then buck stage:
    - `12V_MAIN` -> `U4.VIN`
    - `U4.SW` -> `L1` -> `3V3`
-   - `U4.BST` capacitor to `SW`
-   - local input/output capacitors tied to low-impedance `GND`
-3. Add USB-C port and SWD header nets.
+   - `U4.BST` -> `C19` -> `U4.SW`
+   - `C6` + `C17` on input side and `C18` on `3V3`, all to low-impedance `GND`
+3. Add USB-C debug nets on `J5` with `R31`/`R32` (D+/D- series) and `R29`/`R30` (CC pull-down), then wire SWD header `J6`.
 4. Add dual SP3485 transceivers:
    - `U2A`: TX-only path from `PA9`
-   - `U2B`: RX-only path to `PA10` + 120R termination on RX pair
-5. Add 2x SM712 (one per pair) close to connector net entry.
-6. Add 8 input RC + Schmitt cells and map CH0..CH7 to MCU GPIOs.
-7. Add 8 channel LEDs + power LED + link LED.
+   - `U2B`: RX-only path to `PA10` + `R27` (120R) termination on RX pair
+5. Add `D10` and `D11` (`SM712`, one per RS-485 pair) close to `J4` net entry.
+6. Add 8 input RC + Schmitt cells (`R1-R16`, `C20-C21`, `U5/U6`) and map CH0..CH7 to MCU GPIOs.
+7. Add status LEDs (`LED1-LED10`) with current-limit resistors (`R17-R28`).
 8. Run ERC and verify against input appendix tables.
 
 All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_INPUT.md`.
@@ -95,15 +101,15 @@ All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_INPUT.md`.
 2. Draw `12V_MAIN` input and buck-based `3V3` generation path:
    - `12V_MAIN` -> `U4.VIN`
    - `U4.SW` -> `L1` -> `3V3`
-   - `U4.BST` capacitor to `SW`
-   - local input/output capacitors tied to low-impedance `GND`
+   - `U4.BST` -> `C20` -> `U4.SW`
+   - `C17` + `C18` on input side and `C19` on `3V3`, all to low-impedance `GND`
 3. Add dual SP3485 transceivers:
    - `U2A`: RX-only from cable to `PA10`
    - `U2B`: TX-only heartbeat from `PA9`
-4. Add RX-pair 120R termination and two SM712 protection devices.
-5. Add 8 override RC + Schmitt cells into CH0..CH7 override GPIOs.
-6. Add 8 MOSFET output channels (gate resistor, pulldown, PTC, flyback).
-7. Add 8 output LEDs + power LED + link LED.
+4. Add RX-pair termination `R52` (120R) and two RS-485 TVS devices (`D18`, `D19`).
+5. Add 8 override RC + Schmitt cells (`R17-R32`, `C20-C21`, `U5/U6`) into CH0..CH7 override GPIOs.
+6. Add 8 MOSFET output channels (`Q1-Q8`, `R1-R8` gate resistors, `R9-R16` pulldowns, `F1-F8`, `D2-D9` flyback).
+7. Add status LEDs (`LED1-LED10`) with current-limit resistors (`R41-R51`).
 8. Run ERC and verify against output appendix tables.
 
 All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`.
@@ -118,7 +124,247 @@ All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`.
 - RS-485 TX and RX pairs are separated and correctly crossed across the cable.
 - SWD pinout, NRST, and BOOT0 controls are accessible and labeled.
 
-## 5) Layout handoff
+## 5) EasyEDA page/sheet structure (restored format)
+
+Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is deterministic and reviewable. Keep the sheet names and intent aligned across both boards.
+
+### Input board page map
+
+#### Page 1 - Power entry and 3V3 buck
+
+- Place: `J1`, `D1`, `F1`, `C17`, `C6`, `U4`, `L1`, `C18`, `C19`.
+- Wiring matrix:
+  - `J1.1` -> `VIN_12V_IN`; `J1.2` -> `GND`
+  - `D1`: anode -> `VIN_12V_IN`; cathode -> `F1` input node
+  - `F1`: input -> `D1` cathode node; output -> `12V_MAIN`
+  - `C17`: `+` -> `12V_MAIN`; `-` -> `GND`
+  - `C6`: one side -> `12V_MAIN`; other side -> `GND`
+  - `U4` (`AP63203WU-7`): `VIN` -> `12V_MAIN`; `GND` -> `GND`; `SW` -> `L1` + `C19`; `BST` -> `C19`
+  - `C19` (bootstrap): one side -> `U4.BST`; other side -> `U4.SW`
+  - `L1`: one side -> `U4.SW`; other side -> `3V3`
+  - `C18`: `+` -> `3V3`; `-` -> `GND`
+- Verify:
+  - `12V_MAIN` exists only after `D1` + `F1`.
+  - `C19` is only on `BST`/`SW` loop (not tied to `3V3` directly).
+  - `3V3` does not bypass `L1`.
+
+#### Page 2 - MCU core + reset/debug
+
+- Place: `U1`, `C1`, `C15`, `SW1`, `SW2`, `R33`, `J6`.
+- Wiring matrix:
+  - `U1` power pins: `VDD/VDDA/VBAT` -> `3V3`; `VSS/VSSA` -> `GND`
+  - `U1.NRST` net -> `SW1` + `J6.10`
+  - `U1.PA14-BOOT0` net -> `SW2` + `R33` + `J6.4`
+  - `U1.PA13` -> `SWDIO` -> `J6.2`
+  - `U1.PA11` -> `USB_DM`; `U1.PA12` -> `USB_DP`
+  - `C1`: one side -> `3V3`; other side -> `GND`
+  - `C15`: one side -> `3V3` (VDDA/VREF domain); other side -> `GND`
+  - `R33` (10k): one side -> `PA14-BOOT0`; other side -> `GND`
+  - `SW1` (NRST): one side -> `NRST`; other side -> `GND`
+  - `SW2` (BOOT0): one side -> `PA14-BOOT0`; other side -> `3V3`
+  - `J6`: pins wired per appendix (`1:VTREF_3V3`, `2:SWDIO`, `3/5/9:GND`, `4:PA14-BOOT0`, `10:NRST`)
+- Verify:
+  - `R33` (10k) pulls `PA14-BOOT0` LOW by default.
+  - `SW1` only asserts `NRST` LOW when pressed.
+  - `SW2` only drives BOOT0 path while pressed (no latch path).
+  - `J6` pin mapping matches appendix exactly.
+
+#### Page 3 - Input conditioning channels (CH0..CH7)
+
+- Place: `J2a`, `J2b`, `J3`, `R1-R16`, channel RC capacitors from `C20-C21`, `U5`, `U6`.
+- Wiring matrix (repeat for n=0..7):
+  - Connector: `J2a` (CH0..CH3) / `J2b` (CH4..CH7) pin n -> `IN_CHn_RAW`
+  - Pull-up resistor (from `R1-R16` set): `IN_CHn_RAW` -> `3V3`
+  - Series resistor (from `R1-R16` set): `IN_CHn_RAW` -> `IN_CHn_RC`
+  - RC capacitor (from `C20-C21` set): `IN_CHn_RC` -> `GND`
+  - Schmitt stage (`U5/U6`): input -> `IN_CHn_RC`; output -> `IN_CHn_SENSE`
+  - MCU: `IN_CHn_SENSE` -> GPIO per appendix table
+  - Common: `J3.1` -> `INPUT_COM_GND`; `J3.2` -> `GND`
+- Verify:
+  - CH0..CH7 topology is identical.
+  - Channel connector-to-GPIO mapping matches appendix table.
+  - `INPUT_COM_GND` on `J3.1` is tied to board `GND` strategy per appendix.
+
+#### Page 4 - RS-485 full duplex
+
+- Place: `J4`, `U2A`, `U2B`, `R27`, `D10`, `D11`.
+- Wiring matrix:
+  - `J4.1` -> `RS485_TX+`; `J4.2` -> `RS485_TX-`; `J4.3` -> `RS485_RX+`; `J4.4` -> `RS485_RX-`; `J4.5` -> `GND`; `J4.6` -> `SHIELD`
+  - `U2A` (TX transceiver): `DI` <- `PA9`; `A/B` -> `RS485_TX+/-`; `DE` -> `3V3`; `/RE` -> `3V3`; `VCC` -> `3V3`; `GND` -> `GND`
+  - `U2B` (RX transceiver): `A/B` <- `RS485_RX+/-`; `RO` -> `PA10`; `DE` -> `GND`; `/RE` -> `GND`; `VCC` -> `3V3`; `GND` -> `GND`
+  - `R27` (120R): across `RS485_RX+` and `RS485_RX-`
+  - `D10` (`SM712`): across/into TX pair clamp return (`RS485_TX+/-` to local return)
+  - `D11` (`SM712`): across/into RX pair clamp return (`RS485_RX+/-` to local return)
+- Verify:
+  - `U2A` enable pins are fixed TX state and `U2B` enable pins fixed RX state per appendix.
+  - `D10` clamps TX pair; `D11` clamps RX pair.
+  - No accidental short between TX and RX pair nets.
+
+#### Page 5 - USB-C debug interface
+
+- Place: `J5`, `R31`, `R32`, `R29`, `R30`.
+- Wiring matrix:
+  - `J5.D+` -> `R31` -> `USB_DP` -> `U1.PA12`
+  - `J5.D-` -> `R32` -> `USB_DM` -> `U1.PA11`
+  - `J5.CC1` -> `R29` -> `GND`
+  - `J5.CC2` -> `R30` -> `GND`
+  - `J5.GND/shell` -> `GND` (and chassis policy per PCB appendix)
+- Verify:
+  - `R31`/`R32` are only in series with D+/D-.
+  - `R29`/`R30` are only CC pull-downs.
+  - `USB_DP`/`USB_DM` are not connected to any non-USB function.
+
+#### Page 6 - Status LEDs
+
+- Place: `LED1..LED10`, `R17-R28`.
+- Wiring matrix:
+  - POWER LED: `3V3` -> `R25` (330R) -> `LED1` -> `GND` (always on)
+  - LINK LED: `3V3` -> `R28` -> `LED2` -> `LED_LINK_N` (`PB9`, active-low sink)
+  - CH LEDs (`LED3-LED10`): each channel LED uses one 330R resistor from `R17-R26` group and sinks to its channel GPIO (`PB2`, `PA15`, `PB3`, `PB4`, `PB5`, `PB6`, `PB7`, `PB8`)
+- Verify:
+  - CH LEDs map to `PB2`, `PA15`, `PB3`, `PB4`, `PB5`, `PB6`, `PB7`, `PB8`.
+  - LINK LED maps to `PB9`.
+  - Current-limit values match BOM (`R17-R26` 330R, `R28` 150R).
+
+#### Page 7 - SWD header breakout
+
+- Place: `J6`.
+- Wiring matrix:
+  - `J6.1` -> `VTREF_3V3`
+  - `J6.2` -> `SWDIO` (`PA13`)
+  - `J6.3` -> `GND`
+  - `J6.4` -> `PA14-BOOT0` (`SWCLK`)
+  - `J6.5` -> `GND`
+  - `J6.9` -> `GND`
+  - `J6.10` -> `NRST`
+  - `J6.6/J6.7/J6.8` remain NC per appendix
+- Verify:
+  - Pin 1 = `VTREF_3V3`, pin 2 = `SWDIO`, pin 4 = `PA14-BOOT0`, pin 10 = `NRST`.
+  - `SWO_NC` remains NC.
+
+### Output board page map
+
+#### Page 1 - Power entry, bulk rail, and 3V3 buck
+
+- Place: `J1`, `C17`, `C18`, `U4`, `L1`, `C20`, `C19`.
+- Wiring matrix:
+  - `J1.1` -> `VIN_12V_IN` -> `12V_MAIN`; `J1.2` -> `GND`
+  - `C17`: `+` -> `12V_MAIN`; `-` -> `GND`
+  - `C18`: `+` -> `12V_MAIN`; `-` -> `GND`
+  - `U4` (`AP63203WU-7`): `VIN` -> `12V_MAIN`; `GND` -> `GND`; `SW` -> `L1` + `C20`; `BST` -> `C20`
+  - `C20` (bootstrap): one side -> `U4.BST`; other side -> `U4.SW`
+  - `L1`: one side -> `U4.SW`; other side -> `3V3`
+  - `C19`: `+` -> `3V3`; `-` -> `GND`
+  - `12V_MAIN` -> `F1..F8` channel feed network
+- Verify:
+  - `C20` is only `BST` to `SW`.
+  - `C19` is only on `3V3` bulk role.
+  - `12V_MAIN` branch to `F1..F8` is separate from low-current logic routing.
+
+#### Page 2 - MCU core + reset/debug
+
+- Place: `U1`, `C1`, `C15`, local 100nF decouplers from `C2-C7` group, `SW1`, `SW2`, `R57`, `J8`.
+- Wiring matrix:
+  - `U1` power pins: `VDD/VDDA/VBAT` -> `3V3`; `VSS/VSSA` -> `GND`
+  - `U1.PA9` -> `USART1_TX` -> `U2B.DI`
+  - `U1.PA10` <- `USART1_RX` <- `U2A.RO`
+  - `U1.PA11` -> `USB_DM`; `U1.PA12` -> `USB_DP`
+  - `U1.NRST` net -> `SW1` + `J8.10`
+  - `U1.PA14-BOOT0` net -> `SW2` + `R57` + `J8.4`
+  - `C1`: one side -> `3V3`; other side -> `GND`
+  - `C15`: one side -> `3V3` (VDDA/VREF domain); other side -> `GND`
+  - `R57` (10k): one side -> `PA14-BOOT0`; other side -> `GND`
+  - `SW1`: one side -> `NRST`; other side -> `GND`
+  - `SW2`: one side -> `PA14-BOOT0`; other side -> `3V3`
+  - `J8`: pins wired per appendix (`1:VTREF_3V3`, `2:SWDIO`, `3/5/9:GND`, `4:PA14-BOOT0`, `10:NRST`)
+- Verify:
+  - `R57` (10k) pulls `PA14-BOOT0` LOW by default.
+  - `SW1` resets `NRST`; `SW2` provides BOOT0 override.
+  - `J8` pin mapping matches appendix exactly.
+
+#### Page 3 - Override conditioning channels (OVR0..OVR7)
+
+- Place: `J3a`, `J3b`, `J4`, RC cells (`R17-R32`, override RC capacitors in `C20-C21` group), `U5`, `U6`.
+- Wiring matrix (repeat for n=0..7):
+  - Connector: `J3a` (OVR0..OVR3) / `J3b` (OVR4..OVR7) pin n -> `OVR_CHn_RAW`
+  - Pull-up resistor (from `R17-R32` set): `OVR_CHn_RAW` -> `3V3`
+  - Series resistor (from `R17-R32` set): `OVR_CHn_RAW` -> `OVR_CHn_RC`
+  - RC capacitor (from `C20-C21` set): `OVR_CHn_RC` -> `GND`
+  - Schmitt stage (`U5/U6`): input -> `OVR_CHn_RC`; output -> `OVR_CHn_SENSE`
+  - MCU: `OVR_CHn_SENSE` -> GPIO per appendix table
+  - Common: `J4.1` -> `OVERRIDE_COM_GND`; `J4.2` -> `GND`
+- Verify:
+  - Channel-to-GPIO map matches appendix (`PA0/PA1/PA4/PA5/PA6/PA7/PB0/PB1`).
+  - `OVERRIDE_COM_GND` on `J4.1` follows ground mapping in appendix.
+
+#### Page 4 - RS-485 full duplex
+
+- Place: `J2`, `U2A`, `U2B`, `R52`, `D18`, `D19`.
+- Wiring matrix:
+  - `J2.1` -> `RS485_TX+`; `J2.2` -> `RS485_TX-`; `J2.3` -> `RS485_RX+`; `J2.4` -> `RS485_RX-`; `J2.5` -> `GND`; `J2.6` -> `SHIELD`
+  - `U2A` (RX transceiver): `A/B` <- `RS485_RX+/-`; `RO` -> `PA10`; `DE` -> `GND`; `/RE` -> `GND`; `VCC` -> `3V3`; `GND` -> `GND`
+  - `U2B` (TX transceiver): `DI` <- `PA9`; `A/B` -> `RS485_TX+/-`; `DE` -> `3V3`; `/RE` -> `3V3`; `VCC` -> `3V3`; `GND` -> `GND`
+  - `R52` (120R): across `RS485_RX+` and `RS485_RX-`
+  - `D18` (`SM712`): clamp on TX pair return path
+  - `D19` (`SM712`): clamp on RX pair return path
+- Verify:
+  - `U2A` forced RX, `U2B` forced TX per appendix.
+  - `D18` and `D19` are at connector entry side.
+  - TX and RX pair polarity is preserved through connector pins.
+
+#### Page 5 - Output power channels (OUT0..OUT7)
+
+- Place: `Q1..Q8`, `R1-R8`, `R9-R16`, `F1-F8`, `D2-D9`, `J5a`, `J5b`, `J6`.
+- Wiring matrix (repeat for n=0..7):
+  - `12V_MAIN` -> `F(n)` -> load positive branch (`J5a/J5b` channel pin)
+  - `J5a/J5b` channel return net -> `OUT_CHn_SW` -> `Qn.D`
+  - `Qn.S` -> `LOAD_GND_RTN` (`J6.2`) / `GND` return plane
+  - `Qn.G` <- gate resistor `R(n)` <- `GATE_CHn` GPIO
+  - gate pulldown `R(n+8)` from `Qn.G` to `GND`
+  - flyback diode `D(n+1)`: anode -> `OUT_CHn_SW`; cathode -> `12V_MAIN`
+  - load supply output: `J6.1` -> `LOAD_12V` (fed from `12V_MAIN`)
+- Verify:
+  - Gate GPIO-to-channel map matches appendix table.
+  - Each channel has exactly one gate resistor, one pulldown, one fuse, and one flyback diode.
+  - `J5a/J5b/J6` pin mapping matches appendix exactly.
+
+#### Page 6 - USB-C debug interface
+
+- Place: `J7`, `R53`, `R54`, `R55`, `R56`.
+- Wiring matrix:
+  - `J7.D+` -> `R53` -> `USB_DP` -> `U1.PA12`
+  - `J7.D-` -> `R54` -> `USB_DM` -> `U1.PA11`
+  - `J7.CC1` -> `R55` -> `GND`
+  - `J7.CC2` -> `R56` -> `GND`
+  - `J7.GND/shell` -> `GND` (and chassis policy per PCB appendix)
+- Verify:
+  - No non-USB function is connected to `USB_DP`/`USB_DM`.
+  - CC nets only terminate through designated 5.1k pull-downs.
+
+#### Page 7 - Status LEDs + SWD breakout
+
+- Place: `LED1-LED10`, `R41-R51`, `J8`.
+- Wire:
+  - POWER LED: `3V3` -> one 330R resistor from `R41-R50` group -> `LED1` -> `GND`
+  - LINK LED: `3V3` -> `R51` -> `LED2` -> `PC14` (active-low sink)
+  - CH LEDs (`LED3-LED10`): each channel LED uses one 330R resistor from `R41-R50` group and sinks to its channel GPIO (`PB4`, `PB5`, `PB6`, `PB7`, `PB8`, `PB9`, `PC6`, `PC7`)
+  - SWD (`J8`) wiring:
+    - `J8.1` -> `VTREF_3V3`, `J8.2` -> `SWDIO` (`PA13`), `J8.4` -> `PA14-BOOT0` (`SWCLK`), `J8.10` -> `NRST`, `J8.3/5/9` -> `GND`
+    - `J8.6/J8.7/J8.8` remain NC per appendix
+- Verify:
+  - LED resistor values match BOM (`R41-R50` 330R, `R51` 150R).
+  - `J8` SWD mapping is exact and orientation-marked in symbol.
+
+### Net-label discipline for all pages
+
+- Never alias `PA14-BOOT0` to any other net name.
+- Keep connector net labels identical to appendices:
+  - input: `IN_CHn_RAW`, `IN_CHn_SENSE`
+  - output: `OVR_CHn_RAW`, `OVR_CHn_SENSE`, `OUT_CHn_SW`, `GATE_CHn`
+  - serial: `RS485_TX+/-`, `RS485_RX+/-`
+- If a page introduces a new local net, add it to the relevant appendix before release.
+
+## 6) Layout handoff
 
 After schematic closure, implement layout using:
 

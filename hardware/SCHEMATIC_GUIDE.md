@@ -115,7 +115,8 @@ All endpoint mappings are in `hardware/SCHEMATIC_APPENDIX_INPUT.md`.
 ## 3) Output-board schematic capture sequence
 
 1. Place connectors (`J1`, `J2`, `J3a`, `J3b`, `J4`, `J5a`, `J5b`, `J6`, `J7`, `J8`) and assign pin numbers per appendix.
-2. Draw `12V_MAIN` input and buck-based `3V3` generation path:
+2. Draw input protection and buck-based `3V3` generation path:
+   - `J1.1` -> `VIN_12V_IN` -> `D1` (`SS34`) -> `12V_MAIN`
    - `12V_MAIN` -> `U4.VIN`
    - `U4.SW` -> `L1` -> `3V3`
    - `U4.BST` -> `C20` -> `U4.SW`
@@ -257,9 +258,10 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
 
 #### Page 1 - Power entry, bulk rail, and 3V3 buck
 
-- Place: `J1`, `C17`, `C18`, `C29`, `U4`, `L1`, `C20`, `C19`.
+- Place: `J1`, `D1`, `C17`, `C18`, `C29`, `U4`, `L1`, `C20`, `C19`.
 - Wiring matrix:
-  - `J1.1` -> `VIN_12V_IN` -> `12V_MAIN`; `J1.2` -> `GND`
+  - `J1.1` -> `VIN_12V_IN`; `J1.2` -> `GND`
+  - `D1` (`SS34`): anode -> `VIN_12V_IN`; cathode -> `12V_MAIN`
   - `C17`: `+` -> `12V_MAIN`; `-` -> `GND`
   - `C18`: `+` -> `12V_MAIN`; `-` -> `GND`
   - `C29`: one side -> `12V_MAIN` near `U4.VIN`; other side -> `GND`
@@ -269,6 +271,7 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
   - `C19`: `+` -> `3V3`; `-` -> `GND`
   - `12V_MAIN` -> `F1..F8` channel feed network
 - Verify:
+  - `12V_MAIN` is sourced through `D1` from `VIN_12V_IN`.
   - `C20` is only `BST` to `SW`.
   - `C19` is only on `3V3` bulk role.
   - `12V_MAIN` branch to `F1..F8` is separate from low-current logic routing.
@@ -327,8 +330,8 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
   - `U2A` (RX transceiver): `A/B` <- `RS485_RX+/-`; `RO` -> `PA10`; `DE` -> `GND`; `/RE` -> `GND`; `VCC` -> `3V3`; `GND` -> `GND`
   - `U2B` (TX transceiver): `DI` <- `PA9`; `A/B` -> `RS485_TX+/-`; `DE` -> `3V3`; `/RE` -> `3V3`; `VCC` -> `3V3`; `GND` -> `GND`
   - `R52` (120R): across `RS485_RX+` and `RS485_RX-`
-  - `D18` (`SM712`): clamp on TX pair return path
-  - `D19` (`SM712`): clamp on RX pair return path
+  - `D18` (`SM712`, TX pair TVS): line pins -> `RS485_TX+` and `RS485_TX-`; TVS return pin -> local return (`GND`, with chassis policy per PCB appendix)
+  - `D19` (`SM712`, RX pair TVS): line pins -> `RS485_RX+` and `RS485_RX-`; TVS return pin -> local return (`GND`, with chassis policy per PCB appendix)
 - Verify:
   - `U2A` forced RX, `U2B` forced TX per appendix.
   - `D18` and `D19` are at connector entry side.
@@ -337,14 +340,23 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
 #### Page 5 - Output power channels (OUT0..OUT7)
 
 - Place: `Q1..Q8`, `R1-R8`, `R9-R16`, `F1-F8`, `D2-D9`, `J5a`, `J5b`, `J6`.
-- Wiring matrix (repeat for n=0..7):
-  - `12V_MAIN` -> `F(n)` -> load positive branch (`J5a/J5b` channel pin)
-  - `J5a/J5b` channel return net -> `OUT_CHn_SW` -> `Qn.D`
-  - `Qn.S` -> `LOAD_GND_RTN` (`J6.2`) / `GND` return plane
-  - `Qn.G` <- gate resistor `R(n)` <- `GATE_CHn` GPIO
-  - gate pulldown `R(n+8)` from `Qn.G` to `GND`
-  - flyback diode `D(n+1)`: anode -> `OUT_CHn_SW`; cathode -> `12V_MAIN`
+- Wiring matrix (repeat for channel index `k=0..7`):
+  - `12V_MAIN` -> `F(k+1)` -> load positive branch (`J5a/J5b` channel pin)
+  - `J5a/J5b` channel return net -> `OUT_CHk_SW` -> `Q(k+1).D`
+  - `Q(k+1).S` -> `LOAD_GND_RTN` (`J6.2`) / `GND` return plane
+  - `Q(k+1).G` <- gate resistor `R(k+1)` <- `GATE_CHk` GPIO
+  - gate pulldown `R(k+9)` from `Q(k+1).G` to `GND`
+  - flyback diode `D(k+2)`: anode -> `OUT_CHk_SW`; cathode -> `12V_MAIN`
   - load supply output: `J6.1` -> `LOAD_12V` (fed from `12V_MAIN`)
+- Channel-to-power-part map:
+  - CH0: `F1`, `Q1`, `R1`, `R9`, `D2`
+  - CH1: `F2`, `Q2`, `R2`, `R10`, `D3`
+  - CH2: `F3`, `Q3`, `R3`, `R11`, `D4`
+  - CH3: `F4`, `Q4`, `R4`, `R12`, `D5`
+  - CH4: `F5`, `Q5`, `R5`, `R13`, `D6`
+  - CH5: `F6`, `Q6`, `R6`, `R14`, `D7`
+  - CH6: `F7`, `Q7`, `R7`, `R15`, `D8`
+  - CH7: `F8`, `Q8`, `R8`, `R16`, `D9`
 - Verify:
   - Gate GPIO-to-channel map matches appendix table.
   - Each channel has exactly one gate resistor, one pulldown, one fuse, and one flyback diode.

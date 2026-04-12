@@ -48,6 +48,8 @@ For 2-layer:
 
 For release, lock one stackup per board in the appendix and keep all impedance calculations tied to that stackup.
 
+For the output board, document the selected stackup and resulting USB/RS-485 pair geometry in `hardware/PCB_APPENDIX_OUTPUT.md` before routing.
+
 ## 3) Power routing
 
 ### Input board
@@ -60,10 +62,23 @@ For release, lock one stackup per board in the appendix and keep all impedance c
 
 ### Output board
 
-- Route high-current output path first:
-  - 12V rail trunk -> per-channel PTC -> output terminal
-  - return path to load ground terminal with low impedance
-- Keep MOSFET + flyback + terminal loop tight per channel.
+Use this step-by-step order for first-pass success:
+
+1. Route input protection first: `J1.1 -> VIN_12V_IN -> D1 -> 12V_MAIN`.
+2. Route buck cluster second: `U4`, `L1`, `C20` (bootstrap), `C19` (3V3 output), `C29` (`U4.VIN` HF bypass), with `C17/C18` bulk return loop kept short.
+3. Build `12V_MAIN` high-current trunk copper next.
+4. Route CH0..CH7 output-power loops one channel at a time:
+   - `12V_MAIN -> F1..F8 -> J5a/J5b`
+   - external load return net `OUT_CHn_SW -> Q1..Q8 -> LOAD_GND_RTN`
+   - place `D2..D9` close to switched-node/12V tie.
+5. Route gate-control loops (`R1..R8`, `R9..R16`) after power loops are complete.
+6. Route interfaces (`RS-485`, `USB`) only after high-current copper is stable.
+
+Routing quality checks (output board):
+
+- Keep MOSFET + flyback + terminal loops tight per channel.
+- Keep `LOAD_GND_RTN` low-impedance; avoid narrow return bottlenecks that carry multi-channel current.
+- Keep buck `SW` copper compact and isolated from USB/RS-485/MCU traces.
 
 ### Quantified current sizing (1 oz outer copper baseline)
 
@@ -99,6 +114,7 @@ Treat these as minima. If enclosure temperature or duty-cycle analysis indicates
 - Place 120R termination (`R27` input / `R52` output) directly across receiver A/B pins.
 - Place SM712 TVS (`D10/D11` input, `D18/D19` output) as close as practical to connector entry on each pair.
 - Keep pair reference over continuous ground; avoid crossing plane gaps.
+- Connector-side routing order: connector pins -> TVS -> transceiver/termination path.
 
 Implementation details (pair ordering and connector pin numbers) are in the board appendices.
 
@@ -156,6 +172,7 @@ Per-channel block:
 - Keep shield-to-chassis path short and wide; avoid routing shield current through digital ground traces.
 - Provide a single-point `CHASSIS` to `GND` coupling near cable entry using RC (`4.7 nF` in parallel with `1 Mohm`) with optional `0R` DNI link for EMI bring-up experiments.
 - Keep TVS return paths referenced to the same local ground/chassis strategy used at the connector.
+- On output board, explicitly map `J2.6` (shield) to this entry strategy in the board appendix and keep this connection physically local to cable entry.
 
 ## 10) Debuggability and DFM
 
@@ -207,3 +224,4 @@ Use the appendices to remove ambiguity during actual layout:
 - [ ] Global/local fiducials, height keepouts, and panelization constraints are checked.
 - [ ] Mounting holes and connector clearances fit enclosure plan.
 - [ ] Board-specific appendix checklist is fully completed and signed off.
+- [ ] DRC/ERC are clean (or waivers documented), and Gerber output review is completed before release.

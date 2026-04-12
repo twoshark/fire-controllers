@@ -27,7 +27,7 @@ This appendix is the pin/net/junction reference for `hardware/SCHEMATIC_GUIDE.md
 | `PA11` | BiDir | `USB_DM` | USB-C D- through 22R |
 | `PA12` | BiDir | `USB_DP` | USB-C D+ through 22R |
 | `PA13` | SWD | `SWDIO` | SWD header |
-| `PA14-BOOT0` | SWD/In | `SWCLK` + BOOT0 | SWD header + BOOT0 button + 10k pulldown |
+| `PA14-BOOT0` | SWD/In | `SWCLK` + BOOT0 | SWD header + BOOT0 button + `R57` 10k pulldown |
 | `NRST` | In | Reset | NRST button + SWD header |
 | `PB4` | Out | `LED_CH0_N` | CH0 output LED cathode |
 | `PB5` | Out | `LED_CH1_N` | CH1 output LED cathode |
@@ -141,13 +141,14 @@ Note: power LED is not MCU-driven; wire as always-on from `3V3` through resistor
 
 | Source | Through | Destination |
 | --- | --- | --- |
-| `VIN_12V_IN` (`J1.1`) | board input path | `12V_MAIN` |
+| `VIN_12V_IN` (`J1.1`) | `D1` (`SS34`) reverse-polarity stage | `12V_MAIN` |
 | `12V_MAIN` | `C17` + `C18` bulk + `C29` HF bypass | `GND` return |
 | `12V_MAIN` | `U4.VIN` (`AP63203WU-7`) | buck input stage |
 | `U4.SW` | `L1` | `3V3` |
 | `U4.BST` | `C20` to `U4.SW` | bootstrap drive loop |
-| `3V3` | `C19` + decoupling network | digital logic domain |
-| `12V_MAIN` | per-channel `F1..F8` | `LOAD_12V` distributed to each channel |
+| `3V3` | `C19` + `C1` + `C2-C7` + `C15` decoupling network | digital logic domain |
+| `12V_MAIN` | per-channel `F1..F8` | channel load output pins at `J5a/J5b` |
+| `12V_MAIN` | direct feed | `J6.1` (`LOAD_12V`) |
 
 ## 4) RS-485 transceiver endpoint map (output board)
 
@@ -172,7 +173,8 @@ Note: power LED is not MCU-driven; wire as always-on from `3V3` through resistor
 
 Protection devices:
 
-- `SM712` on TX pair and one `SM712` on RX pair.
+- `D18` (`SM712`) on TX pair.
+- `D19` (`SM712`) on RX pair.
 
 ## 5) Override CH0..CH7 junction map
 
@@ -184,8 +186,8 @@ Schmitt stage pin convention for `U5/U6` (`SN74LV14APWR`):
 Per channel override chain:
 
 ```text
-J3x.OVR_CHn -> OVR_CHn_RAW -> 10k pull-up to 3V3, switch to GND
-              -> 10k series -> RC node with channel capacitor C21..C28 to GND
+J3x.OVR_CHn -> OVR_CHn_RAW -> pull-up resistor from `R17-R32` set to 3V3, switch to GND
+              -> series resistor from `R17-R32` set -> RC node with channel capacitor `C21..C28` to GND
               -> SN74LV14 A-input -> SN74LV14 Y-output -> OVR_CHn_SENSE (MCU GPIO)
 ```
 
@@ -228,7 +230,22 @@ Override RC capacitor assignment (output board):
 
 Per-channel power side:
 
-`12V_MAIN` -> `F(n)` -> load + side (via `J6.1` distribution) -> load -> `OUT_CHn_SW` -> MOSFET low-side -> `LOAD_GND_RTN` (`J6.2`).
+`12V_MAIN` -> `F1..F8` (per channel) -> `J5a/J5b` channel pin -> external load -> `OUT_CHn_SW` -> `Q1..Q8` low-side path -> `LOAD_GND_RTN` (`J6.2`).
+
+Channel power-part mapping:
+
+| Channel | Fuse | MOSFET | Flyback diode |
+| --- | --- | --- | --- |
+| CH0 | `F1` | `Q1` | `D2` |
+| CH1 | `F2` | `Q2` | `D3` |
+| CH2 | `F3` | `Q3` | `D4` |
+| CH3 | `F4` | `Q4` | `D5` |
+| CH4 | `F5` | `Q5` | `D6` |
+| CH5 | `F6` | `Q6` | `D7` |
+| CH6 | `F7` | `Q7` | `D8` |
+| CH7 | `F8` | `Q8` | `D9` |
+
+`J6.1` is the common `LOAD_12V` output feed from `12V_MAIN`; `J6.2` is `LOAD_GND_RTN`.
 
 ## 7) Cable crossover map (output side view)
 

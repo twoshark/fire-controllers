@@ -220,8 +220,8 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
   - `U2A` (TX transceiver): `DI` <- `PA9`; `A/B` -> `RS485_TX+/-`; `DE` -> `3V3`; `/RE` -> `3V3`; `VCC` -> `3V3`; `GND` -> `GND`
   - `U2B` (RX transceiver): `A/B` <- `RS485_RX+/-`; `RO` -> `PA10`; `DE` -> `GND`; `/RE` -> `GND`; `VCC` -> `3V3`; `GND` -> `GND`
   - `R27` (120R): across `RS485_RX+` and `RS485_RX-`
-  - `D10` (`SM712`): across/into TX pair clamp return (`RS485_TX+/-` to local return)
-  - `D11` (`SM712`): across/into RX pair clamp return (`RS485_RX+/-` to local return)
+  - `D10` (`SM712`, TX pair TVS): line pins -> `RS485_TX+` and `RS485_TX-`; TVS return pin -> local return (`GND`, with chassis policy per PCB appendix)
+  - `D11` (`SM712`, RX pair TVS): line pins -> `RS485_RX+` and `RS485_RX-`; TVS return pin -> local return (`GND`, with chassis policy per PCB appendix)
 - Verify:
   - `U2A` enable pins are fixed TX state and `U2B` enable pins fixed RX state per appendix.
   - `D10` clamps TX pair; `D11` clamps RX pair.
@@ -252,22 +252,6 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
   - CH LEDs map to `PB2`, `PA15`, `PB3`, `PB4`, `PB5`, `PB6`, `PB7`, `PB8`.
   - LINK LED maps to `PB9`.
   - Current-limit values match BOM (`R17-R26` 330R, `R28` 150R).
-
-#### Page 7 - SWD header breakout
-
-- Place: `J6`.
-- Wiring matrix:
-  - `J6.1` -> `VTREF_3V3`
-  - `J6.2` -> `SWDIO` (`PA13`)
-  - `J6.3` -> `GND`
-  - `J6.4` -> `PA14-BOOT0` (`SWCLK`)
-  - `J6.5` -> `GND`
-  - `J6.9` -> `GND`
-  - `J6.10` -> `NRST`
-  - `J6.6/J6.7/J6.8` remain NC per appendix
-- Verify:
-  - Pin 1 = `VTREF_3V3`, pin 2 = `SWDIO`, pin 4 = `PA14-BOOT0`, pin 10 = `NRST`.
-  - `SWO_NC` remains NC.
 
 ### Output board page map
 
@@ -379,19 +363,15 @@ Use this page map in EasyEDA (or KiCad hierarchical sheets) so entry is determin
   - No non-USB function is connected to `USB_DP`/`USB_DM`.
   - CC nets only terminate through designated 5.1k pull-downs.
 
-#### Page 7 - Status LEDs + SWD breakout
+#### Page 7 - Status LEDs
 
-- Place: `LED1-LED10`, `R41-R51`, `J8`.
+- Place: `LED1-LED10`, `R41-R51`.
 - Wire:
   - POWER LED: `3V3` -> one 330R resistor from `R41-R50` group -> `LED1` -> `GND`
   - LINK LED: `3V3` -> `R51` -> `LED2` -> `PC14` (active-low sink)
   - CH LEDs (`LED3-LED10`): each channel LED uses one 330R resistor from `R41-R50` group and sinks to its channel GPIO (`PB4`, `PB5`, `PB6`, `PB7`, `PB8`, `PB9`, `PC6`, `PC7`)
-  - SWD (`J8`) wiring:
-    - `J8.1` -> `VTREF_3V3`, `J8.2` -> `SWDIO` (`PA13`), `J8.4` -> `PA14-BOOT0` (`SWCLK`), `J8.10` -> `NRST`, `J8.3/5/9` -> `GND`
-    - `J8.6/J8.7/J8.8` remain NC per appendix
 - Verify:
   - LED resistor values match BOM (`R41-R50` 330R, `R51` 150R).
-  - `J8` SWD mapping is exact and orientation-marked in symbol.
 
 ### Net-label discipline for all pages
 

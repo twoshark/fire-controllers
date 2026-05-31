@@ -8,10 +8,10 @@ Use edge zoning below for deterministic assembly and enclosure wiring.
 
 | Zone | Required content | Notes |
 | --- | --- | --- |
-| Power-entry zone | `J1`, `D1`, `F1`, `C17`, `C6`, `U4`, `L1`, `C18`, `C19` | Keep as compact buck chain from `VIN_12V_IN` to `3V3`; keep `SW` node short. |
-| RS-485 zone | `J4`, `U2A`, `U2B`, `R27`, 2x SM712 | TVS closest to connector. Termination at RX IC pins. |
-| USB/debug zone | `J5`, `R31/R32`, `R29/R30`, `J6`, `SW1`, `SW2` | Keep SWD probe clearance. Keep BOOT0/NRST reachable. |
-| Input-channel zone | `J2a`, `J2b`, RC cells, `U5/U6` | Replicate geometry CH0..CH7 uniformly. |
+| Power-entry zone | `J1`, `D1`, `F1`, `C17` (polarized), `C6`, `U4`, `L1`, `C18`, `C28`, `C19` | Keep as compact buck chain from `VIN_12V_IN` to `3V3`; keep `SW` node short. `C17` `+` to `12V_MAIN`. `C18` and `C28` are both 22uF on `3V3` (review fix). |
+| RS-485 zone | `J4`, `U2A`, `U2B`, `R27`, 2x SM712, `C29` (`U2A.VCC` 1uF), `C30` (`U2B.VCC` 1uF) | TVS closest to connector. Termination at RX IC pins. 1uF cap adjacent to each IC's VCC pin. |
+| USB/debug zone | `J5`, `D12` (USB ESD), `R31/R32`, `R29/R30`, `J6`, `SW1`, `SW2` | Keep SWD probe clearance. Keep BOOT0/NRST reachable. `D12` within 5 mm of `J5`. |
+| Input-channel zone | `J2a`, `J2b`, RC cells, `U5/U6`, `C31` (`U5.VCC` 1uF), `C32` (`U6.VCC` 1uF) | Replicate geometry CH0..CH7 uniformly. 1uF cap adjacent to each Schmitt VCC pin. |
 | MCU core zone | `U1` + local decoupling | Keep centered between RS-485/USB/input zones. |
 | LED edge zone | `LED1..LED10` + series resistors | Single edge-aligned block for window/light-pipe. |
 
@@ -43,7 +43,8 @@ Rules:
 - D+/D- routed length target: <=50 mm.
 - Intra-pair mismatch: <=2 mm.
 - No branch stubs; use in-line test pads only if needed.
-- Place USB ESD (if populated) within 5 mm of connector pins.
+- USB ESD (`D12` = `USBLC6-2SC6`) is REQUIRED on this board (review fix U1). Place within 5 mm of `J5` connector pins, on the cable side of `R31`/`R32`.
+- `D12.VBUS` must be wired to `USB_VBUS` and `D12.GND` to local digital `GND` with very short return.
 - Keep D+/D- and RS-485 pairs from crossing split planes.
 
 ## 5) RS-485 constraints (input board)
@@ -72,10 +73,22 @@ Rules:
 
 ## 7) Bring-up probe order (input board)
 
-1. Validate `VIN_12V_IN` and `12V_MAIN`.
-2. Validate `3V3`.
-3. Confirm `PA14-BOOT0` default LOW and NRST behavior.
-4. Attach SWD and program firmware.
-5. Verify `USART1_TX` periodic state frames.
-6. Verify `USART1_RX` heartbeat reception.
-7. Validate channel LEDs CH0..CH7 and link LED behavior.
+1. Before applying power: visually verify polarity of `C17`, `C18`, `C28` against silkscreen `+` mark (review fix P1). Stop and rework if any is reversed.
+2. Validate `VIN_12V_IN` and `12V_MAIN`.
+3. Validate `3V3`.
+4. Confirm `PA14-BOOT0` default LOW and NRST behavior.
+5. Attach SWD and program firmware.
+6. Verify `USART1_TX` periodic state frames.
+7. Verify `USART1_RX` heartbeat reception.
+8. Validate channel LEDs CH0..CH7 and link LED behavior.
+
+## 8) Review-fix component placement summary (input board)
+
+| New designator | Required placement |
+| --- | --- |
+| `C28` | Adjacent to `C18`, both 22uF on `3V3` near `L1`/`U4` buck output |
+| `C29` | Within ~3 mm of `U2A.VCC` pin |
+| `C30` | Within ~3 mm of `U2B.VCC` pin |
+| `C31` | Within ~3 mm of `U5.VCC` pin |
+| `C32` | Within ~3 mm of `U6.VCC` pin |
+| `D12` | Within 5 mm of `J5` USB-C pins, on cable side of `R31`/`R32` |

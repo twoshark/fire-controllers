@@ -35,13 +35,15 @@ Regulator decision for this board:
 
 ## Output power stage
 
+Low-side switching with a shared +12V feed. All loads' high side is fed from the common +12V terminals (`J6.1` and `J6.2`, both `12V_MAIN`, paralleled); each load's low side returns to its own per-channel terminal (`J5a/J5b.k`, net `OUT_CHk`) and is switched to ground by the channel MOSFET. The load's return is its `J5` pin (through the MOSFET to ground inside the box); there is no load-ground terminal, so a load cannot be wired to bypass its switch.
+
 Per channel:
 
-- IRLML6344 MOSFET low-side switch
+- IRLML6344 MOSFET low-side switch (drain = `OUT_CHk_SW`, source = `LOAD_GND_RTN`, an internal board-`GND` tie that returns to the PSU negative via `J1.2`)
 - 100R gate resistor
 - 10k gate pulldown
-- 2A PTC fuse in series with load supply
-- SS34 flyback diode for inductive load protection
+- 2A PTC fuse in series in the low-side leg, between the `OUT_CHk` terminal and the MOSFET drain (`OUT_CHk_SW`)
+- SS34 flyback diode for inductive load protection, wired directly across the load: anode at `OUT_CHk` (terminal), cathode at `12V_MAIN` (freewheel current bypasses the fuse and MOSFET)
 
 ## Override front-end
 

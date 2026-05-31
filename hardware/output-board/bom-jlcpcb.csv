@@ -2,12 +2,14 @@ Designator,Quantity,Value,Package,LCSC Part#,MPN,Description,Unit Cost
 U1,1,STM32G0B1CBT6,LQFP-48,C2847904,STM32G0B1CBT6,"MCU Cortex-M0+ 64MHz 128KB Flash 36KB SRAM USB DFU",$2.20
 "U2A,U2B",2,SP3485EN-L/TR,SOIC-8,C8963,SP3485EN-L/TR,"RS-485 transceiver pair for full-duplex (RX path + TX heartbeat path)",$0.21
 U4,1,AP63203WU-7,TSOT-23-6,C780769,AP63203WU-7,"3.3V buck regulator 2A (12V -> 3.3V)",$0.14
-L1,1,4.7µH,5.0x5.0mm,C2849485,PNLS5020-4R7M,"Buck power inductor for U4 SW node",$0.05
+L1,1,4.7µH,5.0x5.0mm,FFC2849485F,PNLS5020-4R7M,"Buck power inductor for U4 SW node",$0.05
 U5-U6,2,SN74LV14APWR,TSSOP-14,C7780,SN74LV14APWR,"Hex Schmitt-trigger inverter (2 pcs for 8 override channels, logic inverted in firmware)",$0.16
 Q1-Q8,8,IRLML6344TRPbF,SOT-23,C53550,IRLML6344TRPbF,"N-Ch MOSFET 30V 5A Rds(on)=37mΩ@2.5V",$0.15
 D1-D9,9,SS34,SMA,C8678,SS34,"SS34 diodes (reverse polarity + flyback)",$0.08
 D18-D19,2,SM712,SOT-23,C521963,SM712,"Asymmetric TVS diode (one per RS-485 pair)",$0.05
+D20,1,USBLC6-2SC6,SOT-23-6,C7519,USBLC6-2SC6,"USB-C D+/D-/VBUS ESD protection array (place at J7)",$0.06
 F1-F8,8,1812L200/12GR,1812,C18198339,1812L200/12GR,"PTC Fuse 2A hold 12V (per-channel)",$0.05
+F9,1,ATO holder 4-pin,THT,C207061,178.6165.0002,"PCB-mount ATO blade fuse holder, 22.5A cont/30A max 32V (12V input trunk). Accepts 25A ATO blade fuse (field-inserted accessory, not PCBA). THT - may need hand-solder.",$2.37
 R1-R8,8,100Ω,0603,C22775,0603WAF1000T5E,"MOSFET gate resistor",$0.01
 "R9-R32,R57",25,10kΩ,0603,C25804,0603WAF1002T5E,"10k resistors (gate pull-down, override pull-up/RC, BOOT0 pull-down)",$0.01
 R41-R50,10,330Ω,0603,C23138,0603WAF3300T5E,"LED current limit (green/yellow)",$0.01
@@ -18,15 +20,16 @@ R55-R56,2,5.1kΩ,0603,C23186,0603WAF5101T5E,"USB-C CC1/CC2 pull-down",$0.01
 C1,1,10µF,0603,C19702,CL10A106KP8NNNC,"MCU VDD bulk decoupling",$0.02
 "C2-C7,C21-C29",15,100nF,0603,C14663,CL10B104KB8NNNC,"Decoupling and override RC caps (MCU/RS-485/Schmitt/12V + 8x override RC + VIN HF bypass)",$0.01
 C20,1,100nF,0603,C14663,CL10B104KB8NNNC,"Buck bootstrap capacitor (U4.BST to U4.SW)",$0.01
-C15,1,1µF,0603,C15849,CL10A105KB8NNNC,"VDDA decoupling",$0.01
+"C15,C31,C32,C33,C34",5,1µF,0603,C15849,CL10A105KB8NNNC,"VDDA decoupling (C15) + per-IC 1uF VCC bypass in parallel with 100nF: C31=U2A, C32=U2B (RS-485), C33=U5, C34=U6 (Schmitt)",$0.01
 C17,1,470µF 25V,SMD-10x10.5,C2162977,25TZV470M10X10.5,"Bulk 12V electrolytic primary (SMD)",$0.30
 C18,1,100µF 25V,SMD-6.3x5.4,C4747964,RST100UF25V004,"Bulk 12V electrolytic secondary (SMD)",$0.04
-C19,1,22µF 10V,Tantalum-A,C11366,TAJA226K010RNJ,"Buck 3V3 output bulk capacitor (SMD tantalum)",$0.21
+"C19,C30",2,22µF 10V,Tantalum-A,C11366,TAJA226K010RNJ,"Buck 3V3 output bulk caps, 2x 22uF per AP63203 datasheet (SMD tantalum)",$0.21
 LED1,1,Green,0603,C7496818,F.0603.00025/P2-0603G1TS2-06T-002,"Power indicator LED",$0.01
 LED2,1,Blue,0603,C7496819,F.0603.00026/P2-0603B1TS2-06T-001,"Link indicator LED",$0.01
 LED3-LED10,8,Yellow,0603,C72038,19-213/Y2C-CQ2R2L/3T,"Output state LED",$0.03
 SW1-SW2,2,Tactile,SMD,C318884,TS-1187A-B-A-B,"NRST and BOOT0 tactile buttons",$0.05
-"J1,J4,J6",3,2-pos 5.08mm,THT,C2915639,DB128V-5.08-2P-GN-S,"Screw terminals: 12V input, override COM/GND, 12V LOAD + GND RTN",$0.10
+"J1,J6",2,2-pos 7.5mm 24A,THT,C474954,KF128-7.5-2P,"Screw terminals: 12V board input (J1: VIN_12V_IN + GND) and load +12V feed (J6: both poles 12V_MAIN, paralleled). 24A/450V, 12-22AWG - each carries full 16A trunk. Load ground return is internal (MOSFET sources to GND, back to PSU via J1.2). Use >=14AWG (12AWG preferred) wiring.",$0.21
+J4,1,2-pos 5.08mm,THT,C2915639,DB128V-5.08-2P-GN-S,"Screw terminal: override COM/GND",$0.10
 J2,1,6-pos 5.08mm,THT,C2915642,DB128V-5.08-6P-GN-S,"Screw terminal: RS485_TX+/TX-/RX+/RX-/GND/SHIELD",$0.22
 "J3a,J3b,J5a,J5b",4,4-pos 5.08mm,THT,C2915641,DB128V-5.08-4P-GN-S,"Screw terminals: OVR0-OVR7 and OUT0-OUT7",$0.15
 J7,1,USB-C 16-pin,SMD,C2765186,TYPE-C-16P-2MD073,"USB-C receptacle (debug port)",$0.07

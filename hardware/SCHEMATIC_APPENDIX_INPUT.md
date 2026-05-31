@@ -2,6 +2,13 @@
 
 This appendix is the pin/net/junction reference for `hardware/SCHEMATIC_GUIDE.md`.
 
+Review-related additions (per `hardware/REVIEW_RESOLUTION.md`):
+
+- New designators: `C28` (2nd 22uF on `3V3`), `C29` (`U2A.VCC`), `C30` (`U2B.VCC`), `C31` (`U5.VCC`), `C32` (`U6.VCC`), `D12` (USB ESD).
+- Net naming: `3V3` only - never `3.3V`, `+3.3V`, etc.
+- All `GND`/`3V3`/`12V_MAIN`/`VIN_12V_IN` use Power Symbol Net Flags, not Net Ports.
+- Polarized cap polarity is locked: see Section 8 below.
+
 ## 1) MCU used-pin map (input board)
 
 | MCU GPIO/net | Direction | Function | Endpoint |
@@ -83,12 +90,23 @@ Note: power LED is not MCU-driven; wire as always-on with `3V3 -> R25 -> LED1 ->
 
 | Connector function | Net |
 | --- | --- |
-| D+ | `USB_DP` |
-| D- | `USB_DM` |
-| CC1 | `USB_CC1` (5.1k pulldown to GND) |
-| CC2 | `USB_CC2` (5.1k pulldown to GND) |
-| VBUS | `USB_VBUS` (debug power sense/power only) |
+| D+ | `USB_DP` (clamped by `D12.IO1` before MCU) |
+| D- | `USB_DM` (clamped by `D12.IO2` before MCU) |
+| CC1 | `USB_CC1` (5.1k pulldown to GND via `R29`) |
+| CC2 | `USB_CC2` (5.1k pulldown to GND via `R30`) |
+| VBUS | `USB_VBUS` (also clamped by `D12.VBUS`) |
 | GND/shell | `GND` / chassis policy per PCB appendix |
+
+`D12` (`USBLC6-2SC6`, LCSC `C7519`, SOT-23-6) pinout (per ST datasheet, top view: `1=I/O1, 2=GND, 3=I/O2, 4=I/O2, 5=VBUS, 6=I/O1`; pins 1&6 are internally common I/O1, pins 3&4 are internally common I/O2):
+
+| Pin | Signal | Net |
+| --- | --- | --- |
+| 1 | `I/O1` | `USB_DP` (on the `J5.D+` side of `R31`) |
+| 2 | `GND` | `GND` |
+| 3 | `I/O2` | `USB_DM` (on the `J5.D-` side of `R32`) |
+| 4 | `I/O2` | `USB_DM` (internally common with pin 3; route to the same net or leave open) |
+| 5 | `VBUS` | `USB_VBUS` |
+| 6 | `I/O1` | `USB_DP` (internally common with pin 1; route to the same net or leave open) |
 
 ### `J6` (2x5 SWD, 1.27 mm ARM convention)
 
@@ -110,12 +128,13 @@ Note: power LED is not MCU-driven; wire as always-on with `3V3 -> R25 -> LED1 ->
 | Source | Through | Destination |
 | --- | --- | --- |
 | `VIN_12V_IN` (`J1.1`) | `D1` then `F1` | `12V_MAIN` |
-| `12V_MAIN` | `C17` (bulk) + `C6` (HF) | `GND` return |
+| `12V_MAIN` | `C17` (bulk, polarized `+` to `12V_MAIN`) + `C6` (HF) | `GND` return |
 | `12V_MAIN` | `U4.VIN` (`AP63203WU-7`) | buck input stage |
 | `U4.SW` | `L1` | `3V3` |
 | `U4.BST` | `C19` to `U4.SW` | bootstrap drive loop |
-| `3V3` | `C18` + logic decoupling | `GND` return |
+| `3V3` | `C18` + `C28` (both 22uF, polarized `+` to `3V3`) + logic decoupling | `GND` return |
 | `3V3` | MCU `VDD` pins + logic loads | digital domain |
+| `3V3` | `C29` (`U2A.VCC`), `C30` (`U2B.VCC`), `C31` (`U5.VCC`), `C32` (`U6.VCC`) - 1uF each | `GND` return at each IC |
 
 ## 4) RS-485 transceiver endpoint map (input board)
 
@@ -216,3 +235,59 @@ LED resistor references (input board):
 | `RS485_RX-` | `RS485_TX-` |
 | `GND` | `GND` |
 | `SHIELD` | `SHIELD`/chassis entry |
+
+## 8) Polarized capacitor polarity reference (review fix P1)
+
+Reverse polarity will cause venting/rupture at first power-on. Confirmed orientations on the input board:
+
+| Designator | Value | `+` net | `-` net |
+| --- | --- | --- | --- |
+| `C17` | bulk on `12V_MAIN` | `12V_MAIN` | `GND` |
+| `C18` | 22uF on `3V3` | `3V3` | `GND` |
+| `C28` | 22uF on `3V3` (added) | `3V3` | `GND` |
+
+PCB silkscreen `+` mark must agree with schematic `+` pin before fab release.
+
+## 9) Per-IC `1uF` VCC bypass map (review fix I1/R1)
+
+Each cap goes from the IC VCC pin DIRECTLY to local GND, supplementing the existing 100nF HF caps (do not replace, place in parallel).
+
+| Designator | IC | Function |
+| --- | --- | --- |
+| `C29` | `U2A` | RS-485 TX transceiver bypass |
+| `C30` | `U2B` | RS-485 RX transceiver bypass |
+| `C31` | `U5` | Schmitt CH0..CH5 bypass |
+| `C32` | `U6` | Schmitt CH6..CH7 bypass |
+
+## 10) USB ESD protection map (review fix U1)
+
+| Designator | Part | Pin map |
+| --- | --- | --- |
+| `D12` | `USBLC6-2SC6` (LCSC `C7519`, SOT-23-6) | IO1->`USB_DP`, IO2->`USB_DM`, VBUS->`USB_VBUS`, GND->`GND` |
+
+Insertion topology (clamp on the connector side of the series resistor): `J5.D+` -> `D12.IO1` (clamp) -> `R31` (22R) -> `U1.PA12` (and same for the D-/IO2 path through `R32`). The ESD diode must be upstream of the series resistor so the strike is shunted before reaching `R31`/the MCU. Place within 5 mm of `J5` per `PCB_APPENDIX_INPUT.md`.
+
+## 11) MCU GPIO pin sink-current verification (review fix M1)
+
+Per-channel LED current calculation:
+
+- `I_pin = (3.3V - V_F_LED) / R_series`
+- For 330R + V_F = 2.0V: `I_pin = 1.3 / 330 ~= 3.94mA` per CH LED
+- For 150R + V_F = 2.0V: `I_pin = 1.3 / 150 ~= 8.67mA` for LINK LED (within 8mA recommended; consider 220R if margin desired)
+- STM32G0B1 datasheet limits: `Iol_max = 20mA` per pin; recommended <=8mA for digital integrity
+- Sustained worst-case: 8 channel LEDs + 1 LINK LED = `8 * 3.94 + 8.67 ~= 40.2mA` group total (within typ. 80mA per port group)
+
+If the LINK LED resistor `R28` is changed away from 150R, update this table and re-verify per-pin and per-port-group margin.
+
+## 12) BOM additions summary (review fixes)
+
+| Designator | Value | LCSC / MPN | BOM line |
+| --- | --- | --- | --- |
+| `C28` | 22uF 10V tantalum | `C11366` / TAJA226K010RNJ | merged onto the `C18` line (qty 2) |
+| `C29` | 1uF 0603 | `C15849` / CL10A105KB8NNNC | merged onto the `C15` line (qty 5) |
+| `C30` | 1uF 0603 | `C15849` / CL10A105KB8NNNC | merged onto the `C15` line (qty 5) |
+| `C31` | 1uF 0603 | `C15849` / CL10A105KB8NNNC | merged onto the `C15` line (qty 5) |
+| `C32` | 1uF 0603 | `C15849` / CL10A105KB8NNNC | merged onto the `C15` line (qty 5) |
+| `D12` | `USBLC6-2SC6` SOT-23-6 | `C7519` / USBLC6-2SC6 | own line (qty 1) |
+
+All of the above reuse part numbers already on the BOM except `D12`. `C7519` (USBLC6-2SC6, ST) confirmed in LCSC/JLCPCB stock. The 22uF and 1uF additions reuse the existing tantalum/ceramic lines, so they carry the same stock confidence as the parts they parallel.

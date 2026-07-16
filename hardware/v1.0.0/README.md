@@ -8,6 +8,8 @@ Board truth for printed EasyEDA PCBs (**v1.0.0**). Derived only from EasyEDA exp
 | [`INPUT_BOARD.md`](INPUT_BOARD.md) | Input connectors, power, RS-485, channels |
 | [`OUTPUT_BOARD.md`](OUTPUT_BOARD.md) | Output connectors, power, gates, loads |
 | [`BRINGUP.md`](BRINGUP.md) | First power-on, flash, link test |
+| [`input-buttons-pcb/`](input-buttons-pcb/) | ALL FIRE diode-OR daughter PCB |
+| [`enclosures/`](enclosures/) | sign-input + mp-input enclosure designs |
 | [`exports/`](exports/) | BOM, Pick-and-Place, Netlist (PADS ASC) |
 
 Firmware: `firmware/input-controller`, `firmware/output-controller`.
@@ -20,6 +22,7 @@ Protocol: [`../../docs/serial-protocol.md`](../../docs/serial-protocol.md).
 | `exports/BOM_input.csv` / `BOM_output.csv` | Bill of Materials (CSV) |
 | `exports/PnP_input.csv` / `PnP_output.csv` | Pick and Place / CPL |
 | `exports/Netlist_input.asc` / `Netlist_output.asc` | PADS netlist |
+| `input-buttons-pcb/exports/` | Daughter PCB BOM / PnP / netlist |
 
 ## Optional next export
 
@@ -28,3 +31,4 @@ Easy in EasyEDA, useful for visual silk/net cross-check. Drop as:
 
 - `exports/Schematic_input.pdf`
 - `exports/Schematic_output.pdf`
+- `input-buttons-pcb/exports/Schematic.pdf` (and ideally a connectorized board rev)

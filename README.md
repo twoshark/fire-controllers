@@ -68,7 +68,7 @@ Chip: `STM32G0B1CBTx`. DFU: hold `SW2` (BOOT0), tap `SW1` (NRST), release `SW2`.
 
 ## Protocol
 
-- Input→output: `[0xAA][state][CRC8]`
+- Input→output: `[0xAA][state][CRC8]` on every input edge, plus 25 ms idle keepalive (~40 Hz when quiet)
 - Output→input: `[0x55][status][CRC8]` @ 10Hz
 - CRC-8/MAXIM, UART 115200 8N1
 - Spec: [`docs/serial-protocol.md`](docs/serial-protocol.md)

@@ -56,4 +56,6 @@ USART1: `PA9`→`U2A.DI`, `PA10`←`U2B.RO` (same TX/RX roles as input).
 | GND (5) | GND (5) |
 | SHIELD (6) | SHIELD (6) |
 
+On both PCBs, connector pin 6 (SHIELD) is bonded to GND in the netlist.
+
 Load wiring: `J6` (+12V) → load → `J5x.k`. Never return load to board GND.

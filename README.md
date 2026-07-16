@@ -6,18 +6,18 @@ Real-time two-board control system:
 - **Output board** drives 8× 12V low-side MOSFET channels (solenoids/relays).
 - Boards communicate over **full-duplex RS-485** with <10ms end-to-end latency target.
 
-## As-built (2026-07-15 EasyEDA)
+## Hardware v1.0.0 (2026-07-15 EasyEDA)
 
-Printed-board truth lives in [`hardware/as-built/`](hardware/as-built/):
+Printed-board truth lives in [`hardware/v1.0.0/`](hardware/v1.0.0/):
 
 | Doc | Role |
 | --- | --- |
-| [`hardware/as-built/README.md`](hardware/as-built/README.md) | Index + export list |
-| [`hardware/as-built/PIN_MAP.md`](hardware/as-built/PIN_MAP.md) | MCU pin ↔ channel map |
-| [`hardware/as-built/INPUT_BOARD.md`](hardware/as-built/INPUT_BOARD.md) | Input board |
-| [`hardware/as-built/OUTPUT_BOARD.md`](hardware/as-built/OUTPUT_BOARD.md) | Output board |
-| [`hardware/as-built/BRINGUP.md`](hardware/as-built/BRINGUP.md) | Power-on / flash / link test |
-| [`hardware/as-built/exports/`](hardware/as-built/exports/) | BOM, PnP, netlist |
+| [`hardware/v1.0.0/README.md`](hardware/v1.0.0/README.md) | Index + export list |
+| [`hardware/v1.0.0/PIN_MAP.md`](hardware/v1.0.0/PIN_MAP.md) | MCU pin ↔ channel map |
+| [`hardware/v1.0.0/INPUT_BOARD.md`](hardware/v1.0.0/INPUT_BOARD.md) | Input board |
+| [`hardware/v1.0.0/OUTPUT_BOARD.md`](hardware/v1.0.0/OUTPUT_BOARD.md) | Output board |
+| [`hardware/v1.0.0/BRINGUP.md`](hardware/v1.0.0/BRINGUP.md) | Power-on / flash / link test |
+| [`hardware/v1.0.0/exports/`](hardware/v1.0.0/exports/) | BOM, PnP, netlist |
 
 ## Architecture snapshot
 
@@ -32,7 +32,7 @@ Printed-board truth lives in [`hardware/as-built/`](hardware/as-built/):
 ```text
 fire-controllers/
 ├── firmware/              # Embassy Rust firmware
-├── hardware/as-built/     # Printed board truth + EasyEDA exports
+├── hardware/v1.0.0/     # Printed board truth + EasyEDA exports
 ├── docs/                  # Protocol + system architecture
 └── scripts/               # build / flash / test
 ```
@@ -45,7 +45,7 @@ fire-controllers/
 ./scripts/flash-output.sh
 ```
 
-Full checklist: [`hardware/as-built/BRINGUP.md`](hardware/as-built/BRINGUP.md)
+Full checklist: [`hardware/v1.0.0/BRINGUP.md`](hardware/v1.0.0/BRINGUP.md)
 
 ## Build
 

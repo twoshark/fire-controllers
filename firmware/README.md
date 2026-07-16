@@ -1,6 +1,6 @@
 # Firmware
 
-Embassy / Rust `no_std` firmware for the as-built STM32G0B1 boards.
+Embassy / Rust `no_std` firmware for the v1.0.0 STM32G0B1 boards.
 
 | Crate | Board | Binary |
 | --- | --- | --- |
@@ -8,8 +8,8 @@ Embassy / Rust `no_std` firmware for the as-built STM32G0B1 boards.
 | `input-controller` | input PCB | `target/thumbv6m-none-eabi/release/input-controller` |
 | `output-controller` | output PCB | `target/thumbv6m-none-eabi/release/output-controller` |
 
-Pin map: [`../hardware/as-built/PIN_MAP.md`](../hardware/as-built/PIN_MAP.md)
-Bring-up: [`../hardware/as-built/BRINGUP.md`](../hardware/as-built/BRINGUP.md)
+Pin map: [`../hardware/v1.0.0/PIN_MAP.md`](../hardware/v1.0.0/PIN_MAP.md)
+Bring-up: [`../hardware/v1.0.0/BRINGUP.md`](../hardware/v1.0.0/BRINGUP.md)
 
 ## Quick start
 

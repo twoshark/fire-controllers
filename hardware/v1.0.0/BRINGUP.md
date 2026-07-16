@@ -1,6 +1,6 @@
 # Board Bring-Up Guide
 
-Checklist for first power-on of the 2026-07-15 as-built boards.
+Checklist for first power-on of the 2026-07-15 v1.0.0 boards.
 Pin map: [`PIN_MAP.md`](PIN_MAP.md).
 As-built parts: [`INPUT_BOARD.md`](INPUT_BOARD.md) / [`OUTPUT_BOARD.md`](OUTPUT_BOARD.md).
 
@@ -52,7 +52,8 @@ Apply **current-limited** 12V to `J1` (start ~200mA limit on input board, ~500mA
 | 5 | `PA14`/BOOT0 idle | ~0V (pulldown) |
 | 6 | `NRST` idle | ~3.3V |
 
-If `3V3` is wrong: stop. Check `U4`/`L1`/`C19` path before attaching a probe.
+If `3V3` is wrong: stop. Check `U4`/`L1` and 3V3 bulk caps before attaching a probe
+(input: `C18`/`C28`; output: `C19`/`C30`).
 
 ## 3) Flash firmware (SWD preferred)
 
@@ -86,7 +87,7 @@ DFU entry: hold `SW2` (BOOT0) -> tap `SW1` (NRST) -> release `SW2`.
 | --- | --- | --- |
 | Channel LEDs | Short each `J2a`/`J2b` pin to `J3` GND | Matching yellow LED lights |
 | Link LED | No RS-485 peer | `LED2` blinks (~5Hz) |
-| TX activity | Scope / logic on `PA9` or `CN2` TX pair | Frames ~1kHz keepalive |
+| TX activity | Scope / logic on `PA9` or `CN2` TX pair | Edge TX + ~40 Hz idle keepalive |
 
 ### Output board alone
 
@@ -124,7 +125,7 @@ DFU entry: hold `SW2` (BOOT0) -> tap `SW1` (NRST) -> release `SW2`.
 | `./scripts/dfu-flash-output.sh` | USB DFU flash output |
 | `./scripts/monitor.sh` | Attach probe-rs RTT without reflashing |
 
-## 7) Known as-built gotchas
+## 7) Known v1.0.0 gotchas
 
 - Input CH6/CH7 are on `PB0`/`PB1` (not `PA6`/`PA7`); firmware polls them at 1 ms because EXTI0/1 are used by CH0/CH1.
 - Input CH0 LED is `PB10`, not `PB2`.
@@ -133,4 +134,4 @@ DFU entry: hold `SW2` (BOOT0) -> tap `SW1` (NRST) -> release `SW2`.
 - Input RS-485 connector is **`CN2`**, not `J4`.
 - Output reverse protection is **`Q9` P-MOS**, not a series SS34.
 - Output PTCs are **`1812L200/16GR`** (16V).
-- No series gate resistors on output as-built — gates are direct + 10k PD.
+- No series gate resistors on output v1.0.0 — gates are direct + 10k PD.

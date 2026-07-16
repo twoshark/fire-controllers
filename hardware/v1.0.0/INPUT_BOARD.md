@@ -1,4 +1,4 @@
-# Input Board (As-Built)
+# Input Board (v1.0.0)
 
 Exports: `exports/BOM_input.csv`, `PnP_input.csv`, `Netlist_input.asc`.
 Pins: [`PIN_MAP.md`](PIN_MAP.md). Bring-up: [`BRINGUP.md`](BRINGUP.md).
@@ -20,10 +20,10 @@ Pins: [`PIN_MAP.md`](PIN_MAP.md). Bring-up: [`BRINGUP.md`](BRINGUP.md).
 | Connector | Pin | Net |
 | --- | --- | --- |
 | `J1` | 1/2 | `VIN_12V_IN` / `GND` |
-| `J2a` | 1..4 | `IN_CH0_RAW`..`IN_CH3_RAW` |
-| `J2b` | 1..4 | `IN_CH4_RAW`..`IN_CH7_RAW` |
+| `J2a` | 1..4 | switch inputs CH0..CH3 (to RC + Schmitt → `IN_CH*_SENSE`) |
+| `J2b` | 1..4 | switch inputs CH4..CH7 (to RC + Schmitt → `IN_CH*_SENSE`) |
 | `J3` | 1/2 | `GND` / `GND` |
-| `CN2` | 1..6 | TX+, TX-, RX+, RX-, GND, SHIELD |
+| `CN2` | 1..6 | TX+, TX-, RX+, RX-, GND, SHIELD (pin 6 tied to GND on PCB) |
 | `J6` | ARM 10-pin | VTREF, SWDIO, GND, SWCLK, … NRST |
 
 ## Power

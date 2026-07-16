@@ -1,6 +1,6 @@
-# As-Built Hardware (2026-07-15)
+# Hardware v1.0.0 (2026-07-15)
 
-Board truth for the **printed** EasyEDA PCBs. Derived only from EasyEDA exports in [`exports/`](exports/).
+Board truth for printed EasyEDA PCBs (**v1.0.0**). Derived only from EasyEDA exports in [`exports/`](exports/).
 
 | Doc | Purpose |
 | --- | --- |

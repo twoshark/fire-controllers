@@ -10,18 +10,18 @@
 - A button press on the input controller must register across serial to the output in what feels like true real time to the user (<10ms end-to-end latency target)
 - Include connectors for all board inputs and outputs
 - All external connectors must be waterproof (IP67 or better). Connectors are panel-mounted on the enclosure and wired to the PCB; PCB uses screw terminals for easy enclosure wiring
-- Include industry standard methods for making the board easy to debug (test points, SWD headers, UART breakout, etc.)
+- Include industry standard methods for making the board easy to debug (SWD header + USB DFU on v1.0.0; UART breakout / named test points optional on future revisions)
 - Always ask clarifying questions
 
 # Project Overview
 
-This repo contains the design docs, code, and KiCad files that fully describe a system for real-time transmission of inputs from an input board, over serial, to an output board that controls 8x 12V outputs.
+This repo contains the design docs, firmware, and EasyEDA manufacturing exports that fully describe a system for real-time transmission of inputs from an input board, over serial, to an output board that controls 8x 12V outputs.
 
 The primary use cases for the outputs are 12V solenoids and relays.
 
 # Tech Stack / Repo Contents
 
-- KiCad for circuit schematics, PCB layout, and manufacturing files (Gerbers, drill files, BOM)
+- EasyEDA for schematics/PCB; manufacturing truth in `hardware/v1.0.0/exports/` (BOM, Pick-and-Place, PADS netlist)
 - STM32G0B1 series ARM Cortex-M0+ microcontroller with native USB DFU support (64MHz, modern, good Rust support)
 - Rust (embedded, no_std) using Embassy async framework for STM32 firmware
 - sh or Bash for build/flash/devops scripts
@@ -80,33 +80,30 @@ The board produces 8 outputs based on the state received over serial. If an over
 
 # Resolved Design Decisions
 
-1. **Power supply**: Off-the-shelf AC-DC modules inside each enclosure convert 120V AC to 12V DC. **Input board**: Mean Well IRM-15-12 (15W, PCB-mount, ~$8) — electronics-only draw ~1W. **Output board**: Mean Well LRS-200-12 (200W, 17A, enclosed, fanless, ~$28) — must supply 8x 2A load channels (192W peak). Each PCB uses an onboard `AP63203WU-7` 3.3V buck for MCU logic. The PCB itself never sees mains voltage — the AC-DC module is wired between the IEC inlet and the PCB's 12V screw terminal. The LRS-200-12 (output board) has a manual 115V/230V input voltage selector switch that must be set to the 115V position for 120V North American mains. **WARNING**: Keep the LRS-200-12 output trim at the factory **12.0V** default (do not raise it). As-built channel PTCs are `1812L200/16GR` (16V). The IRM-15-12 (input board) is auto-ranging (85–264VAC) and needs no switch. **As-built reference**: see `hardware/as-built/` (EasyEDA 2026-07-15).
+1. **Power supply**: Off-the-shelf AC-DC modules inside each enclosure convert 120V AC to 12V DC. **Input board**: Mean Well IRM-15-12 (15W, PCB-mount, ~$8) — electronics-only draw ~1W. **Output board**: Mean Well LRS-200-12 (200W, 17A, enclosed, fanless, ~$28) — must supply 8x 2A load channels (192W peak). Each PCB uses an onboard `AP63203WU-7` 3.3V buck for MCU logic. The PCB itself never sees mains voltage — the AC-DC module is wired between the IEC inlet and the PCB's 12V screw terminal. The LRS-200-12 (output board) has a manual 115V/230V input voltage selector switch that must be set to the 115V position for 120V North American mains. **WARNING**: Keep the LRS-200-12 output trim at the factory **12.0V** default (do not raise it). Channel PTCs are `1812L200/16GR` (16V). The IRM-15-12 (input board) is auto-ranging (85–264VAC) and needs no switch. **v1.0.0 reference**: see `hardware/v1.0.0/` (EasyEDA 2026-07-15).
 2. **Override detection**: Each override input uses pull-up + RC debounce + Schmitt-trigger buffering. Firmware reads digital level directly (closed switch = override ON; open switch = serial control).
 3. **Input interface**: Each channel is a simple switch-to-GND digital input with RC + Schmitt cleanup. No ADC divider path is used.
 4. **Waterproof connectors**: Amphenol AT series (automotive-grade, IP67, cost-effective) for signal connections. Panel-mounted on enclosure, wired to PCB screw terminals. IEC C14 inlet for 120V AC. M12 8-pin for full-duplex RS-485 link.
 5. **STM32 subfamily**: STM32G0B1CBT6, Cortex-M0+, 64MHz, LQFP48 package, native USB DFU support, ample GPIO for digital inputs, outputs, LEDs, USB, UART, and SWD.
 6. **Enclosure**: User designs separately. PCB provides M3 mounting holes in standard pattern, clearly labeled screw terminals, logical connector grouping (power, inputs, outputs, serial, debug), and comprehensive silkscreen.
 7. **Status LEDs**: All LEDs are surface-mounted directly on the PCB, grouped together along one edge in a defined LED block. The enclosure exposes these through aligned holes, a clear window strip, or light pipes. This eliminates LED wiring during assembly. PCB silkscreen clearly labels each LED's function next to it.
-8. **Serial protocol**: Full-duplex bidirectional **Hotline v2** protocol over RS-485 at 115200 baud. Primary direction: input→output state frames (3-byte: [0xAA] [8-bit channel state] [CRC8]) at 1kHz. Reverse direction: output→input heartbeat frames (3-byte: [0x55] [status byte] [CRC8]) at 10Hz. Two transceivers per board (one TX path, one RX path) eliminate bus-turnaround control in firmware. End-to-end latency: ~1-2ms typical, <5ms worst case.
+8. **Serial protocol**: Full-duplex bidirectional **Hotline v2** protocol over RS-485 at 115200 baud. Primary direction: input→output state frames (3-byte: [0xAA] [8-bit channel state] [CRC8]) on every input edge, with 25 ms idle keepalive (~40 Hz). Reverse direction: output→input heartbeat frames (3-byte: [0x55] [status byte] [CRC8]) at 10Hz. Two transceivers per board (one TX path, one RX path) eliminate bus-turnaround control in firmware. End-to-end latency: ~1-2ms typical, <5ms worst case.
 9. **RS-485 cabling**: Belden 9842 or equivalent 2-pair 24AWG shielded twisted pair, 120Ω characteristic impedance, specifically designed for RS-485. One 120Ω termination per receiver pair. M12 8-pin connectors at each enclosure.
 
-# As-Built Boards (authoritative)
+# Hardware v1.0.0 (authoritative)
 
-Printed PCB documentation and EasyEDA exports live in `hardware/as-built/` (`PIN_MAP.md`, `INPUT_BOARD.md`, `OUTPUT_BOARD.md`, `BRINGUP.md`, `exports/`). Prefer those over historical capture guides (removed).
+Printed PCB documentation and EasyEDA exports live in `hardware/v1.0.0/` (`PIN_MAP.md`, `INPUT_BOARD.md`, `OUTPUT_BOARD.md`, `BRINGUP.md`, `exports/`). Prefer those over historical capture guides (removed).
 
 # Expected Outputs
 
 - Input controller firmware (Rust, embedded no_std) with build/flash scripts
 - Output controller firmware (Rust, embedded no_std) with build/flash scripts
-- Complete manufacturing-ready KiCad project for each board:
-  - Schematic files (.kicad_sch)
-  - PCB layout files (.kicad_pcb)
-  - Gerber and drill files for fabrication
-  - BOM (CSV) with real part numbers and sourcing info
+- EasyEDA manufacturing exports per board in `hardware/v1.0.0/exports/`:
+  - BOM (CSV)
+  - Pick-and-Place / CPL (CSV)
+  - PADS netlist (ASC)
 - Top-level README with build instructions, architecture overview, and usage guide
-- Design docs and diagrams covering:
-  - System architecture
-  - Serial protocol specification
-  - Power supply design
-  - Input conditioning and output drive circuits
-  - PCB layout rationale
+- Design docs covering:
+  - System architecture (`docs/system-architecture.md`)
+  - Serial protocol specification (`docs/serial-protocol.md`)
+  - Board truth docs under `hardware/v1.0.0/`

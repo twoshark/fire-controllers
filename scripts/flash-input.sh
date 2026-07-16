@@ -7,7 +7,7 @@ CHIP="${CHIP:-STM32G0B1CBTx}"
 
 echo "==> Flashing input-controller via SWD ($CHIP)"
 echo "    Connect probe to J6 (2x5 SWD). Power board (3V3 up)."
-echo "    Pin map: hardware/as-built/PIN_MAP.md   Bring-up: hardware/as-built/BRINGUP.md"
+echo "    Pin map: hardware/v1.0.0/PIN_MAP.md   Bring-up: hardware/v1.0.0/BRINGUP.md"
 echo ""
 
 if ! command -v probe-rs >/dev/null 2>&1; then

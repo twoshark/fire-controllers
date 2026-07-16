@@ -1,4 +1,4 @@
-# Output Board (As-Built)
+# Output Board (v1.0.0)
 
 Exports: `exports/BOM_output.csv`, `PnP_output.csv`, `Netlist_output.asc`.
 Pins: [`PIN_MAP.md`](PIN_MAP.md). Bring-up: [`BRINGUP.md`](BRINGUP.md).

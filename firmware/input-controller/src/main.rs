@@ -19,7 +19,7 @@ use hotline_protocol::{
 use defmt_rtt as _;
 use panic_probe as _;
 
-// Netlist-verified pin map (2026-07-15 ASC): see hardware/as-built/PIN_MAP.md
+// Netlist-verified pin map (2026-07-15 ASC): see hardware/v1.0.0/PIN_MAP.md
 //   IN CH0..CH5 -> PA0, PA1, PA4, PA5, PA6, PA7 (EXTI)
 //   IN CH6..CH7 -> PB0, PB1 (polled; EXTI0/1 clash with PA0/PA1)
 //   USART1 TX/RX -> PA9 / PA10 (U2A.DI / U2B.RO)

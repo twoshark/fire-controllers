@@ -74,7 +74,8 @@ pub fn crc8(data: &[u8]) -> u8 {
 // State frame (input -> output, 0xAA sync)
 // ---------------------------------------------------------------------------
 
-/// An 8-channel state frame transmitted from input board to output board at 1 kHz.
+/// An 8-channel state frame transmitted from input board to output board
+/// (edge-driven, with [`STATE_KEEPALIVE_MS`] idle keepalive).
 ///
 /// Wire format: `[0xAA][payload][CRC8]` (3 bytes total).
 /// Each bit in `channels` maps to one channel (bit 0 = CH0, bit 7 = CH7).

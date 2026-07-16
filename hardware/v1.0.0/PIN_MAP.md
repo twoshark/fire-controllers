@@ -1,4 +1,4 @@
-# MCU Pin Map (Netlist-Verified)
+# MCU Pin Map
 
 Sources: `exports/Netlist_input.asc`, `exports/Netlist_output.asc` (2026-07-15).
 GPIO names use STM32G0B1CBT6 LQFP48 package pins.

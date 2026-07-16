@@ -20,7 +20,7 @@ use hotline_protocol::{
 use defmt_rtt as _;
 use panic_probe as _;
 
-// Netlist-verified pin map (2026-07-15 ASC): see hardware/v1.0.0/PIN_MAP.md
+// Pin map: hardware/v1.0.0/PIN_MAP.md
 //   OVR CH0..CH7 -> PA0..PA7          (Schmitt HIGH = force ON)
 //   GATE CH0..7  -> PB0, PB1, PB2, PB10..PB14 (HIGH = MOSFET on)
 //   CH LEDs      -> PB3..PB9, PC6     (active-low; refs CH0..CH7)

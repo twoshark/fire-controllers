@@ -67,7 +67,7 @@ If `3V3` is wrong: stop. Check `U4`/`L1` and 3V3 bulk caps before attaching a pr
 
 Expected RTT / defmt line:
 
-- input: `input-controller: init complete (netlist pin map)`
+- input: `input-controller: init complete`
 - output: `output-controller: init complete`
 
 DFU fallback (no probe):

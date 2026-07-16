@@ -111,7 +111,7 @@ DFU entry: hold `SW2` (BOOT0) -> tap `SW1` (NRST) -> release `SW2`.
    - Output `LINK` solid (state frames received; not failsafe)
 4. Close input CH0 -> output `CH0` LED + gate follow within a few ms.
 5. Open input, assert output override -> output stays ON.
-6. Unplug RS-485 -> output enters failsafe (gates OFF, `LINK` blinks) within ~100ms.
+6. Unplug RS-485 -> failsafe within ~100ms (`LINK` blinks; serial-driven channels OFF). Assert an override -> that channel still turns ON.
 
 ## 6) Script cheat sheet
 

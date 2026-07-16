@@ -1,12 +1,13 @@
 #![no_std]
 #![no_main]
 
+use board_common::{clock_config, usart_config, IWDG_TIMEOUT_US, UART_RX_BUF_LEN};
 use embassy_executor::Spawner;
 use embassy_futures::select::{select4, select_array, Either4};
 use embassy_stm32::exti::{ExtiInput, InterruptHandler as ExtiInterruptHandler};
 use embassy_stm32::gpio::{Level, Output, Pull, Speed};
 use embassy_stm32::mode::Async;
-use embassy_stm32::usart::{Config as UartConfig, Uart, UartRx, UartTx};
+use embassy_stm32::usart::{Uart, UartRx, UartTx};
 use embassy_stm32::wdg::IndependentWatchdog;
 use embassy_stm32::{bind_interrupts, dma, interrupt, peripherals, usart};
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
@@ -14,7 +15,8 @@ use embassy_sync::watch::Watch;
 use embassy_time::{Instant, Timer};
 
 use hotline_protocol::{
-    DecoderEvent, FrameDecoder, HeartbeatFrame, COMM_WATCHDOG_TIMEOUT_MS, HEARTBEAT_INTERVAL_MS,
+    resolve_outputs, DecoderEvent, FrameDecoder, HeartbeatFrame, COMM_WATCHDOG_TIMEOUT_MS,
+    HEARTBEAT_INTERVAL_MS,
 };
 
 use defmt_rtt as _;
@@ -31,7 +33,6 @@ use panic_probe as _;
 bind_interrupts!(struct Irqs {
     USART1 => usart::InterruptHandler<peripherals::USART1>;
     DMA1_CHANNEL2_3 => dma::InterruptHandler<peripherals::DMA1_CH2>, dma::InterruptHandler<peripherals::DMA1_CH3>;
-    // EXTI lines 0..7 (one per override channel PA0..PA7) grouped into the G0 vectors.
     EXTI0_1 => ExtiInterruptHandler<interrupt::typelevel::EXTI0_1>;
     EXTI2_3 => ExtiInterruptHandler<interrupt::typelevel::EXTI2_3>;
     EXTI4_15 => ExtiInterruptHandler<interrupt::typelevel::EXTI4_15>;
@@ -40,10 +41,6 @@ bind_interrupts!(struct Irqs {
 /// Upper bound on output-driver loop period: guarantees the watchdog is petted and
 /// outputs are refreshed even with no serial/override/failsafe activity.
 const OUTPUT_REEVAL_MS: u64 = 200;
-
-// ---------------------------------------------------------------------------
-// Shared state (statics)
-// ---------------------------------------------------------------------------
 
 /// Last valid channel state received over serial.
 static SERIAL_STATE: Watch<CriticalSectionRawMutex, u8, 3> = Watch::new();
@@ -54,37 +51,13 @@ static LAST_FRAME_INSTANT: Watch<CriticalSectionRawMutex, Instant, 2> = Watch::n
 /// Whether the communication watchdog has fired (failsafe mode).
 static FAILSAFE_ACTIVE: Watch<CriticalSectionRawMutex, bool, 3> = Watch::new();
 
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
-
 #[embassy_executor::main]
 async fn main(spawner: Spawner) {
-    let mut config = embassy_stm32::Config::default();
-    {
-        use embassy_stm32::rcc::*;
-        config.rcc.hsi = Some(Hsi {
-            sys_div: HsiSysDiv::DIV1,
-        });
-        config.rcc.pll = Some(Pll {
-            source: PllSource::HSI,
-            prediv: PllPreDiv::DIV1,
-            mul: PllMul::MUL8,
-            divp: None,
-            divq: None,
-            divr: Some(PllRDiv::DIV2),
-        });
-        config.rcc.sys = Sysclk::PLL1_R;
-    }
-    let p = embassy_stm32::init(config);
+    let p = embassy_stm32::init(clock_config());
 
-    // -- IWDG: 1 s hardware watchdog --
-    let mut iwdg = IndependentWatchdog::new(p.IWDG, 1_000_000);
+    let mut iwdg = IndependentWatchdog::new(p.IWDG, IWDG_TIMEOUT_US);
     iwdg.unleash();
 
-    // -- USART1: RS-485 at 115200 baud (PA9=TX, PA10=RX) with DMA --
-    let mut uart_config = UartConfig::default();
-    uart_config.baudrate = 115200;
     let uart1 = Uart::new(
         p.USART1,
         p.PA10,
@@ -92,12 +65,11 @@ async fn main(spawner: Spawner) {
         p.DMA1_CH2,
         p.DMA1_CH3,
         Irqs,
-        uart_config,
+        usart_config(),
     )
     .unwrap();
     let (tx, rx) = uart1.split();
 
-    // -- Overrides: J3a CH0..3 + J3b CH4..7 -> PA0..PA7 (HIGH = force ON) --
     let mut overrides = [
         ExtiInput::new(p.PA0, p.EXTI0, Pull::None, Irqs), // OVR0 / J3a.1
         ExtiInput::new(p.PA1, p.EXTI1, Pull::None, Irqs), // OVR1 / J3a.2
@@ -109,7 +81,6 @@ async fn main(spawner: Spawner) {
         ExtiInput::new(p.PA7, p.EXTI7, Pull::None, Irqs), // OVR7 / J3b.4
     ];
 
-    // -- MOSFET gates (default LOW = off; HW 10k PD R9..R16, no series Rg) --
     let mut gates: [Output; 8] = [
         Output::new(p.PB0, Level::Low, Speed::Low),  // Q1 / J5a.1
         Output::new(p.PB1, Level::Low, Speed::Low),  // Q2 / J5a.2
@@ -121,7 +92,6 @@ async fn main(spawner: Spawner) {
         Output::new(p.PB14, Level::Low, Speed::Low), // Q8 / J5b.4
     ];
 
-    // -- Channel LEDs CH0..CH7 (active LOW) --
     let mut ch_leds: [Output; 8] = [
         Output::new(p.PB3, Level::High, Speed::Low), // CH0
         Output::new(p.PB4, Level::High, Speed::Low), // CH1
@@ -133,17 +103,14 @@ async fn main(spawner: Spawner) {
         Output::new(p.PC6, Level::High, Speed::Low), // CH7
     ];
 
-    // -- LINK LED (active LOW): PC7 --
     let led_link = Output::new(p.PC7, Level::High, Speed::Low);
 
-    // Initialise shared state
     SERIAL_STATE.sender().send(0u8);
     LAST_FRAME_INSTANT.sender().send(Instant::now());
     FAILSAFE_ACTIVE.sender().send(false);
 
     defmt::info!("output-controller: init complete");
 
-    // Spawn tasks
     spawner.spawn(serial_receive(rx).unwrap());
     spawner.spawn(heartbeat_transmit(tx).unwrap());
     spawner.spawn(comm_watchdog().unwrap());
@@ -155,37 +122,26 @@ async fn main(spawner: Spawner) {
     let mut failsafe: bool = failsafe_rx.try_get().unwrap_or(false);
 
     loop {
-        // Read 8 override digital inputs (closed switch = HIGH = force ON).
-        let mut override_on = [false; 8];
+        let mut override_bits: u8 = 0;
         for (i, input) in overrides.iter().enumerate() {
-            override_on[i] = input.is_high();
+            if input.is_high() {
+                override_bits |= 1 << i;
+            }
         }
 
-        // Merge: failsafe forces all OFF; otherwise override forces ON, else the
-        // channel follows the latest serial state. One pass drives every gate + LED.
+        let outputs = resolve_outputs(failsafe, override_bits, serial_channels);
         for i in 0..8usize {
-            let on = if failsafe {
-                false
-            } else if override_on[i] {
-                true
-            } else {
-                serial_channels & (1 << i) != 0
-            };
-
-            if on {
+            if outputs & (1 << i) != 0 {
                 gates[i].set_high();
-                ch_leds[i].set_low(); // LED ON
+                ch_leds[i].set_low();
             } else {
                 gates[i].set_low();
-                ch_leds[i].set_high(); // LED OFF
+                ch_leds[i].set_high();
             }
         }
 
         iwdg.pet();
 
-        // Re-evaluate immediately on a new serial frame, a failsafe transition, or
-        // any override edge. The timeout bounds the loop so the watchdog is petted
-        // and outputs refreshed even with no activity.
         let override_edges = overrides.each_mut().map(|o| o.wait_for_any_edge());
         match select4(
             serial_rx.changed(),
@@ -203,40 +159,36 @@ async fn main(spawner: Spawner) {
     }
 }
 
-// ---------------------------------------------------------------------------
-// Serial receive task (continuous frame RX)
-// ---------------------------------------------------------------------------
-
 #[embassy_executor::task]
 async fn serial_receive(mut rx: UartRx<'static, Async>) {
     defmt::info!("serial_receive: started");
     let mut decoder = FrameDecoder::new();
-    let mut buf = [0u8; 1];
+    let mut buf = [0u8; UART_RX_BUF_LEN];
     let state_tx = SERIAL_STATE.sender();
     let frame_ts_tx = LAST_FRAME_INSTANT.sender();
 
     loop {
-        match rx.read(&mut buf).await {
-            Ok(()) => match decoder.feed(buf[0]) {
-                DecoderEvent::State(frame) => {
-                    state_tx.send(frame.channels);
-                    frame_ts_tx.send(Instant::now());
+        match rx.read_until_idle(&mut buf).await {
+            Ok(n) => {
+                for &byte in &buf[..n] {
+                    match decoder.feed(byte) {
+                        DecoderEvent::State(frame) => {
+                            state_tx.send(frame.channels);
+                            frame_ts_tx.send(Instant::now());
+                        }
+                        DecoderEvent::CrcError => {
+                            defmt::warn!("rx: CRC error");
+                        }
+                        _ => {}
+                    }
                 }
-                DecoderEvent::CrcError => {
-                    defmt::warn!("rx: CRC error");
-                }
-                _ => {}
-            },
+            }
             Err(e) => {
                 defmt::warn!("rx err: {:?}", e);
             }
         }
     }
 }
-
-// ---------------------------------------------------------------------------
-// Heartbeat transmit task (10 Hz)
-// ---------------------------------------------------------------------------
 
 #[embassy_executor::task]
 async fn heartbeat_transmit(mut tx: UartTx<'static, Async>) {
@@ -256,10 +208,6 @@ async fn heartbeat_transmit(mut tx: UartTx<'static, Async>) {
     }
 }
 
-// ---------------------------------------------------------------------------
-// Communication watchdog task
-// ---------------------------------------------------------------------------
-
 #[embassy_executor::task]
 async fn comm_watchdog() {
     defmt::info!(
@@ -268,24 +216,25 @@ async fn comm_watchdog() {
     );
     let failsafe_tx = FAILSAFE_ACTIVE.sender();
     let mut ts_rx = LAST_FRAME_INSTANT.receiver().unwrap();
+    let mut was_failsafe = false;
 
     loop {
         Timer::after_millis(COMM_WATCHDOG_TIMEOUT_MS / 2).await;
         let last_ts = ts_rx.try_get().unwrap_or(Instant::from_millis(0));
         let elapsed = last_ts.elapsed().as_millis();
+        let failsafe = elapsed > COMM_WATCHDOG_TIMEOUT_MS;
 
-        if elapsed > COMM_WATCHDOG_TIMEOUT_MS {
-            failsafe_tx.send(true);
-            defmt::warn!("FAILSAFE: no frame for {}ms", elapsed);
-        } else {
-            failsafe_tx.send(false);
+        if failsafe != was_failsafe {
+            was_failsafe = failsafe;
+            failsafe_tx.send(failsafe);
+            if failsafe {
+                defmt::warn!("FAILSAFE: no frame for {}ms", elapsed);
+            } else {
+                defmt::info!("FAILSAFE cleared");
+            }
         }
     }
 }
-
-// ---------------------------------------------------------------------------
-// Link LED driver task
-// ---------------------------------------------------------------------------
 
 #[embassy_executor::task]
 async fn link_led_driver(mut led: Output<'static>) {
@@ -298,13 +247,11 @@ async fn link_led_driver(mut led: Output<'static>) {
         }
 
         if in_failsafe {
-            // Fast blink: error pattern
             led.set_low();
             Timer::after_millis(50).await;
             led.set_high();
             Timer::after_millis(50).await;
         } else {
-            // Solid ON on valid frames
             led.set_low();
             Timer::after_millis(200).await;
         }

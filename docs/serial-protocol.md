@@ -77,5 +77,5 @@ Validation vector: `CRC8("123456789") = 0xA1`.
 ## Failsafe
 
 - Output board enables failsafe if no valid state frame is received for 100ms.
-- In failsafe, all outputs are forced OFF.
+- In failsafe, serial-derived channels are forced OFF; local override inputs still force their channels ON.
 - Heartbeat status reports the failsafe bit back to input board.

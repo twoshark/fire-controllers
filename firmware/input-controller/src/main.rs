@@ -1,11 +1,12 @@
 #![no_std]
 #![no_main]
 
+use board_common::{clock_config, usart_config, IWDG_TIMEOUT_US, UART_RX_BUF_LEN};
 use embassy_executor::Spawner;
 use embassy_futures::select::{select3, select_array, Either3};
 use embassy_stm32::exti::{ExtiInput, InterruptHandler as ExtiInterruptHandler};
 use embassy_stm32::gpio::{Input, Level, Output, Pull, Speed};
-use embassy_stm32::usart::{Config as UartConfig, Uart};
+use embassy_stm32::usart::Uart;
 use embassy_stm32::wdg::IndependentWatchdog;
 use embassy_stm32::{bind_interrupts, dma, interrupt, peripherals, usart};
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
@@ -42,31 +43,11 @@ static LINK_HEALTHY: Watch<CriticalSectionRawMutex, bool, 2> = Watch::new();
 
 #[embassy_executor::main]
 async fn main(spawner: Spawner) {
-    let mut config = embassy_stm32::Config::default();
-    {
-        use embassy_stm32::rcc::*;
-        config.rcc.hsi = Some(Hsi {
-            sys_div: HsiSysDiv::DIV1,
-        });
-        config.rcc.pll = Some(Pll {
-            source: PllSource::HSI,
-            prediv: PllPreDiv::DIV1,
-            mul: PllMul::MUL8,
-            divp: None,
-            divq: None,
-            divr: Some(PllRDiv::DIV2),
-        });
-        config.rcc.sys = Sysclk::PLL1_R;
-    }
-    let p = embassy_stm32::init(config);
+    let p = embassy_stm32::init(clock_config());
 
-    // -- IWDG: 1 s hardware watchdog --
-    let mut iwdg = IndependentWatchdog::new(p.IWDG, 1_000_000);
+    let mut iwdg = IndependentWatchdog::new(p.IWDG, IWDG_TIMEOUT_US);
     iwdg.unleash();
 
-    // -- USART1: full-duplex RS-485 at 115200 (PA9=TX, PA10=RX) with DMA --
-    let mut uart_config = UartConfig::default();
-    uart_config.baudrate = 115200;
     let uart1 = Uart::new(
         p.USART1,
         p.PA10,
@@ -74,14 +55,12 @@ async fn main(spawner: Spawner) {
         p.DMA1_CH2,
         p.DMA1_CH3,
         Irqs,
-        uart_config,
+        usart_config(),
     )
     .unwrap();
     let (mut tx, rx) = uart1.split();
 
-    // -- Digital inputs (bit n = channel n) --
-    // CH0..CH5 use EXTI. CH6/CH7 are on PB0/PB1 which share EXTI0/1 with PA0/PA1,
-    // so they are polled at POLLED_INPUT_MS.
+    // CH0..CH5 use EXTI. CH6/CH7 share EXTI0/1 with PA0/PA1, so they are polled.
     let mut exti_in = [
         ExtiInput::new(p.PA0, p.EXTI0, Pull::None, Irqs), // CH0 / J2a.1
         ExtiInput::new(p.PA1, p.EXTI1, Pull::None, Irqs), // CH1 / J2a.2
@@ -93,7 +72,6 @@ async fn main(spawner: Spawner) {
     let ch6 = Input::new(p.PB0, Pull::None); // CH6 / J2b.3
     let ch7 = Input::new(p.PB1, Pull::None); // CH7 / J2b.4
 
-    // -- Channel LEDs LED3..LED10 (active LOW) --
     let mut leds: [Output; 8] = [
         Output::new(p.PB10, Level::High, Speed::Low), // LED3  CH0
         Output::new(p.PA15, Level::High, Speed::Low), // LED4  CH1
@@ -105,7 +83,6 @@ async fn main(spawner: Spawner) {
         Output::new(p.PB8, Level::High, Speed::Low),  // LED10 CH7
     ];
 
-    // -- Link LED2 (active LOW): PB9 --
     let led_link = Output::new(p.PB9, Level::High, Speed::Low);
 
     defmt::info!("input-controller: init complete");
@@ -162,10 +139,6 @@ async fn main(spawner: Spawner) {
     }
 }
 
-// ---------------------------------------------------------------------------
-// Heartbeat monitor task
-// ---------------------------------------------------------------------------
-
 type UartRx = embassy_stm32::usart::UartRx<'static, embassy_stm32::mode::Async>;
 
 #[embassy_executor::task]
@@ -173,31 +146,35 @@ async fn heartbeat_monitor(mut rx: UartRx) {
     defmt::info!("heartbeat_monitor: started");
     let mut decoder = FrameDecoder::new();
     let mut last_hb: Option<Instant> = None;
-    let mut buf = [0u8; 1];
+    let mut buf = [0u8; UART_RX_BUF_LEN];
     let sender = LINK_HEALTHY.sender();
     let mut link_healthy = false;
 
     loop {
         match embassy_time::with_timeout(
             embassy_time::Duration::from_millis(100),
-            rx.read(&mut buf),
+            rx.read_until_idle(&mut buf),
         )
         .await
         {
-            Ok(Ok(())) => match decoder.feed(buf[0]) {
-                DecoderEvent::Heartbeat(hb) => {
-                    last_hb = Some(Instant::now());
-                    defmt::debug!(
-                        "hb: healthy={} failsafe={}",
-                        hb.is_healthy(),
-                        hb.is_failsafe_active()
-                    );
+            Ok(Ok(n)) => {
+                for &byte in &buf[..n] {
+                    match decoder.feed(byte) {
+                        DecoderEvent::Heartbeat(hb) => {
+                            last_hb = Some(Instant::now());
+                            defmt::debug!(
+                                "hb: healthy={} failsafe={}",
+                                hb.is_healthy(),
+                                hb.is_failsafe_active()
+                            );
+                        }
+                        DecoderEvent::CrcError => {
+                            defmt::warn!("hb: CRC error");
+                        }
+                        _ => {}
+                    }
                 }
-                DecoderEvent::CrcError => {
-                    defmt::warn!("hb: CRC error");
-                }
-                _ => {}
-            },
+            }
             Ok(Err(e)) => {
                 defmt::warn!("hb RX err: {:?}", e);
             }
@@ -216,10 +193,6 @@ async fn heartbeat_monitor(mut rx: UartRx) {
     }
 }
 
-// ---------------------------------------------------------------------------
-// Link LED driver task
-// ---------------------------------------------------------------------------
-
 #[embassy_executor::task]
 async fn link_led_driver(mut led: Output<'static>) {
     let mut receiver = LINK_HEALTHY.receiver().unwrap();
@@ -228,7 +201,6 @@ async fn link_led_driver(mut led: Output<'static>) {
     loop {
         if healthy {
             led.set_low(); // solid ON
-                           // Wait for state change or re-check periodically
             if let Ok(h) = embassy_time::with_timeout(
                 embassy_time::Duration::from_millis(200),
                 receiver.changed(),
@@ -238,12 +210,10 @@ async fn link_led_driver(mut led: Output<'static>) {
                 healthy = h;
             }
         } else {
-            // Blink: no heartbeat
             led.set_low();
             Timer::after_millis(100).await;
             led.set_high();
             Timer::after_millis(100).await;
-            // Check for state update (non-blocking)
             if let Some(h) = receiver.try_get() {
                 healthy = h;
             }

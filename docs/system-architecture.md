@@ -95,7 +95,7 @@ BOOT0 access:
 - 8x IRLML6344 low-side MOSFET channels
 - Per-channel PTC `1812L200/16GR` (2A hold, 16V)
 - SS34 flyback diode per channel
-- Output failsafe forces all channels OFF on comm watchdog timeout
+- Output failsafe forces serial-derived channels OFF on comm watchdog timeout; local overrides still work
 
 ## Firmware architecture
 

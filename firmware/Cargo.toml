@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
+    "board-common",
     "hotline-protocol",
     "input-controller",
     "output-controller",

@@ -25,9 +25,6 @@ pub const HEARTBEAT_INTERVAL_MS: u64 = 100;
 /// Maximum allowed age of the latest heartbeat before link is considered unhealthy.
 pub const HEARTBEAT_LOSS_TIMEOUT_MS: u64 = 500;
 
-/// Polling interval in milliseconds.
-pub const POLL_INTERVAL_MS: u64 = 1;
-
 /// Maximum interval between input->output state frames when inputs are idle.
 ///
 /// In the event-driven input firmware, a state frame is sent immediately on any
@@ -255,6 +252,39 @@ impl Default for FrameDecoder {
 }
 
 // ---------------------------------------------------------------------------
+// Output channel merge
+// ---------------------------------------------------------------------------
+
+/// Resolve one output channel.
+///
+/// Priority: local override forces ON; else failsafe forces OFF; else serial bit.
+/// Local override always wins so the output board can be operated manually when
+/// the link is down.
+#[inline]
+pub fn resolve_channel(failsafe: bool, override_on: bool, serial_on: bool) -> bool {
+    if override_on {
+        true
+    } else if failsafe {
+        false
+    } else {
+        serial_on
+    }
+}
+
+/// Resolve all 8 channels into a bitmask (`bit0` = CH0).
+///
+/// Local override bits always force ON. Failsafe only clears serial-derived
+/// channels (`overrides | serial` when healthy; `overrides` alone in failsafe).
+#[inline]
+pub fn resolve_outputs(failsafe: bool, overrides: u8, serial: u8) -> u8 {
+    if failsafe {
+        overrides
+    } else {
+        overrides | serial
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Tests (host-runnable)
 // ---------------------------------------------------------------------------
 
@@ -474,5 +504,30 @@ mod tests {
             dec.feed(hb_wire[2]),
             DecoderEvent::Heartbeat(HeartbeatFrame::new(true, true))
         );
+    }
+
+    // -- Output merge --
+
+    #[test]
+    fn resolve_channel_priority() {
+        // Local override always forces ON, including during failsafe.
+        assert!(resolve_channel(true, true, true));
+        assert!(resolve_channel(true, true, false));
+        assert!(!resolve_channel(true, false, true));
+        assert!(resolve_channel(false, true, false));
+        assert!(resolve_channel(false, false, true));
+        assert!(!resolve_channel(false, false, false));
+        assert!(resolve_channel(false, true, true));
+    }
+
+    #[test]
+    fn resolve_outputs_bitmask() {
+        // Failsafe drops serial bits but keeps local overrides.
+        assert_eq!(resolve_outputs(true, 0xFF, 0xFF), 0xFF);
+        assert_eq!(resolve_outputs(true, 0x0F, 0xF0), 0x0F);
+        assert_eq!(resolve_outputs(false, 0x0F, 0xF0), 0xFF);
+        assert_eq!(resolve_outputs(false, 0x00, 0xA5), 0xA5);
+        assert_eq!(resolve_outputs(false, 0xA5, 0x00), 0xA5);
+        assert_eq!(resolve_outputs(false, 0x0F, 0x33), 0x3F);
     }
 }

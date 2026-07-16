@@ -12,6 +12,7 @@ test = false
 bench = false
 
 [dependencies]
+board-common = { path = "../board-common" }
 hotline-protocol = { path = "../hotline-protocol", features = ["defmt"] }
 
 embassy-stm32 = { version = "0.6.0", features = ["defmt", "time-driver-any", "stm32g0b1cb", "memory-x", "unstable-pac", "exti"] }

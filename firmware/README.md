@@ -4,6 +4,7 @@ Embassy / Rust `no_std` firmware for the v1.0.0 STM32G0B1 boards.
 
 | Crate | Board | Binary |
 | --- | --- | --- |
+| `board-common` | shared | library (clocks / UART / IWDG helpers) |
 | `hotline-protocol` | shared | library + host tests |
 | `input-controller` | input PCB | `target/thumbv6m-none-eabi/release/input-controller` |
 | `output-controller` | output PCB | `target/thumbv6m-none-eabi/release/output-controller` |
@@ -37,7 +38,7 @@ Chip target for probe-rs: `STM32G0B1CBTx`.
 - Receives state frames on USART1 RX
 - Overrides on `PA0`..`PA7` force channel ON
 - Gates on `PB0`,`PB1`,`PB2`,`PB10`..`PB14` (default low / OFF)
-- Comm watchdog ~100ms -> failsafe all-OFF
+- Comm watchdog ~100ms -> failsafe (serial channels OFF; local overrides still force ON)
 - Heartbeat TX at 10Hz; link LED on `PC7`
 
 ## Protocol

@@ -41,6 +41,9 @@ jobs:
       - name: clippy (hotline-protocol, host target)
         run: cargo clippy -p hotline-protocol --all-targets --target x86_64-unknown-linux-gnu -- -D warnings
 
+      - name: clippy (board-common, cross target)
+        run: cargo clippy --target thumbv6m-none-eabi -p board-common -- -D warnings
+
       - name: clippy (input-controller, cross target)
         run: cargo clippy --target thumbv6m-none-eabi -p input-controller -- -D warnings
 

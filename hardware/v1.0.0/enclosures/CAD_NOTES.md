@@ -1,108 +1,58 @@
-# CAD / 3D-print notes
+# CAD / 3D-print notes (budget GX16)
 
-Printable shells for **sign-input** and **mp-input**. Dimensions are starting recommendations — adjust after measuring your actual PCB + PSU stack.
+Shells for sign-input, mp-input, sign-output, mp-output.
 
-## Target IP strategy
+## IP strategy
 
-3D prints are porous unless sealed. Treat IP67 as **panel components + gasketed lid**, not raw PETG alone:
+Gasketed lid + GX16 panel seals + caps + HangTon USB **IP65** with weather cap. Expect **IP55–IP65** after hose test — not lab-certified IP67/IP68.
 
-1. 2–3 mm deep lid groove + continuous EPDM/silicone O-ring / gasket cord
-2. All cutouts use the component’s panel gasket + correct torque
-3. Optional: brush-on epoxy / polyurethane coat on exterior
-4. Orient seams away from spray; drain lip under lid
+## Outer sizes (start)
 
-Expect **IP65–IP67 with care**; validate with hose test before field use.
-
-## Suggested outer sizes
-
-| Box | Outer L × W × H | Why |
+| Box | L × W × H mm | Driver |
 | --- | --- | --- |
-| **sign-input** | **240 × 160 × 90 mm** | 6× 22 mm + POWER + 2× 16 mm + connectors |
-| **mp-input** | **200 × 140 × 90 mm** | Fewer channel buttons |
+| sign-input | 240 × 160 × 90 | Arcade row |
+| mp-input | 200 × 140 × 90 | Fewer buttons |
+| sign-output | 300 × 220 × 110 | LRS-200 (215×115×30) |
+| mp-output | 280 × 200 × 100 | LRS-150 (159×97×30) |
 
-Wall: **3.0–3.5 mm** PETG/ABS. Lid: **3 mm**. Corner radius ≥3 mm for strength.
+Wall 3.0–3.5 mm PETG/ABS; lid 3 mm; gasket groove 2–3 mm.
 
-## Internal keep-outs
+## Cutouts
 
-| Item | Envelope (approx.) | Mount |
+| Feature | Hole | Notes |
 | --- | --- | --- |
-| Input PCB | check your panel; leave 10 mm margin | M3 standoffs 8–10 mm |
-| IRM-15-12 | 53 × 28 × 25 mm + wiring | Insulated carrier; AC clearance ≥5 mm to plastic if no coating |
-| Diode daughter | ~70 × 25 × 10 mm (from PnP span) | Standoffs or adhesive standoff |
-| Cable bend (M12/USB) | 30 mm behind panel | — |
+| GX16 panel | **Ø16 mm** | All power/signal GX16 |
+| USB-C HangTon D-type | D-cut per datasheet | Cap clearance; nut inside |
+| RESET/BOOT Adafruit 16 mm | **Ø16 mm** | Gasket included |
+| POWER rocker | ~30 × 22 mm | `WRG32F2FBBNN`; seal cutout |
+| Arcade (input) | per your buttons | — |
+| LED window | ~80×8 mm | Match PCB LED row |
 
-## Front panel cutouts
-
-| Feature | Hole | Qty sign / mp |
-| --- | --- | --- |
-| Channel + ALL + POWER (arcade) | **per your arcade datasheet** (often Ø24–30 mm) | 7 / 5 |
-| RESET, BOOT | **Ø16.0 mm** (or arcade if you prefer) | 2 / 2 |
-| M12-8 panel | per datasheet (often **Ø16 mm** / M16 thread) | 1 |
-| USB-C bulkhead | per datasheet (often rectangular + 2 screws) | 1 |
-| Bulgin / IP68 Buccaneer 400 | **Ø16 mm** class single-hole (confirm `PX0412` datasheet) | 1 |
-| LED window | slot matching PCB LED row (~80×8 mm) | 1 |
-
-Arcade spacing: leave **≥ finger width** between bezels; verify nut clearance behind the panel.
-
-### Suggested front layout — sign-input
+### sign-output / mp-output edge layout
 
 ```text
-┌──────────────────────────────────────────────┐
-│  [S1] [S2] [S3] [S4] [S5]     [ALL FIRE]     │
-│                                              │
-│  [POWER]              [RESET] [BOOT]         │
-│                                              │
-│  ░░░░░ LED WINDOW ░░░░░                      │
-│                                              │
-│  (USB-C)     (M12 RS-485)     (IP67 AC)      │
-└──────────────────────────────────────────────┘
+[AC IN GX16-3 male] [GLOW GX16-3 female] [RS-485 GX16-6] [SOL multipin] [USB-C]
 ```
 
-### Suggested front layout — mp-input
+Put AC/glow on bottom drip edge. Label `120VAC IN`, `GLOW 120VAC`, `SOLENOID 12V`, `RS-485`.
 
-```text
-┌────────────────────────────────────┐
-│  [M1] [M2] [M3]      [ALL FIRE]    │
-│                                    │
-│  [POWER]        [RESET] [BOOT]     │
-│                                    │
-│  ░░░ LED WINDOW ░░░                │
-│                                    │
-│  (USB-C)  (M12)  (IP67 AC)         │
-└────────────────────────────────────┘
-```
+## Keep-outs
 
-Put **IP67 AC inlet on the bottom or rear** if you want the front cleaner; keep AC wiring short inside. Cap all connectors when unmated.
-
-## Print settings (starting point)
-
-| Parameter | Value |
+| Item | Size |
 | --- | --- |
-| Material | PETG (outdoor) or ABS (acetone-smoothable) |
-| Infill | 40–60% gyroid for walls |
-| Walls | ≥4 perimeters |
-| Layer | 0.2 mm |
-| Orientation | Lid flat; box open-face up |
-| Inserts | M3 heat-set after print |
+| LRS-200 | 215 × 115 × 30 mm + terminals + 10 mm airflow |
+| LRS-150 | 159 × 97 × 30 mm + terminals + 10 mm airflow |
+| IRM-15-12 | 53 × 28 × 25 mm |
+| G5LE | ~22 × 16 × 19 mm |
 
-## Fasteners
+## Print
 
-- Lid: M3×10 with washers into heat-sets (6–8 places)
-- PCB: M3×8 + 6–8 mm nylon/brass standoffs
-- Do not metal-standoff directly under AC traces without insulation
+PETG; ≥4 walls; 40–60% gyroid; M3 heat-sets; lid screws 6–10 places.
 
-## Labeling
+## Checklist
 
-Laser/engrave or vinyl:
-
-- Channel names, ALL FIRE, POWER, RESET, BOOT
-- `RS-485`, `USB DFU`, `120 VAC`
-- Warning: mains inside
-
-## CAD checklist before slicing
-
-- [ ] Gasket groove continuous (no gaps at corners)
-- [ ] Nut clearance behind every panel connector
-- [ ] IRM airflow: ≥10 mm free above module
-- [ ] Strain relief bosses for internal harness
-- [ ] Drain / weep optional on bottom (trade vs IP)
+- [ ] Continuous gasket  
+- [ ] Nut clearance behind every GX16  
+- [ ] AC loom isolated from 12 V / RS-485  
+- [ ] LRS selector accessible before final close  
+- [ ] Caps for unmated connectors  

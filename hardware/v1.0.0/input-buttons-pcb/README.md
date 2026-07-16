@@ -4,14 +4,23 @@ EasyEDA export 2026-07-15. Diode-OR board for the enclosure **ALL FIRE** button.
 
 ## What it does
 
-Eight `1N4148W` diodes form a wired-OR so one **ALL FIRE** switch can pull multiple channel sense lines to GND at once (same polarity as the per-channel buttons).
+`1N4148W` diodes form a wired-OR so **ALL FIRE** pulls the **same channel nets as that enclosure’s individual buttons** to GND (same polarity as per-channel NO switches).
 
 | Net | Role |
 | --- | --- |
-| `IN_CH0_BUTTON_A` … `IN_CH7_BUTTON_A` | To input-board `J2a`/`J2b` channel terminals (and to each channel button NO contact) |
-| `ALL_BUTTON_A` | Common cathode side → ALL FIRE switch → `GND` |
+| `IN_CHx_BUTTON_A` | Tied to input-board channel terminal **and** that channel’s arcade NO |
+| `ALL_BUTTON_A` | ALL FIRE NO → this net → GND |
 
-Diode orientation (from netlist): `D*.1` on `ALL_BUTTON_A`, `D*.2` on `IN_CHx_BUTTON_A`. With SOD-123 cathode on pin 1 this pulls channels **low** when `ALL_BUTTON_A` is grounded.
+Diode orientation (netlist): `D*.1` on `ALL_BUTTON_A`, `D*.2` on `IN_CHx_BUTTON_A`. Cathode on pin 1 → grounding `ALL_BUTTON_A` pulls wired channels **low**.
+
+## Scope per enclosure (critical)
+
+| Enclosure | Individual buttons | ALL FIRE must assert | Wire diodes | Leave open |
+| --- | --- | --- | --- | --- |
+| **sign-input** | front CH1..CH5 → MCU CH0..CH4 | **exactly CH0..CH4** | D1..D5 | D6..D8 pads; `J2b.2..4` |
+| **mp-input** | front CH1..CH3 → MCU CH0..CH2 | **exactly CH0..CH2** | D1..D3 | D4..D8 pads; unused `J2` |
+
+Do **not** strap unused diode cathodes onto the input PCB or ALL FIRE will light unused Hotline bits.
 
 ## Exports
 
@@ -23,18 +32,6 @@ Diode orientation (from netlist): `D*.1` on `ALL_BUTTON_A`, `D*.2` on `IN_CHx_BU
 
 ## Gaps / wiring note
 
-This export contains **only the diodes** — no connectors in the BOM/PnP. For enclosure builds:
+Export is **diodes only** (no connectors). For builds: solder flying leads to used pads, or rev the PCB with screw terminals (`ALL`, used `CHx`, `GND`).
 
-1. Solder flying leads to the diode pads / add a through-hole header on a board rev, **or**
-2. Prefer a small screw-terminal carrier in a future PCB rev (`ALL`, `CH0`…`CH7`, `GND`).
-
-Until then, treat pads as solder posts and strain-relieve every wire.
-
-## Channel usage by enclosure
-
-| Enclosure | Wired channels | Unused diodes |
-| --- | --- | --- |
-| **sign-input** | CH0..CH4 + ALL | Leave CH5..CH7 pads open (or omit those diodes) |
-| **mp-input** | CH0..CH2 + ALL | Leave CH3..CH7 open |
-
-See [`../enclosures/`](../enclosures/) for full box designs.
+See [`../enclosures/WIRING.md`](../enclosures/WIRING.md).

@@ -9,7 +9,7 @@ Board truth for printed EasyEDA PCBs (**v1.0.0**). Derived only from EasyEDA exp
 | [`OUTPUT_BOARD.md`](OUTPUT_BOARD.md) | Output connectors, power, gates, loads |
 | [`BRINGUP.md`](BRINGUP.md) | First power-on, flash, link test |
 | [`input-buttons-pcb/`](input-buttons-pcb/) | ALL FIRE diode-OR daughter PCB |
-| [`enclosures/`](enclosures/) | sign-input + mp-input enclosure designs |
+| [`enclosures/`](enclosures/) | sign/mp input+output; budget BOM + [`SHOPPING_LIST.md`](enclosures/SHOPPING_LIST.md) |
 | [`exports/`](exports/) | BOM, Pick-and-Place, Netlist (PADS ASC) |
 
 Firmware: `firmware/input-controller`, `firmware/output-controller`.

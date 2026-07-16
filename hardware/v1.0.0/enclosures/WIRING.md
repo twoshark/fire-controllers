@@ -1,158 +1,121 @@
-# Enclosure wiring
+# Enclosure wiring (budget GX16 platform)
 
-Applies to **sign-input** and **mp-input**. Only the number of channel buttons differs.
+Applies to all four boxes. Connector family: **GX16** (not Buccaneer / Phoenix M12 / AT). Parts: [`PARTS_BOM.md`](PARTS_BOM.md).
 
-## Block diagram
+---
+
+## Part A — Input (sign-input / mp-input)
+
+### ALL FIRE rule
+
+| Box | Front buttons | MCU bits | Diodes |
+| --- | --- | --- | --- |
+| sign-input | CH1..CH5 | CH0..CH4 | D1..D5 only |
+| mp-input | CH1..CH3 | CH0..CH2 | D1..D3 only |
+
+Do not wire unused diode pads or unused `J2` pins.
+
+### Input block diagram
 
 ```mermaid
 flowchart TB
-  subgraph AC["AC domain"]
-    IEC[Bulgin 400 PX0412 panel]
-    FUSE[1A fuse]
-    PWR[POWER latching switch]
-    IEC --> FUSE --> PWR
-  end
-
-  subgraph PSU["PSU"]
-    IRM["IRM-15-12\n12V / 1.25A"]
-    PWR -->|AC/L AC/N| IRM
-  end
-
-  subgraph DC["12V domain"]
-    J1[input PCB J1]
-    LEDS[Button LEDs]
-    IRM -->|+12V GND| J1
-    IRM -->|+12V GND| LEDS
-  end
-
-  subgraph BTN["Front buttons"]
-    CHx[CH momentary NO]
-    ALL[ALL FIRE NO]
-    RST[RESET 16mm]
-    BOOT[BOOT 16mm]
-  end
-
-  subgraph DIO["input-buttons PCB"]
-    OR[Diode OR D1..Dn]
-  end
-
-  subgraph MCU["input PCB"]
-    J2[J2a / J2b channels]
-    J3[J3 GND]
-    CN2[CN2 RS-485]
-    J5[J5 USB-C]
-    SWD[NRST / BOOT0]
-  end
-
-  CHx -->|NO → CHx net\nCOM → GND| J2
-  CHx --> J3
-  ALL -->|NO → ALL_BUTTON_A\nCOM → GND| OR
-  OR -->|cathodes → CHx nets| J2
-  RST --> SWD
-  BOOT --> SWD
-  M12[M12-8 panel] --> CN2
-  USBP[USB-C IP67 panel] --> J5
+  AC[GX16-3 AC IN] --> FUSE[1A fuse] --> PWR[Arcade POWER]
+  PWR --> IRM[IRM-15-12]
+  IRM --> J1[input J1]
+  IRM --> LEDS[Arcade LEDs]
+  CHx[CH buttons] --> J2[J2 used pins]
+  ALL[ALL FIRE] --> OR[diode OR] --> J2
+  RST[RESET 559] --> SWD[NRST/BOOT0]
+  BOOT[BOOT 481] --> SWD
+  M12[GX16-6 RS-485] --> CN2[CN2]
+  USB[HangTon USB-C] --> J5[J5]
 ```
 
-## Channel map
+### POWER (input)
 
-### sign-input
+Arcade latch: fuse load → switch → IRM `AC/L`. Neutral unswitched. PE to inlet PE only (IRM is Class II).
 
-| Front label | Input net | Board terminal | Diode |
-| --- | --- | --- | --- |
-| CH1 / Sign A | `IN_CH0` | `J2a.1` | D1 |
-| CH2 / Sign B | `IN_CH1` | `J2a.2` | D2 |
-| CH3 / Sign C | `IN_CH2` | `J2a.3` | D3 |
-| CH4 / Sign D | `IN_CH3` | `J2a.4` | D4 |
-| CH5 / Sign E | `IN_CH4` | `J2b.1` | D5 |
-| ALL FIRE | `ALL_BUTTON_A` | via diodes → CH0..CH4 | D1..D5 |
-| — | unused | `J2b.2..4` | leave open |
+### RESET / BOOT
 
-### mp-input
+COM → GND; NO → `NRST` / `BOOT0`.
 
-| Front label | Input net | Board terminal | Diode |
-| --- | --- | --- | --- |
-| CH1 | `IN_CH0` | `J2a.1` | D1 |
-| CH2 | `IN_CH1` | `J2a.2` | D2 |
-| CH3 | `IN_CH2` | `J2a.3` | D3 |
-| ALL FIRE | `ALL_BUTTON_A` | via diodes → CH0..CH2 | D1..D3 |
-| — | unused | rest of J2 | leave open |
+---
 
-Polarity reminder: closed button → channel line to **GND** → Schmitt **HIGH** on MCU = active.
+## Part B — Output (sign-output / mp-output)
 
-## Per-button wiring (arcade momentary channel / ALL)
+### Output block diagram
 
-Pin names vary by arcade switch — map to:
-
-| Switch pin | Wire to |
-| --- | --- |
-| NO | Channel net **or** `ALL_BUTTON_A` |
-| COM / C | `GND` (board `J3` and PSU −V star) |
-| LED+ (if lit) | `+12V` |
-| LED− (if lit) | `GND` |
-
-ALL FIRE does **not** connect directly to a channel terminal; it only grounds `ALL_BUTTON_A` on the daughter PCB so diodes pull the used channel nets low.
-
-## POWER switch (latching, AC)
-
-| Contact | Connection |
-| --- | --- |
-| Common / pole | Fuse load side (from IEC Line) |
-| NO (latched ON) | IRM `AC/L` |
-| Neutral | IEC Neutral → IRM `AC/N` (unswitched) |
-| LED+ / LED− | `+12V` / `GND` (lights only when PSU is up) |
-
-Class II IRM has **no PE pin**. If using a metal panel, bond PE from inlet to chassis only if the inlet provides PE; plastic print → leave PE open / cap.
-
-## RESET / BOOT
-
-| Button | MCU / board |
-| --- | --- |
-| RESET COM | GND |
-| RESET NO | `NRST` (SW1 net / SWD `J6` NRST) |
-| BOOT COM | GND |
-| BOOT NO | `BOOT0` (SW2 net) |
-
-DFU entry (same as bring-up): hold BOOT → tap RESET → release BOOT. Panel buttons replace onboard SW1/SW2; leave onboard switches accessible or desolder if they fight the panel (parallel NO to GND is OK if both open by default).
-
-## RS-485 M12 pinout (recommended)
-
-Use the same logical map as board `CN2`, then field cable **crossover** to the output box per [`../PIN_MAP.md`](../PIN_MAP.md).
-
-| M12 pin | Signal | Board `CN2` |
-| ---: | --- | --- |
-| 1 | TX+ | 1 |
-| 2 | TX− | 2 |
-| 3 | RX+ | 3 |
-| 4 | RX− | 4 |
-| 5 | GND | 5 |
-| 6 | SHIELD | 6 |
-| 7 | NC | — |
-| 8 | NC | — |
-
-Pair TX± and RX±. Shield drain → pin 6 only (already bonded to GND on PCB).
-
-## USB-C
-
-Panel IP67 USB-C → short pigtail → board `J5`. Mount so the sealed face is outside; keep the board USB-C unused or covered.
-
-## Grounding / star point
-
-```text
-PSU −V ──┬── input J1.GND
-         ├── J3 (switch returns)
-         ├── all LED−
-         ├── M12 pin 5
-         └── RESET/BOOT COM
+```mermaid
+flowchart TB
+  IN[GX16-3 AC IN male] --> F[fuse 5A sign / 3.15A mp] --> PWR[POWER rocker]
+  PWR --> LRS[LRS-200 sign / LRS-150 mp]
+  LRS --> J1[J1 / J6]
+  PWR -->|hot| COM[G5LE COM]
+  COM --> NO[NO] --> GLOW[GX16-3 GLOW female]
+  J6[J6] --> SOL[GX16 SOL pins 1-2 = +12V]
+  J6 --> COIL[G5LE coil]
+  OUT7[J5b.4 CH7] --> COIL
+  OVR[OVR7 to GND] --> J3[J3b.4]
+  RS[GX16-6 RS-485] --> J2[J2]
+  USB[HangTon USB-C] --> J7[J7]
 ```
 
-Do **not** return LED or switch currents through RS-485 cable shield as the only GND.
+### AC segregation
 
-## Assembly order
+| Path | Gauge | Notes |
+| --- | --- | --- |
+| AC L/N/PE in | 16–18 AWG | GX16-3 panel **male**; fuse **5 A** (sign) / **3.15 A** (mp) / **1 A** (input) TD |
+| Fuse → POWER → LRS AC/L + relay COM | 16–18 AWG | Hot only switched |
+| Glow hot (relay NO) + N | 16–18 AWG | GX16-3 panel **female** |
+| 12 V to J1/J6 | 16–18 AWG | — |
+| Solenoid multipin | 18 AWG | — |
+| Coil / OVR | 22 AWG | — |
+| RS-485 | 24 AWG | — |
 
-1. Print + install heat-sets, gasket, panel connectors (dry fit).
-2. Mount IRM on insulated carrier; wire AC with POWER **off**.
-3. Bring up 12 V alone; measure before plugging input PCB.
-4. Wire LEDs; confirm current &lt; 0.4 A total.
-5. Wire channel / ALL / diode PCB; verify with firmware LEDs.
-6. Fit USB + M12 last; seal nuts with thin RTV if needed.
+Keep AC loom separate from 12 V / RS-485 (≥6 mm / separate bundle).
+
+### Solenoid multipin
+
+**sign GX16-8:** pins **1–2** = `+12V` paralleled; 3–7 = OUT0..4; 8 = NC.  
+**mp GX16-6:** pins **1–2** = `+12V` paralleled; 3–5 = OUT0..2; 6 = NC.
+
+Do **not** put all solenoid current through a single 5 A pin.
+
+### Glow / CH7 always-on
+
+1. Strap `J3b.4` → `J4` GND.  
+2. Coil: `J6` → G5LE → `J5b.4`.  
+3. COM ← AC hot after POWER; NO → glow hot; N → glow N.
+
+### RS-485 GX16-6
+
+| Pin | Signal |
+| ---: | --- |
+| 1–2 | TX+ / TX− |
+| 3–4 | RX+ / RX− |
+| 5 | GND |
+| 6 | SHIELD |
+
+Field cable **crossovers** TX↔RX between input and output boxes ([`../PIN_MAP.md`](../PIN_MAP.md)).
+
+### USB-C
+
+HangTon panel F–F bulkhead → short USB-C **M–M** jumper → board `J5` (input) / `J7` (output). Weather **cap on** when unused (**IP65**). Keep USB loom away from AC.
+
+---
+
+## Ground stars
+
+**Input 12 V:** IRM −V → J1.GND, J3, LED−, RS-485 pin5, RESET/BOOT COM.  
+**Output 12 V:** LRS −V → J1.GND, J4, RS-485 pin5, RESET/BOOT COM. Load returns only via `J5` FETs.
+
+---
+
+## Assembly order (output)
+
+1. Print + gasket; mount LRS; set **115 V**.  
+2. Fit all GX16 panels (AC male, glow female, RS-485, solenoids), HangTon USB, POWER, RESET, BOOT.  
+3. Wire AC cold; PE bonded; fuse in.  
+4. Bring up 12.0 V before loads.  
+5. Fit OVR7 strap + G5LE.  
+6. Verify glow with POWER; solenoids follow serial.

@@ -7,7 +7,7 @@ Applies to **sign-input** and **mp-input**. Only the number of channel buttons d
 ```mermaid
 flowchart TB
   subgraph AC["AC domain"]
-    IEC[IP67 Bulgin power inlet]
+    IEC[Bulgin 400 PX0412 panel]
     FUSE[1A fuse]
     PWR[POWER latching switch]
     IEC --> FUSE --> PWR

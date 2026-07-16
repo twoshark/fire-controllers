@@ -21,7 +21,7 @@ Use shared catalog in [`PARTS_BOM.md`](PARTS_BOM.md).
 | 16 mm IP67 RESET / BOOT | 1 / 1 |
 | M12-8 panel + field cable + caps | 1 |
 | IP67 USB-C bulkhead + cap | 1 |
-| Bulgin IP67/68 inlet + mate plug + 1 A fuse | 1 |
+| Bulgin Buccaneer 400 set (`PX0412/03P` + `PX0410/03S` + contacts + cap) + 1 A fuse | 1 |
 | Printed shell + gasket | 1 |
 
 ## Channel assignment

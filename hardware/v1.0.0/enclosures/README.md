@@ -20,7 +20,7 @@ Input PCB: [`../INPUT_BOARD.md`](../INPUT_BOARD.md).
 
 ## Design goals
 
-- **IP67** at every panel interface (arcade button seals, USB-C, M12, **Bulgin/IP68 power inlet** — not open C14)
+- **IP67/IP68** at every panel interface (arcade seals, USB-C, M12, **Bulgin Buccaneer 400** power — **not** open C14 / not PX0580)
 - POWER latch breaks **AC hot** after the fuse
 - Channel / ALL / POWER use **your arcade buttons**; BOM covers PSU, sealed connectors, RESET/BOOT
 - Unused input channels stay **open / disconnected**
@@ -40,7 +40,7 @@ Input PCB: [`../INPUT_BOARD.md`](../INPUT_BOARD.md).
 │                                                      │                    │
 │  [USB-C IP67 bulkhead] ──cable──► input J5                                │
 │  [M12-8 A-code panel] ──wires──► input CN2 (RS-485)                       │
-│  [Bulgin IP67/68 inlet] ──fuse──► POWER (AC hot) ──► IRM-15-12            │
+│  [Bulgin 400 PX0412] ──fuse──► POWER (AC hot) ──► IRM-15-12               │
 └───────────────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────── INSIDE ───────────────────────────────────────┐
@@ -65,6 +65,6 @@ Reject filament bulbs. LED arcade lamps are expected to leave large headroom.
 
 1. Channel / ALL FIRE: momentary NO, switch-to-GND (arcade).
 2. POWER: latching, switches **AC hot** (confirmed).
-3. Mains: **true IP67/IP68** sealed inlet + mating plug (confirmed) — no open IEC C14.
+3. Mains: **Bulgin Buccaneer 400** (`PX0412` + `PX0410`) IP68 when mated (confirmed). **Not** IEC C14 / **not** `PX0580`.
 4. Unused channels: left open.
 5. RS-485 via M12 to the output enclosure ([`../PIN_MAP.md`](../PIN_MAP.md) crossover).

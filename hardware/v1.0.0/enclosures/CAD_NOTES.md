@@ -39,7 +39,7 @@ Wall: **3.0–3.5 mm** PETG/ABS. Lid: **3 mm**. Corner radius ≥3 mm for streng
 | RESET, BOOT | **Ø16.0 mm** (or arcade if you prefer) | 2 / 2 |
 | M12-8 panel | per datasheet (often **Ø16 mm** / M16 thread) | 1 |
 | USB-C bulkhead | per datasheet (often rectangular + 2 screws) | 1 |
-| Bulgin / IP67 power inlet | per Buccaneer datasheet (round panel cutout) | 1 |
+| Bulgin / IP68 Buccaneer 400 | **Ø16 mm** class single-hole (confirm `PX0412` datasheet) | 1 |
 | LED window | slot matching PCB LED row (~80×8 mm) | 1 |
 
 Arcade spacing: leave **≥ finger width** between bezels; verify nut clearance behind the panel.

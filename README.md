@@ -3,86 +3,78 @@
 Real-time two-board control system:
 
 - **Input board** reads 8 switch channels.
-- **Output board** drives 8x 12V low-side MOSFET channels (solenoids/relays).
+- **Output board** drives 8× 12V low-side MOSFET channels (solenoids/relays).
 - Boards communicate over **full-duplex RS-485** with <10ms end-to-end latency target.
 
-## Current architecture
+## As-built (2026-07-15 EasyEDA)
+
+Printed-board truth lives in [`hardware/as-built/`](hardware/as-built/):
+
+| Doc | Role |
+| --- | --- |
+| [`hardware/as-built/README.md`](hardware/as-built/README.md) | Index + export list |
+| [`hardware/as-built/PIN_MAP.md`](hardware/as-built/PIN_MAP.md) | MCU pin ↔ channel map |
+| [`hardware/as-built/INPUT_BOARD.md`](hardware/as-built/INPUT_BOARD.md) | Input board |
+| [`hardware/as-built/OUTPUT_BOARD.md`](hardware/as-built/OUTPUT_BOARD.md) | Output board |
+| [`hardware/as-built/BRINGUP.md`](hardware/as-built/BRINGUP.md) | Power-on / flash / link test |
+| [`hardware/as-built/exports/`](hardware/as-built/exports/) | BOM, PnP, netlist |
+
+## Architecture snapshot
 
 - MCU: `STM32G0B1CBT6`
-- USB: native USB DFU on `PA11/PA12`
-- RS-485: two SP3485EN per board (dedicated TX and RX paths)
-- Inputs/overrides: 10k pull-up + 10k series + 100nF + Schmitt (`SN74LV14APWR`)
-- Debug/recovery: SWD header retained + NRST + BOOT0 button flow
+- 3.3V: `AP63203WU-7` buck
+- RS-485: dual `SP3485EN` (`U2A`=TX, `U2B`=RX on both boards)
+- Output reverse-polarity: `Q9` `IPB110P06LM` + ATO `F9`
+- Channel PTC: `1812L200/16GR`
 
-## Repository layout
+## Repo layout
 
 ```text
-fire_controllers/
-├── firmware/
-│   ├── hotline-protocol/
-│   ├── input-controller/
-│   └── output-controller/
-├── hardware/
-│   ├── input-board/
-│   ├── output-board/
-│   ├── SCHEMATIC_GUIDE.md
-│   └── PCB_LAYOUT_GUIDE.md
-├── docs/
-│   ├── system-architecture.md
-│   ├── serial-protocol.md
-│   ├── input-board-design.md
-│   └── output-board-design.md
-└── scripts/
+fire-controllers/
+├── firmware/              # Embassy Rust firmware
+├── hardware/as-built/     # Printed board truth + EasyEDA exports
+├── docs/                  # Protocol + system architecture
+└── scripts/               # build / flash / test
 ```
 
-## Build and validation
+## Quick start
 
 ```bash
-cd firmware
-cargo fmt --all --check
-cargo check
-cargo clippy -p hotline-protocol --target aarch64-apple-darwin -- -D warnings
-cargo clippy -p input-controller --target thumbv6m-none-eabi -- -D warnings
-cargo clippy -p output-controller --target thumbv6m-none-eabi -- -D warnings
-```
-
-## Flashing via SWD (recommended for bring-up/recovery)
-
-```bash
+./scripts/test.sh
 ./scripts/flash-input.sh
 ./scripts/flash-output.sh
 ```
 
-These scripts build release artifacts first, then run `probe-rs`.
-Expected chip target is `STM32G0B1CBTx`.
+Full checklist: [`hardware/as-built/BRINGUP.md`](hardware/as-built/BRINGUP.md)
 
-## USB DFU programming flow
+## Build
 
-1. Hold BOOT0 button (`SW2`).
-2. Press and release reset (`SW1`).
-3. Release BOOT0.
-4. Program over USB using `dfu-util` or STM32CubeProgrammer.
+```bash
+./scripts/build.sh
+./scripts/test.sh
+```
 
-SWD remains strongly recommended for manufacturing, option-byte recovery, and debug.
+## Flashing
 
-## Protocol summary
+```bash
+./scripts/flash-input.sh      # SWD
+./scripts/flash-output.sh
+./scripts/monitor.sh          # RTT only
+./scripts/dfu-flash-input.sh  # USB DFU fallback
+./scripts/dfu-flash-output.sh
+```
 
-- Input -> output: `[0xAA][state][CRC8]` at 1kHz
-- Output -> input: `[0x55][status][CRC8]` at 10Hz
-- CRC: CRC-8/MAXIM
-- UART: 115200, 8N1
+Chip: `STM32G0B1CBTx`. DFU: hold `SW2` (BOOT0), tap `SW1` (NRST), release `SW2`.
 
-## Hardware/documentation references
+## Protocol
 
-- Schematic entry: `hardware/SCHEMATIC_GUIDE.md`
-- PCB layout: `hardware/PCB_LAYOUT_GUIDE.md`
-- System architecture: `docs/system-architecture.md`
-- Input board details: `docs/input-board-design.md`
-- Output board details: `docs/output-board-design.md`
-- Serial protocol: `docs/serial-protocol.md`
+- Input→output: `[0xAA][state][CRC8]`
+- Output→input: `[0x55][status][CRC8]` @ 10Hz
+- CRC-8/MAXIM, UART 115200 8N1
+- Spec: [`docs/serial-protocol.md`](docs/serial-protocol.md)
 
 ## Safety
 
-- Set LRS-200-12 input selector to **115V** for 120V mains.
-- Do not trim output above **12.0V**.
-- Mains wiring must be done by a qualified person.
+- LRS-200-12 selector **115V**; trim **12.0V**.
+- Insert **25A ATO** in output `F9` before load tests.
+- Loads: `J6` (+12V) → load → `J5x` (never return to board GND).

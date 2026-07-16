@@ -32,3 +32,6 @@ __pycache__/
 *.elf
 *.bin
 *.hex
+
+# Local Rust toolchain cache
+.toolchain/

@@ -35,7 +35,7 @@ The system is comprised of 2 boards, each with their own microcontroller, connec
 
 **Serial Link**: RS-485 differential signaling over shielded twisted pair cable (Belden 9842 or equivalent 2-pair 24AWG shielded RS-485 cable, 120Ω characteristic impedance). Both boards include dual RS-485 transceivers for full duplex. At 115200 baud, a 3-byte frame transmits in ~260μs, well within the <10ms latency budget.
 
-**Power**: Each box accepts 120V AC mains via an IEC C14 panel-mount inlet on the enclosure. An off-the-shelf enclosed AC-DC module inside the enclosure converts to the required DC rails (12V for outputs/input conditioning, 3.3V for MCU logic via onboard LDO).
+**Power**: Each box accepts 120V AC mains via an IEC C14 panel-mount inlet on the enclosure. An off-the-shelf enclosed AC-DC module inside the enclosure converts to 12V DC. Each PCB generates 3.3V for MCU logic via an onboard `AP63203WU-7` synchronous buck (not an LDO).
 
 **Enclosure Wiring**: The PCB is designed for easy enclosure assembly. All external connections use screw terminals on the PCB. Waterproof connectors (Amphenol AT series or equivalent) are panel-mounted on the enclosure and wired to the board. Clear silkscreen labeling. Mounting holes in standard patterns.
 
@@ -45,7 +45,7 @@ The system is comprised of 2 boards, each with their own microcontroller, connec
 
 The board takes in power and an array of input states.
 
-- 120V AC mains power via IEC C14 inlet on enclosure → off-the-shelf AC-DC module (e.g., Mean Well IRM-15-12 or similar, 12V output) → onboard LDO for 3.3V MCU rail
+- 120V AC mains power via IEC C14 inlet on enclosure → off-the-shelf AC-DC module (e.g., Mean Well IRM-15-12 or similar, 12V output) → onboard `AP63203WU-7` buck for 3.3V MCU rail
 - 8x digital inputs via pull-up + RC debounce + Schmitt-trigger frontend (switch-to-GND wiring). Firmware reads digital GPIO states.
 - USB-C debug/programming port (SWD via USB adapter or native USB bootloader)
 
@@ -61,7 +61,7 @@ The board takes in power and an array of input states.
 
 ### Inputs
 
-- 120V AC mains power via IEC C14 inlet on enclosure → off-the-shelf AC-DC module (Mean Well LRS-200-12, 200W, 12V/17A output — required to supply 8x 2A load channels = 192W peak) → onboard LDO for 3.3V MCU rail
+- 120V AC mains power via IEC C14 inlet on enclosure → off-the-shelf AC-DC module (Mean Well LRS-200-12, 200W, 12V/17A output — required to supply 8x 2A load channels = 192W peak) → onboard `AP63203WU-7` buck for 3.3V MCU rail
 - RS-485 full-duplex serial link with the input controller (dedicated RX and TX pairs)
 - 8x digital override inputs via pull-up + RC debounce + Schmitt-trigger frontend (switch-to-GND). Override closed forces ON, open defers to serial command.
 - USB-C debug/programming port
@@ -70,8 +70,9 @@ The board takes in power and an array of input states.
 
 The board produces 8 outputs based on the state received over serial. If an override input is active, it takes precedence over the serial state for that channel.
 
-- 8x 12V MOSFET-driven outputs (IRLML6344TRPbF, up to 2A per channel) with flyback diodes and per-channel PTC fuses (1812L200/12GR, 2A hold, 12V rated) for overcurrent protection
-- 12V GND output terminal for output device return path
+- 8x 12V MOSFET-driven outputs (IRLML6344TRPbF, up to 2A per channel) with flyback diodes and per-channel PTC fuses (`1812L200/16GR`, 2A hold, 16V rated) for overcurrent protection
+- Shared `+12V` load feed on `J6` (both poles); loads return through per-channel low-side switches (no external load-GND terminal)
+- Board 12V input protected by ATO fuse `F9` + `Q9` (`IPB110P06LM`) P-MOS reverse-polarity circuit
 - Status LEDs (surface-mounted on PCB, grouped along one edge for enclosure light-pipe/window exposure):
   - 1x serial link status (RX activity / link healthy)
   - 1x power indicator (box on)
@@ -79,7 +80,7 @@ The board produces 8 outputs based on the state received over serial. If an over
 
 # Resolved Design Decisions
 
-1. **Power supply**: Off-the-shelf AC-DC modules inside each enclosure convert 120V AC to 12V DC. **Input board**: Mean Well IRM-15-12 (15W, PCB-mount, ~$8) — electronics-only draw ~1W. **Output board**: Mean Well LRS-200-12 (200W, 17A, enclosed, fanless, ~$28) — must supply 8x 2A load channels (192W peak). Onboard 3.3V LDO on each PCB for MCU logic. The PCB itself never sees mains voltage — the AC-DC module is wired between the IEC inlet and the PCB's 12V screw terminal. The LRS-200-12 (output board) has a manual 115V/230V input voltage selector switch that must be set to the 115V position for 120V North American mains. **WARNING**: The output voltage trim pot on the LRS-200-12 must NOT be adjusted above 12.0V (factory default), as the per-channel PTC fuses are rated for 12V maximum. The IRM-15-12 (input board) is auto-ranging (85–264VAC) and needs no switch.
+1. **Power supply**: Off-the-shelf AC-DC modules inside each enclosure convert 120V AC to 12V DC. **Input board**: Mean Well IRM-15-12 (15W, PCB-mount, ~$8) — electronics-only draw ~1W. **Output board**: Mean Well LRS-200-12 (200W, 17A, enclosed, fanless, ~$28) — must supply 8x 2A load channels (192W peak). Each PCB uses an onboard `AP63203WU-7` 3.3V buck for MCU logic. The PCB itself never sees mains voltage — the AC-DC module is wired between the IEC inlet and the PCB's 12V screw terminal. The LRS-200-12 (output board) has a manual 115V/230V input voltage selector switch that must be set to the 115V position for 120V North American mains. **WARNING**: Keep the LRS-200-12 output trim at the factory **12.0V** default (do not raise it). As-built channel PTCs are `1812L200/16GR` (16V). The IRM-15-12 (input board) is auto-ranging (85–264VAC) and needs no switch. **As-built reference**: see `hardware/as-built/` (EasyEDA 2026-07-15).
 2. **Override detection**: Each override input uses pull-up + RC debounce + Schmitt-trigger buffering. Firmware reads digital level directly (closed switch = override ON; open switch = serial control).
 3. **Input interface**: Each channel is a simple switch-to-GND digital input with RC + Schmitt cleanup. No ADC divider path is used.
 4. **Waterproof connectors**: Amphenol AT series (automotive-grade, IP67, cost-effective) for signal connections. Panel-mounted on enclosure, wired to PCB screw terminals. IEC C14 inlet for 120V AC. M12 8-pin for full-duplex RS-485 link.
@@ -88,6 +89,10 @@ The board produces 8 outputs based on the state received over serial. If an over
 7. **Status LEDs**: All LEDs are surface-mounted directly on the PCB, grouped together along one edge in a defined LED block. The enclosure exposes these through aligned holes, a clear window strip, or light pipes. This eliminates LED wiring during assembly. PCB silkscreen clearly labels each LED's function next to it.
 8. **Serial protocol**: Full-duplex bidirectional **Hotline v2** protocol over RS-485 at 115200 baud. Primary direction: input→output state frames (3-byte: [0xAA] [8-bit channel state] [CRC8]) at 1kHz. Reverse direction: output→input heartbeat frames (3-byte: [0x55] [status byte] [CRC8]) at 10Hz. Two transceivers per board (one TX path, one RX path) eliminate bus-turnaround control in firmware. End-to-end latency: ~1-2ms typical, <5ms worst case.
 9. **RS-485 cabling**: Belden 9842 or equivalent 2-pair 24AWG shielded twisted pair, 120Ω characteristic impedance, specifically designed for RS-485. One 120Ω termination per receiver pair. M12 8-pin connectors at each enclosure.
+
+# As-Built Boards (authoritative)
+
+Printed PCB documentation and EasyEDA exports live in `hardware/as-built/` (`PIN_MAP.md`, `INPUT_BOARD.md`, `OUTPUT_BOARD.md`, `BRINGUP.md`, `exports/`). Prefer those over historical capture guides (removed).
 
 # Expected Outputs
 

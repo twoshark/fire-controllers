@@ -3,11 +3,18 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 FIRMWARE_DIR="$SCRIPT_DIR/../firmware"
+CHIP="${CHIP:-STM32G0B1CBTx}"
 
-echo "==> Flashing output-controller via SWD..."
-echo "    (Ensure ST-Link / J-Link / CMSIS-DAP probe is connected to the output board)"
+echo "==> Flashing output-controller via SWD ($CHIP)"
+echo "    Connect probe to J8 (2x5 SWD). Power board (3V3 up)."
+echo "    Pin map: hardware/as-built/PIN_MAP.md   Bring-up: hardware/as-built/BRINGUP.md"
 echo ""
+
+if ! command -v probe-rs >/dev/null 2>&1; then
+  echo "ERROR: probe-rs not found. Install: cargo install probe-rs-tools --locked" >&2
+  exit 1
+fi
 
 cd "$FIRMWARE_DIR"
 cargo build --release -p output-controller
-probe-rs run --chip STM32G0B1CBTx target/thumbv6m-none-eabi/release/output-controller
+probe-rs run --chip "$CHIP" target/thumbv6m-none-eabi/release/output-controller

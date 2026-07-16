@@ -124,9 +124,8 @@ BOOT0 access:
 - PCB uses screw terminals for enclosure wiring
 - External waterproof panel connectors (IP67+) remain enclosure-side
 - SWD remains required for robust manufacturing/debug/recovery flow
-- Detailed schematic capture sequence: `hardware/SCHEMATIC_GUIDE.md`
-- Detailed PCB placement/routing sequence: `hardware/PCB_LAYOUT_GUIDE.md`
-- Input schematic pin/net appendix: `hardware/SCHEMATIC_APPENDIX_INPUT.md`
-- Output schematic pin/net appendix: `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`
-- Input PCB execution appendix: `hardware/PCB_APPENDIX_INPUT.md`
-- Output PCB execution appendix: `hardware/PCB_APPENDIX_OUTPUT.md`
+- Printed board truth: `hardware/as-built/` (`PIN_MAP.md`, `INPUT_BOARD.md`, `OUTPUT_BOARD.md`, `exports/`)
+
+## As-built boards (2026-07-15)
+
+Printed PCB truth (BOM / PnP / netlist): [`hardware/as-built/`](../hardware/as-built/).

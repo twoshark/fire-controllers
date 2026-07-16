@@ -28,9 +28,10 @@ Hotline v2 uses **full-duplex** RS-485.
 - Point-to-point wiring crossover:
   - Input `TX+/-` -> Output `RX+/-`
   - Output `TX+/-` -> Input `RX+/-`
-- Terminal pin ordering and exact endpoint maps are documented in:
-  - `hardware/SCHEMATIC_APPENDIX_INPUT.md`
-  - `hardware/SCHEMATIC_APPENDIX_OUTPUT.md`
+- Terminal pin maps: [`hardware/as-built/PIN_MAP.md`](../hardware/as-built/PIN_MAP.md)
+  - Input RS-485 connector: **`CN2`**
+  - Output RS-485 connector: **`J2`**
+  - Both boards: `U2A`=TX, `U2B`=RX
 
 No DE/RE firmware bus-turnaround logic is used.
 

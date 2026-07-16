@@ -2,24 +2,39 @@
 #![no_main]
 
 use embassy_executor::Spawner;
+use embassy_futures::select::{select3, select_array, Either3};
+use embassy_stm32::exti::{ExtiInput, InterruptHandler as ExtiInterruptHandler};
 use embassy_stm32::gpio::{Input, Level, Output, Pull, Speed};
 use embassy_stm32::usart::{Config as UartConfig, Uart};
 use embassy_stm32::wdg::IndependentWatchdog;
-use embassy_stm32::{bind_interrupts, dma, peripherals, usart};
+use embassy_stm32::{bind_interrupts, dma, interrupt, peripherals, usart};
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
 use embassy_sync::watch::Watch;
-use embassy_time::{Instant, Ticker, Timer};
+use embassy_time::{Duration, Instant, Ticker, Timer};
 
 use hotline_protocol::{
-    DecoderEvent, FrameDecoder, StateFrame, HEARTBEAT_LOSS_TIMEOUT_MS, POLL_INTERVAL_MS,
+    DecoderEvent, FrameDecoder, StateFrame, HEARTBEAT_LOSS_TIMEOUT_MS, STATE_KEEPALIVE_MS,
 };
 
 use defmt_rtt as _;
 use panic_probe as _;
 
+// Netlist-verified pin map (2026-07-15 ASC): see hardware/as-built/PIN_MAP.md
+//   IN CH0..CH5 -> PA0, PA1, PA4, PA5, PA6, PA7 (EXTI)
+//   IN CH6..CH7 -> PB0, PB1 (polled; EXTI0/1 clash with PA0/PA1)
+//   USART1 TX/RX -> PA9 / PA10 (U2A.DI / U2B.RO)
+//   CH LEDs LED3..10 -> PB10, PA15, PB3..PB8 (active-low)
+//   LINK LED2 -> PB9 (active-low)
+//   USB PA11/PA12 ; SWD PA13/PA14 ; BOOT0=SW2, NRST=SW1
+
+/// Poll period for CH6/CH7 (PB0/PB1 cannot share EXTI0/1 with PA0/PA1).
+const POLLED_INPUT_MS: u64 = 1;
+
 bind_interrupts!(struct Irqs {
     USART1 => usart::InterruptHandler<peripherals::USART1>;
     DMA1_CHANNEL2_3 => dma::InterruptHandler<peripherals::DMA1_CH2>, dma::InterruptHandler<peripherals::DMA1_CH3>;
+    EXTI0_1 => ExtiInterruptHandler<interrupt::typelevel::EXTI0_1>;
+    EXTI4_15 => ExtiInterruptHandler<interrupt::typelevel::EXTI4_15>;
 });
 
 /// Link health status shared between heartbeat_monitor and link_led_driver.
@@ -64,66 +79,86 @@ async fn main(spawner: Spawner) {
     .unwrap();
     let (mut tx, rx) = uart1.split();
 
-    // -- 8 digital input channels from Schmitt frontend (switch closed = HIGH) --
-    let ch0 = Input::new(p.PA0, Pull::None);
-    let ch1 = Input::new(p.PA1, Pull::None);
-    let ch2 = Input::new(p.PA4, Pull::None);
-    let ch3 = Input::new(p.PA5, Pull::None);
-    let ch4 = Input::new(p.PA6, Pull::None);
-    let ch5 = Input::new(p.PA7, Pull::None);
-    let ch6 = Input::new(p.PB0, Pull::None);
-    let ch7 = Input::new(p.PB1, Pull::None);
-    let channels_in = [ch0, ch1, ch2, ch3, ch4, ch5, ch6, ch7];
+    // -- Digital inputs (netlist-verified; bit n = channel n) --
+    // CH0..CH5 use EXTI. CH6/CH7 are on PB0/PB1 which share EXTI0/1 with PA0/PA1,
+    // so they are polled at POLLED_INPUT_MS.
+    let mut exti_in = [
+        ExtiInput::new(p.PA0, p.EXTI0, Pull::None, Irqs), // CH0 / J2a.1
+        ExtiInput::new(p.PA1, p.EXTI1, Pull::None, Irqs), // CH1 / J2a.2
+        ExtiInput::new(p.PA4, p.EXTI4, Pull::None, Irqs), // CH2 / J2a.3
+        ExtiInput::new(p.PA5, p.EXTI5, Pull::None, Irqs), // CH3 / J2a.4
+        ExtiInput::new(p.PA6, p.EXTI6, Pull::None, Irqs), // CH4 / J2b.1
+        ExtiInput::new(p.PA7, p.EXTI7, Pull::None, Irqs), // CH5 / J2b.2
+    ];
+    let ch6 = Input::new(p.PB0, Pull::None); // CH6 / J2b.3
+    let ch7 = Input::new(p.PB1, Pull::None); // CH7 / J2b.4
 
-    // -- Channel LEDs (active LOW) --
+    // -- Channel LEDs LED3..LED10 (active LOW) --
     let mut leds: [Output; 8] = [
-        Output::new(p.PB2, Level::High, Speed::Low),
-        Output::new(p.PA15, Level::High, Speed::Low),
-        Output::new(p.PB3, Level::High, Speed::Low),
-        Output::new(p.PB4, Level::High, Speed::Low),
-        Output::new(p.PB5, Level::High, Speed::Low),
-        Output::new(p.PB6, Level::High, Speed::Low),
-        Output::new(p.PB7, Level::High, Speed::Low),
-        Output::new(p.PB8, Level::High, Speed::Low),
+        Output::new(p.PB10, Level::High, Speed::Low), // LED3  CH0
+        Output::new(p.PA15, Level::High, Speed::Low), // LED4  CH1
+        Output::new(p.PB3, Level::High, Speed::Low),  // LED5  CH2
+        Output::new(p.PB4, Level::High, Speed::Low),  // LED6  CH3
+        Output::new(p.PB5, Level::High, Speed::Low),  // LED7  CH4
+        Output::new(p.PB6, Level::High, Speed::Low),  // LED8  CH5
+        Output::new(p.PB7, Level::High, Speed::Low),  // LED9  CH6
+        Output::new(p.PB8, Level::High, Speed::Low),  // LED10 CH7
     ];
 
-    // -- Link LED (active LOW): PB9 --
+    // -- Link LED2 (active LOW): PB9 --
     let led_link = Output::new(p.PB9, Level::High, Speed::Low);
 
-    defmt::info!("input-controller: init complete");
+    defmt::info!("input-controller: init complete (netlist pin map)");
 
-    // Spawn heartbeat monitor (continuous RX in full-duplex mode)
     spawner.spawn(heartbeat_monitor(rx).unwrap());
-    // Spawn link LED driver
     spawner.spawn(link_led_driver(led_link).unwrap());
 
-    let mut ticker = Ticker::every(embassy_time::Duration::from_millis(POLL_INTERVAL_MS));
+    let mut keepalive = Ticker::every(Duration::from_millis(STATE_KEEPALIVE_MS));
+    let mut poll = Ticker::every(Duration::from_millis(POLLED_INPUT_MS));
+    let mut last_channels: u8 = 0xFF; // force first TX
+    let mut last_tx = Instant::now();
+
     loop {
-        // Read 8 digital channels and pack into protocol bitfield
         let mut channels: u8 = 0;
-        for (i, input) in channels_in.iter().enumerate() {
+        for (i, input) in exti_in.iter().enumerate() {
             if input.is_high() {
                 channels |= 1 << i;
             }
         }
-
-        // Encode and transmit state frame
-        let wire = StateFrame::new(channels).encode();
-        if let Err(e) = tx.write(&wire).await {
-            defmt::warn!("TX err: {:?}", e);
+        if ch6.is_high() {
+            channels |= 1 << 6;
+        }
+        if ch7.is_high() {
+            channels |= 1 << 7;
         }
 
-        // Update channel LEDs (active LOW)
-        for (i, led) in leds.iter_mut().enumerate() {
-            if channels & (1 << i) != 0 {
-                led.set_low();
-            } else {
-                led.set_high();
+        let changed = channels != last_channels;
+        let keepalive_due = last_tx.elapsed().as_millis() >= STATE_KEEPALIVE_MS;
+        if changed || keepalive_due {
+            let wire = StateFrame::new(channels).encode();
+            if let Err(e) = tx.write(&wire).await {
+                defmt::warn!("TX err: {:?}", e);
+            }
+            last_channels = channels;
+            last_tx = Instant::now();
+
+            for (i, led) in leds.iter_mut().enumerate() {
+                if channels & (1 << i) != 0 {
+                    led.set_low();
+                } else {
+                    led.set_high();
+                }
             }
         }
 
         iwdg.pet();
-        ticker.next().await;
+
+        let edges = exti_in.each_mut().map(|c| c.wait_for_any_edge());
+        match select3(select_array(edges), poll.next(), keepalive.next()).await {
+            Either3::First(_) => {}  // CH0..CH5 edge
+            Either3::Second(_) => {} // CH6/CH7 poll tick
+            Either3::Third(_) => {}  // keepalive bound
+        }
     }
 }
 

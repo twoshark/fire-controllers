@@ -28,6 +28,14 @@ pub const HEARTBEAT_LOSS_TIMEOUT_MS: u64 = 500;
 /// Polling interval in milliseconds.
 pub const POLL_INTERVAL_MS: u64 = 1;
 
+/// Maximum interval between input->output state frames when inputs are idle.
+///
+/// In the event-driven input firmware, a state frame is sent immediately on any
+/// input edge (EXTI) and otherwise at this keepalive cadence. It must stay well
+/// under [`COMM_WATCHDOG_TIMEOUT_MS`] so the output board does not enter failsafe
+/// during quiescent periods.
+pub const STATE_KEEPALIVE_MS: u64 = 25;
+
 // ---------------------------------------------------------------------------
 // CRC-8/MAXIM
 // ---------------------------------------------------------------------------

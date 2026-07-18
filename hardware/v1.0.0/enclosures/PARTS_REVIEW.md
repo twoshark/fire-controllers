@@ -8,7 +8,7 @@ Confidence: **high** = keep · **med** = keep with note · **cut** = remove/redu
 | # | Item | Ext | Necessary? | Function | Verdict |
 | ---: | --- | ---: | --- | --- | --- |
 | 1 | RS-15-12 ×2 | $17.20 | Yes | 12 V for input electronics | **KEEP** |
-| 2 | HLG-240H-12 ×2 | $142.60 | Yes | Outdoor 12 V / 16 A · day-1 peaks | **KEEP** |
+| 2 | HLG-240H-12 ×2 | $142.60 | Yes | Outdoor 12 V / 16 A · PCB headroom | **KEEP** |
 | 3 | bociloy 1" hinges 10pk | $5.29 | Yes | Internal lid hinge | **KEEP** |
 | 4 | M3 / M2 heat-sets | — | Yes | Latches · RS-15 · PCB · hinges | **OWNED** |
 | 5 | M2 / M3 screws | — | Yes | same | **OWNED** |

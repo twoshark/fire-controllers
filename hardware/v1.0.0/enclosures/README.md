@@ -8,7 +8,7 @@
 | [`mp-input/`](mp-input/) | Arcade + ALL center · input PCB · RS-15-12 | CAD · BOM · Wiring |
 | [`sign-output/`](sign-output/) | Output PCB · SOL0..4 · 12 V from HLG | CAD · BOM · Wiring |
 | [`mp-output/`](mp-output/) | Output PCB · SOL0..2 · 12 V from HLG | CAD · BOM · Wiring |
-| HLG-240H-12 ×2 | IP67 120 VAC→12 V/16 A (5+3 SOL) | [`POWER_OTS.md`](POWER_OTS.md) |
+| HLG-240H-12 ×2 | IP67 120 VAC→12 V/16 A (panels 5+3 SOL) | [`POWER_OTS.md`](POWER_OTS.md) |
 
 | Root | Contents |
 | --- | --- |

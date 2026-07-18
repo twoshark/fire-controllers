@@ -1,17 +1,3 @@
 # mp-output-power — CAD
 
-Same envelope and cutouts as [`../sign-output-power/CAD_NOTES.md`](../sign-output-power/CAD_NOTES.md).
-
-| Dim | Value |
-| --- | ---: |
-| Outer | **240 × 180 × 95** |
-| PanelPole OUT CL height | **40** (mate → mp-output) |
-| Fan CL | **48** |
-| C14 / POWER CL | **35** / **50** |
-
-## Cables (external)
-
-| Cable | Length |
-| --- | ---: |
-| C13→C14 mains | **6 ft** |
-| Powerpole → mp-output | **≤ 4 ft** |
+Same as [`../sign-output-power/CAD_NOTES.md`](../sign-output-power/CAD_NOTES.md). Mate DTP → mp-output at **H = 40**. Cables: **6 ft** AC · **≤ 4 ft** DTP.

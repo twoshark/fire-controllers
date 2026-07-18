@@ -1,77 +1,48 @@
 # Cost options → under $300
 
-Current kit is **6** boxes (2 inputs + 2 outputs + 2 power).  
-Lean cart below targets **≤ $300 for all 6**. If you meant only **4** controller boxes (no power shells), see Option D.
+Six boxes. Revised cart (~$256): [`SHOPPING_LIST.md`](SHOPPING_LIST.md).
 
-Removed by default (no quality loss for field use):
-- External RESET/BOOT (Adafruit) — open the lid, use on-board tactiles
-- HangTon panel USB — open lid / grommet for DFU
-- DigiKey Amphenol AT kits — same DT 2-pin family via Amazon kit
-- Amazon markup on PanelPole2 — buy from Powerwerx.com
-- Pre-made EX-12-5 — DIY 12 AWG + PP30 (**≤ 4 ft** each link)
+### Locked changes (vs PanelPole lean)
 
-Kept (site assumptions):
-- **4× IEC C13–C14 6 ft** cords — every AC box to a 120 V receptacle
-- **2× Powerpole jumpers ≤ 4 ft** — power box ↔ matching output box
+| Change | Why |
+| --- | --- |
+| Drop PanelPole2 ×4 (−$80) | Not IP67 when mated; too expensive |
+| Add DTP 2-pin 10-set (~+$28) | **25 A · IP67 mated** · 12 AWG |
+| Drop 12 V KCD4 on output boxes | AC-only rocker must not switch 10 A DC |
+| Add boots / M12 caps / C14 covers (~+$24) | Dust/rain on remaining weak points |
+| Keep DT for SOL · M12 for RS-485 · Bravo PSUs | Correct families |
 
 ---
 
-## Recommended lean cart (~$297)
+## Recommended cart (~$264)
 
-| Keep | Why | Ext |
-| --- | --- | ---: |
-| Bravo 2× RS-15-12 + 2× LRS-200-12 | Already cheap / correct PSUs | $69.20 |
-| EG STARTS triangle ×2 | Locked part | $23.98 |
-| C14 pack ×4 | Needed | $8.19 |
-| C13–C14 cords **4× 6 ft** | Mains to each AC box | ~$16 |
-| PanelPole2 ×4 @ Powerwerx **$19.99** | Same part, not Amazon $27.78 | $79.96 |
-| PP30-10 + 12 AWG zip (DIY 2× ≤4 ft) | Same Powerpole quality | ~$21 |
-| M12-5 **1×** 4-set | 4 panel + 2 field cables | $23.79 |
-| JRready DT 2-pin **10 sets** [B0BKRRGRQY](https://www.amazon.com/dp/B0BKRRGRQY) | IP67 · 13 A · replaces DigiKey AT | ~$25 |
-| KCD4 DPST rocker **6-pack** (30×22 class) | Same job as WRG32 | ~$8 |
-| 60 mm 12 V fans **4-pack** + filter/grill pack | Adequate cooling | ~$22 |
-| | **Sum** | **~$297** |
-
-(+ scrap Al for LRS plates · crimp tools if needed)
+| Keep | Ext |
+| --- | ---: |
+| Bravo 2× RS-15 + 2× LRS-200 | $69.20 |
+| Amazon (connectors, seal extras, fans, cords, 12 AWG, lens/gasket stock) | ~$195 |
+| **Sum** | **~$264** |
 
 ---
 
-## Option menu (pick any)
+## Option menu
 
-| ID | Change | Saves | Tradeoff |
-| --- | ---: | --- |
-| **A** | Keep HangTon USB on 4 controller boxes | **−$0** / costs **+$29** | Convenient DFU without opening |
-| **B** | Keep Newark WRG32 (UL) instead of KCD4 | **−$0** / costs **+$9** | Name-brand UL rocker |
-| **C** | Keep DigiKey Amphenol AT kits | costs **+$55** | OEM AT vs DT-compatible kit |
-| **D** | **4 boxes only** — drop both `*-output-power` shells, fans, 2× LRS, 2× PanelPole OUT | **−~$160** | Need another 12 V source for outputs (not a complete system) |
-| **E** | Print Powerpole panel mounts + PP30 only (no PanelPole2) | **−~$60** | You design/print weather seal |
-| **F** | Skip purchased fans — convection + shade only | **−~$22** | Hotter LRS; derate load |
-| **G** | One shared LRS-200 for both outputs (one power box) | **−~$40** | One cable run / single point of failure |
+| ID | Change | Δ | Tradeoff |
+| --- | --- | ---: | --- |
+| **A** | HangTon USB on 4 controllers | +$29 | DFU without opening |
+| **B** | UL AC rocker (WRG32) on 4 AC boxes | +$9 | Still AC-only — OK on AC path only |
+| **C** | OEM DigiKey AT flange for SOL | +$40–55 | Better panel seal than printed pocket |
+| **D** | 4 boxes only (drop power shells) | −~$160 | Incomplete system |
+| **E** | Printed Powerpole instead of DTP | −~$20 vs DTP | **Reject for outdoor** — unsealed when mated |
+| **F** | Skip fans | −$22 | Hotter LRS; more sealable power box |
+| **G** | One shared LRS for both | −~$40 | 16 A on 17 A — **reject** without derate |
 
 ---
 
-## Do not cut (false economy)
+## Do not cut
 
 | Item | Why |
 | --- | --- |
-| LRS-200-12 / RS-15-12 | Load and form-factor locked |
-| Powerpole (genuine PP30) for 12 V bus | Current rating |
-| DT/AT 2-pin for SOL | 2 A × outdoor |
-| M12 for RS-485 | Signal integrity / outdoor |
-
----
-
-## vs previous ~$530
-
-| Cut | Saved |
-| --- | ---: |
-| Adafruit RESET/BOOT | $39.60 |
-| HangTon + USB pack | $37.86 |
-| Long/premium C13 cords → 4× 6 ft basic | ~$20 |
-| PanelPole Amazon→Powerwerx | $31.16 |
-| DigiKey AT → Amazon DT | ~$55 |
-| EX-12-5 → DIY | ~$15 |
-| Extra M12 pack | $23.79 |
-| Newark rocker/filter premium | ~$12 |
-| DigiKey fans → Amazon | ~$10 |
-| **Total cut** | **~$250** |
+| LRS-200-12 / RS-15-12 | Load locked |
+| DTP (or ATP) for 12 V bus | Current + IP67 |
+| DT/AT for SOL | 2 A outdoor |
+| M12 for RS-485 | Signal / outdoor |

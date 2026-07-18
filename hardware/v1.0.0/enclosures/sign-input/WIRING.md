@@ -1,11 +1,11 @@
 # sign-input — wiring
 
 ```text
-C14 → POWER (KCD4) → RS-15-12 AC
+C14 → POWER (KCD4+boot) → RS-15-12 AC
 RS-15 → J1
 M12-5 → CN2
-Top EG STARTS CH + ALL → J2 / buttons PCB
-DFU / RESET / BOOT: open lid → board USB-C / SW1 / SW2
+Top EG STARTS → J2 / buttons PCB
+DFU / RESET / BOOT: open lid
 ```
 
 | Top | PCB |
@@ -19,4 +19,4 @@ DFU / RESET / BOOT: open lid → board USB-C / SW1 / SW2
 | 1–5 | TX+ TX− RX+ RX− GND |
 | Shell | pin 6 SHIELD |
 
-External: **6 ft** C13→C14 mains.
+External: **6 ft** C13→C14. Cap M12 when unused.

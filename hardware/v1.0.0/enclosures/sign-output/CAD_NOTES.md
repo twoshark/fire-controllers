@@ -2,7 +2,7 @@
 
 Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md) · [`../SEALING.md`](../SEALING.md).
 
-**No POWER rocker** — kill via sign-output-power.
+**No POWER rocker** — kill by unplugging the **HLG-240H-12** AC cord ([`../POWER_OTS.md`](../POWER_OTS.md)).
 
 ## Envelope (grown for pockets)
 
@@ -24,9 +24,9 @@ Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](.
 
 | Item | Spec |
 | --- | --- |
-| Output PCB | KO **126×114** · LED→FRONT · `J5`/`J6`→SOL · `J1`→DTP · 4× M3 · Z=12 |
+| Output PCB | Outline **124.0×112.4** · KO **126×114** · LED→FRONT · `J5`/`J6`→SOL · `J1`→DTP · 4× M2 bosses (H1–H4) · Z=12 |
 | Wire | DTP→`J1` 12 AWG short · `J6` star → SOL |
 
 ## Cables
 
-DTP jumper **≤ 4 ft**. Supports: none if chamfered pockets.
+DTP from HLG DC pigtail **≤ 4 ft**. Supports: none if chamfered pockets.

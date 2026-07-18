@@ -1,133 +1,146 @@
 # Mounting — inserts, pillars, bosses
 
-Boards have **no mounting holes** (v1.0.0). Use **corner clamp pillars** outside the keep-out that bear on the PCB top with M3 screws into heat-set inserts in the floor bosses.
+Gerber source (2026-07-18): `hardware/v1.0.0/{input/easyeda,output/eda-exports,input-buttons-pcb/exports}/gerber/`. Hole XY from `Drill_PTH_Through.DRL` (Ø2.54). Same coordinate frame as PnP (mm).
 
-Shopping: M3×5.7 + M4×6 heat-set packs — [`SHOPPING_LIST.md`](SHOPPING_LIST.md).
+## PCB mounting pads
+
+| Dim | mil | mm |
+| --- | ---: | ---: |
+| Hole (drill) | **100** | **2.54** |
+| Pad diameter | **160** | **4.06** |
+
+**M2** pan screws through pad → **M2 heat-set** in floor bosses. Not every Ø2.54 hole is used — only the stable set below.
+
+---
+
+## Board outlines (Gerber GKO)
+
+| Board | Outline W × H | Floor keep-out (margin) |
+| --- | ---: | ---: |
+| Input | **83.1 × 79.0** | **86 × 83** |
+| Output | **124.0 × 112.4** | **126 × 114** |
+| Buttons | **71.0 × 44.7** | under lid / standoffs |
+
+---
+
+## Coordinate frames
+
+**Gerber / PnP** (authoritative for hole tables):
+
+```text
++X right · +Y down (Y values negative) · LED block at high X
+Outline ≈ X∈[0,W], Y∈[−H,0]
+```
+
+**Enclosure floor** (CAD):
+
+```text
+Origin = inner floor, front-left corner (inside wall)
++X = toward right · +Y = toward back · +Z = up
+FRONT = LED window wall
+```
+
+**Place PCB** with LED edge (max X) → FRONT. Map Gerber → enclosure:
+
+```text
+enc_x = ox + (−Y_gerber)
+enc_y = oy + (W − X_gerber)
+```
+
+`(ox, oy)` = enclosure position of Gerber corner **(W, 0)** = board **front-left** (LED edge at front, drawing-top toward left).
+
+Suggested `(ox, oy)`: **sign-input** `(20, 40)` · **sign-output** `(25, 25)` — nudge for wire dress; keep ≥10 mm wall clearance to outline.
 
 ---
 
 ## Heat-set inserts
 
-| Spec | M3 | M4 |
+| Spec | M2 (PCB) | M3 (lid / RS-15) |
 | --- | --- | --- |
-| Example | Ruthex / CNC Kitchen M3×5.7 | M4×6–8 |
-| Print hole Ø | **4.2** | **5.6** |
-| Insert length | 5.7 | 6–8 |
-| Boss outer Ø | **≥9** | **≥11** |
-| Boss height above floor | **≥6** | **≥8** |
-| Local wall around boss | ≥1.5 | ≥2.0 |
-| Screw | M3×8–10 pan | M4×10–12 |
+| Example | Ruthex / CNC Kitchen M2×4–5 | M3×5.7 |
+| Print hole Ø | **~3.2** (per insert datasheet) | **4.2** |
+| Boss outer Ø | **≥7** | **≥9** |
+| Boss height | **≥5** | **≥6** |
+| Screw | M2×6–8 pan | M3×8–12 pan |
 
-Install with soldering iron / insert tip perpendicular; allow cool before load.
+Install with insert tip; cool before load. PCB standoff **Z = 12** (board bottom above floor).
 
 ---
 
-## Coordinate system (all boxes)
+## Input PCB — use 4 of 5 Ø2.54 holes
 
-```text
-Origin = inner floor, front-left corner (inside wall)
-+X = toward right (along width)
-+Y = toward back (along length)
-+Z = up
-FRONT = LED window wall (controller boxes) or intake wall (power)
-```
+Outline **W = 83.06**. Skip center hole (not needed for stiffness).
 
-PCB keep-out rectangles are placed with **LED edge parallel to FRONT** (+X along LED column).
+| Boss | Gerber X | Gerber Y | Role |
+| --- | ---: | ---: | --- |
+| H1 | **25.908** | **−18.415** | TL |
+| H2 | **79.121** | **−4.064** | TR (near LED edge) |
+| H3 | **23.495** | **−75.057** | BL |
+| H4 | **79.121** | **−75.184** | BR (near LED edge) |
 
----
+Unused: `(43.180, −54.483)` mid-board.
 
-## Input PCB (sign-input / mp-input)
+Span ≈ **55.6 × 71.1** mm. Example bosses at `(ox,oy)=(20,40)`:
 
-Keep-out **86 × 83** (X × Y). Place with margin ≥10 from walls.
-
-| Boss | Role | Pattern |
-| --- | --- | --- |
-| C1..C4 | Corner clamps | At keep-out corners **outward** 4 mm (centers outside copper) |
-| Clamp finger | M3 screw + printed washer/clip | Bears on PCB top copper-free margin |
-
-Suggested keep-out origin (inner, mm) — **sign-input**:
-
-| Corner | X | Y |
+| Boss | enc X | enc Y |
 | --- | ---: | ---: |
-| KO front-left | 20 | 40 |
-| KO size | 86 | 83 |
+| H1 | 38.4 | 97.1 |
+| H2 | 24.1 | 43.9 |
+| H3 | 95.1 | 99.6 |
+| H4 | 95.2 | 43.9 |
 
-Boss centers = KO corners ± (outward 6 mm along both axes as needed).
+**RS-15-12** (62.5 × 51 × 28): LEFT near C14 · 2× **M3** · Z≈3 · lid clearance ≥10.
 
-**RS-15-12** (62.5 × 51 × 28): place near LEFT (AC) wall. Datasheet 2× M3 on chassis — bosses match RS-15 bottom holes (measure unit; typ. along 62.5 length). Standoff height **Z = 3** (or direct to Al/pad). Clearance above RS-15 to lid ≥10.
-
-**Buttons daughter**: 2× M3 bosses under top lid or on standoffs from floor; flying leads to `J2`/`J3`.
-
-**Standoff height (PCB top from floor)**: **12 mm** min under PCB for wire dress; USB-C/SWD face open toward lid volume.
+**Buttons daughter** (optional 4× M2): Gerber corners `(2.667,−2.667)`, `(68.199,−2.794)`, `(2.794,−41.910)`, `(68.072,−41.910)` — 2 diagonal OK if space tight.
 
 ---
 
-## Output PCB (sign-output / mp-output)
+## Output PCB — use 4 of 6 Ø2.54 holes
 
-Keep-out **126 × 114**.
+Outline **W = 123.95**. Skip mid-pair and fuse NPTH.
 
-| Item | Rule |
+| Boss | Gerber X | Gerber Y | Role |
+| --- | ---: | ---: | --- |
+| H1 | **17.907** | **−28.194** | TL |
+| H2 | **120.777** | **−3.048** | TR (near LED) |
+| H3 | **3.640** | **−107.950** | BL |
+| H4 | **120.777** | **−107.950** | BR (near LED) |
+
+**Do not** boss:
+
+| Gerber | Why |
 | --- | --- |
-| LED edge | FRONT |
-| `J5`/`J6` edge | toward SOL face |
-| `J1` edge | toward DTP mate face |
-| Corner clamps | 4× M3 same as input |
-| `F9` access | lid open · no pillar over fuse |
+| `(64.516, −76.073)`, `(76.850, −76.073)` | interior pair — unused |
+| NPTH `(10.541, −5.461)` Ø2.50 | **F9** ATO fuse hole |
 
-Suggested keep-out origin — **sign-output** (inner mm):
+Span ≈ **117.1 × 104.9** mm. Example `(ox,oy)=(25,25)`:
 
-| | X | Y |
+| Boss | enc X | enc Y |
 | --- | ---: | ---: |
-| KO front-left | 25 | 25 |
-| KO size | 126 | 114 |
+| H1 | 53.2 | 131.0 |
+| H2 | 28.0 | 28.2 |
+| H3 | 133.0 | 145.3 |
+| H4 | 133.0 | 28.2 |
 
-PCB standoff **Z = 12**.
-
----
-
-## LRS-200-12 + Al plate (power boxes)
-
-Al plate **215 × 115 × 3** on floor bosses.
-
-| Feature | Spec |
-| --- | --- |
-| Plate holes | Match LRS bottom: span along L typ. **150**, end offset typ. **32.5** — **verify on unit** |
-| Fasteners | M4 through plate into heat-set in floor **or** M4 into LRS (L≤5 into PSU) |
-| Plate position | Terminals toward LONG-wall AC (C14/POWER); far short end = DTP mate |
-| Gap terminal end | **≥30** inner to wall for AC/DC wire |
-| Gap DTP end | ≥5 body + pocket in wall |
-
-Floor bosses: 4× under plate holes.
+Orientation: LED→FRONT · `J5`/`J6`→SOL · `J1`→DTP · no pillar over `F9`.
 
 ---
 
-## Fans (power boxes)
+## Lid fasteners
 
 | Spec | Value |
 | --- | --- |
-| Pattern | 50 × 50 · Ø3.5 through · M3 screws into heat-set **or** nuts |
-| Airflow hole | Ø57 |
-| CL height | **48** from outer bottom |
-| Recess | Fan body in wall pocket; ≤10 into cavity |
-| Seal | Foam between filter/grill and outer face |
-
----
-
-## Lid fasteners (all boxes)
-
-| Spec | Value |
-| --- | --- |
-| Count | **4** (corners) or **6** (power boxes) |
+| Count | **4** corners |
 | Insert | M3×5.7 in body flange |
 | Screw | M3×10–12 |
-| Gasket | 2–3 mm silicone cord/strip in lid groove · 20–30% compression |
-| Groove | 3.5 W × 2.0 D (tune to gasket) · print face up |
+| Gasket | 2–3 mm silicone · 20–30% compression |
+| Groove | 3.5 W × 2.0 D · print face up |
 
----
+## Qty
 
-## Qty checklist (shopping)
-
-| Insert | Approx qty |
+| Insert | Approx |
 | --- | ---: |
-| M3×5.7 | 50 (PCBs + lids + RS-15 + fans + spare) |
-| M4×6–8 | 12 (LRS plates + spare) |
+| M2×4–5 | ≥20 (4 holes × 4 boards + spare; +4 if buttons) |
+| M3×5.7 | ≥24 (lids + RS-15 + spare) |
+| M2×6–8 pan screws | ≥20 |
+| M3×10–12 pan screws | ≥20 |

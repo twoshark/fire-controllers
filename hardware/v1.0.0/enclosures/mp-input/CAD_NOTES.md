@@ -24,7 +24,7 @@ Same pattern as sign-input (C14+POWER LEFT · M12 RIGHT · LED FRONT).
 
 ## Internal
 
-Same input PCB KO **86×83** + RS-15 + M3 inserts ([`../MOUNTING.md`](../MOUNTING.md)). D4..D8 unused.
+Same input PCB outline **83.1×79.0** · KO **86×83** + RS-15 · 4× M2 bosses H1–H4 / lid **M3** ([`../MOUNTING.md`](../MOUNTING.md)). D4..D8 unused.
 
 ## Cables
 

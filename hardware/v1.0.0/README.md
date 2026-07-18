@@ -17,18 +17,11 @@ Protocol: [`../../docs/serial-protocol.md`](../../docs/serial-protocol.md).
 
 ## Exports present
 
-| File | EasyEDA export |
+| Path | EasyEDA export |
 | --- | --- |
-| `exports/BOM_input.csv` / `BOM_output.csv` | Bill of Materials (CSV) |
-| `exports/PnP_input.csv` / `PnP_output.csv` | Pick and Place / CPL |
-| `exports/Netlist_input.asc` / `Netlist_output.asc` | PADS netlist |
-| `input-buttons-pcb/exports/` | Daughter PCB BOM / PnP / netlist |
+| `input/easyeda/BOM_input.csv`, `PnP_input.csv`, `Netlist_input.asc` | Input BOM / CPL / PADS |
+| `output/eda-exports/BOM_output.csv`, `PnP_output.csv`, `Netlist_output.asc` | Output BOM / CPL / PADS |
+| `input/easyeda/gerber/`, `output/eda-exports/gerber/` | Gerber + Excellon (2026-07-18) |
+| `input-buttons-pcb/exports/` (+ `gerber/`) | Daughter BOM / CPL / netlist / Gerber |
 
-## Optional next export
-
-If you can add one more file, export **Schematic PDF** (File → Export → PDF) for each board.
-Easy in EasyEDA, useful for visual silk/net cross-check. Drop as:
-
-- `exports/Schematic_input.pdf`
-- `exports/Schematic_output.pdf`
-- `input-buttons-pcb/exports/Schematic.pdf` (and ideally a connectorized board rev)
+Mounting-hole XY for enclosures is derived from Gerber drills — see [`enclosures/MOUNTING.md`](enclosures/MOUNTING.md).

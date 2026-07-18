@@ -37,7 +37,7 @@ sudo apt install dfu-util   # or brew install dfu-util
 
 - [ ] `F9` blade fuse **inserted** (25A ATO) before applying load current
 - [ ] `Q9` (TO-263) present between fuse and bulk caps
-- [ ] LRS-200-12 (if used): selector **115V**, trim left at **12.0V**
+- [ ] HLG-240H-12: FG earthed; DC → DTP → `J1`; mount shaded
 
 ## 2) Cold rail bring-up (no firmware yet)
 

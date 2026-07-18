@@ -1,48 +1,30 @@
-# Cost options → under $300
+# Cost options
 
-Six boxes. Revised cart (~$256): [`SHOPPING_LIST.md`](SHOPPING_LIST.md).
-
-### Locked changes (vs PanelPole lean)
-
-| Change | Why |
-| --- | --- |
-| Drop PanelPole2 ×4 (−$80) | Not IP67 when mated; too expensive |
-| Add DTP 2-pin 10-set (~+$28) | **25 A · IP67 mated** · 12 AWG |
-| Drop 12 V KCD4 on output boxes | AC-only rocker must not switch 10 A DC |
-| Add boots / M12 caps / C14 covers (~+$24) | Dust/rain on remaining weak points |
-| Keep DT for SOL · M12 for RS-485 · Bravo PSUs | Correct families |
-
----
-
-## Recommended cart (~$282)
-
-| Keep | Ext |
+| Cart | Ext |
 | --- | ---: |
-| Bravo 2× RS-15 + 2× LRS-200 | $69.20 |
-| Amazon (connectors, seal extras, fans, cords, inserts, lens/gasket) | ~$213 |
-| **Sum** | **~$282** |
+| Bravo RS-15×2 + HLG-240H-12×2 | $159.80 |
+| Amazon (4 boxes + interconnect) | ~$199 |
+| **Sum** | **~$359** |
 
----
+### Budget PSU
 
-## Option menu
+| Change | Bravo | Approx total |
+| --- | ---: | ---: |
+| 2× HLG-185H-12 (13 A) | $131.80 | ~$331 |
+| HLG-240H (sign) + HLG-185H (mp) | $128.70 | ~$328 |
+
+### Add-ons
 
 | ID | Change | Δ | Tradeoff |
 | --- | --- | ---: | --- |
-| **A** | HangTon USB on 4 controllers | +$29 | DFU without opening |
-| **B** | UL AC rocker (WRG32) on 4 AC boxes | +$9 | Still AC-only — OK on AC path only |
-| **C** | OEM DigiKey AT flange for SOL | +$40–55 | Better panel seal than printed pocket |
-| **D** | 4 boxes only (drop power shells) | −~$160 | Incomplete system |
-| **E** | Printed Powerpole instead of DTP | −~$20 vs DTP | **Reject for outdoor** — unsealed when mated |
-| **F** | Skip fans | −$22 | Hotter LRS; more sealable power box |
-| **G** | One shared LRS for both | −~$40 | 16 A on 17 A — **reject** without derate |
+| **A** | HangTon USB | +$29 | DFU without opening |
+| **C** | OEM AT flange SOL | +$40–55 | Better panel seal |
+| **G** | One HLG for both outputs | −$71 | Shared 16 A — only if loads never overlap hard |
 
----
-
-## Do not cut
+### Do not cut
 
 | Item | Why |
 | --- | --- |
-| LRS-200-12 / RS-15-12 | Load locked |
-| DTP (or ATP) for 12 V bus | Current + IP67 |
-| DT/AT for SOL | 2 A outdoor |
-| M12 for RS-485 | Signal / outdoor |
+| HLG (or equiv IP67 MW) | Outdoor 12 V source |
+| DTP for 12 V link | 25 A · IP67 mated |
+| DT for SOL · M12 for RS-485 | Outdoor |

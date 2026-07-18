@@ -40,9 +40,9 @@ Bed ≤ **256 × 256**. Print body open-up; lid groove up.
 
 | Item | Spec |
 | --- | --- |
-| Input PCB | KO **86×83** · LED→FRONT · 4× M3 clamp bosses · Z=12 |
+| Input PCB | Outline **83.1×79.0** · KO **86×83** · LED→FRONT · 4× M2 bosses ([`../MOUNTING.md`](../MOUNTING.md) H1–H4) · Z=12 |
 | RS-15-12 | **62.5×51×28** · LEFT near C14 · 2× M3 |
-| Buttons PCB | under top · 2× M3 |
+| Buttons PCB | Outline **71.0×44.7** · under top · 2–4× M2 |
 | Lid | 4× M3 · gasket groove |
 
 ## Cables

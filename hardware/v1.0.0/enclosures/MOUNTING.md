@@ -162,17 +162,42 @@ Gerber Ø2.54 corners — use **2 diagonal** or all 4. Mount under lid / to lid 
 
 ---
 
-## Lid M3 flange (4 corners)
+## Lid — internal hinges + front latches
 
-Body flange inserts, inset **8 mm** from inner corners (outer = inner + wall).
+**Do not print hinges.** Prefab **Sugatsune KHA-25C** (304 SS, polyacetal bushing).
 
-| Box | Inner L×W | Lid M3 (enc X, Y) |
-| --- | ---: | --- |
-| sign-input | 214×174 | (8,8) (206,8) (8,166) (206,166) |
-| mp-input | 194×154 | (8,8) (186,8) (8,146) (186,146) |
-| sign/mp-output | 214×164 | (8,8) (206,8) (8,156) (206,156) |
+| Spec | Value |
+| --- | --- |
+| MPN | **KHA-25C** |
+| Size | H **25** mm along pin · leaf ~**16** mm from pin · closed stack ~**6.3** mm |
+| Holes | 2 per leaf · P1=**6** · P2=**13** (not countersunk) |
+| Load | **3 kg** per pair (datasheet) — lids well under |
+| Buy | [Sugatsune](https://www.sugatsune.com/butt-hinge-kha-25c/) · Alema/Wurth · Amazon “KHA-25C” |
+| Qty | **2 per box** · **8** total |
 
-Gasket groove in **lid**, print groove-up. Groove 3.5 W × 2.0 D · 20–30% crush.
+### Placement (all four boxes)
+
+```text
+Hinge pin on BACK edge (internal) · lid opens toward FRONT
+2× KHA-25C · leaves inside cavity (not through outer wall)
+Latches: 2× M3 at FRONT corners (screw into body flange inserts)
+```
+
+| Box | Inner L×W | Hinge A pin center (X, Y) | Hinge B | Latch M3 (FRONT) |
+| --- | ---: | ---: | ---: | --- |
+| sign-input | 214×174 | **(40, 170)** | **(174, 170)** | (8,8) (206,8) |
+| mp-input | 194×154 | **(35, 150)** | **(159, 150)** | (8,8) (186,8) |
+| sign/mp-output | 214×164 | **(40, 160)** | **(174, 160)** | (8,8) (206,8) |
+
+Y = near back wall (inner W − ~4). Pin axis parallel to **+X**. Each hinge spans **25** mm in X (leaf H); centers above are mid-pin.
+
+**Body leaf:** M3 heat-sets in vertical bosses on inner BACK wall / flange, leaf face toward cavity.  
+**Lid leaf:** M3 heat-sets in lid underside near back edge.  
+Screws: **M3×6** pan (8 per box for hinges + 2 latch = 10).
+
+Keep-out: no PCB / wire in the **20 × 30** mm zone around each hinge when closed. Lid swing: leave **≥90°** clear above BACK face (no tall panel glands on BACK above hinge — DTP stays mid-height OK).
+
+Gasket groove in **lid**, print groove-up. Groove 3.5 W × 2.0 D · 20–30% crush. Run gasket continuous on FRONT/LEFT/RIGHT; on BACK run **inboard of hinge knuckles** (or split gasket with butt joints at pin ends) so hinges stay internal and dry.
 
 ---
 
@@ -248,9 +273,12 @@ DTP on **BACK** face, centered in X, CL height **40**.
 
 ## Qty
 
-| Insert | Approx |
+| Item | Approx |
 | --- | ---: |
-| M2×4–5 | ≥20 (4×4 boards + spare; +4 if buttons) |
-| M3×5.7 | ≥24 (lids 16 + RS-15 4 + spare) |
+| KHA-25C hinge | **8** (2×4 boxes) |
+| M2×4–5 heat-set | ≥20 (PCB + spare; +4 if buttons) |
+| M3×5.7 heat-set | ≥**48** (hinge 32 + latch 8 + RS-15 4 + spare) |
 | M2×6–8 pan | ≥20 |
-| M3×8–12 pan | ≥20 (lid); M3×6–8 for RS-15 (L≤4 into PSU) |
+| M3×6 pan | ≥40 (hinge leaves) |
+| M3×10–12 pan | ≥12 (front latches + spare) |
+| M3×6–8 into RS-15 | ≥4 (L≤4 into PSU) |

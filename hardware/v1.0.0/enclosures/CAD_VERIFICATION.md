@@ -10,7 +10,7 @@ Axis: outer **L × W × H** = **+X × +Y × +Z** (right × back × up). FRONT = 
 | --- | --- | --- | --- |
 | 1 | Envelope vs contents | **PASS*** | Floor pack OK; arcade = compact hex ring; *measure EG STARTS Ø + DT/DTP housings |
 | 2 | Heat-set inserts | **PASS** | M2 PCB; M3 lids + RS-15 — [`MOUNTING.md`](MOUNTING.md) + cart |
-| 3 | Pillar locations | **PASS** | PCB H1–H4, RS-15 M3, lid M3, arcade centers — [`MOUNTING.md`](MOUNTING.md) |
+| 3 | Pillar locations | **PASS** | PCB H1–H4, RS-15, **KHA-25C** hinge bosses, front latch M3 — [`MOUNTING.md`](MOUNTING.md) |
 | 4 | Layout | **PASS** | LED→FRONT; M12 LEFT; SOL LEFT; DTP BACK; service under lid |
 | 5 | Wiring | **PASS** | Faces match terminal mids; star `J6`; ≤80 mm preferred |
 | 6 | Build plate | **PASS** | Largest **220×180** |
@@ -34,7 +34,7 @@ Inner ≈ outer − **6** (2×3 mm walls).
 | Insert | Use | Print hole | Boss OD |
 | --- | --- | ---: | ---: |
 | M2×4–5 heat-set | PCB (Ø2.54) · buttons | ~**3.2** | **≥7** |
-| M3×5.7 heat-set | Lid · RS-15 floor | **Ø4.2** | **≥9** |
+| M3×5.7 heat-set | Hinge leaves · front latch · RS-15 | **Ø4.2** | **≥9** |
 
 ## Layout / wiring
 
@@ -47,6 +47,7 @@ Inner ≈ outer − **6** (2×3 mm walls).
 | Output SOL row | **LEFT** (near `J5`/`J6`) |
 | Output M12 | **LEFT** near front (near `J2`) |
 | Terminal → panel | ≤80 mm preferred; ≤120 mm max |
+| Lid | **Internal** KHA-25C ×2 on BACK · M3 latches FRONT |
 | Service | lid open → USB-C, SWD, `F9`, SW; standoff **≥12** |
 | Output kill | unplug HLG AC |
 
@@ -55,7 +56,8 @@ Inner ≈ outer − **6** (2×3 mm walls).
 | Part | Print |
 | --- | --- |
 | Body | Open face **up** · no supports |
-| Lid | Gasket groove **up** · arcade holes vertical |
+| Lid | Gasket groove **up** · arcade holes vertical · hinge bosses for KHA-25C (prefab) |
+| Hinges | **Not printed** — screw-on internal |
 | DT/DTP retainers | **Separate clips** (default) — do not rely on unsupported pocket lips |
 | Screw bosses | Taper 2° |
 | Optional | Chamfered integral pocket only after print test |

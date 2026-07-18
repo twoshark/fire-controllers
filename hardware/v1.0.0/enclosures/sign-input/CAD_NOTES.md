@@ -36,7 +36,7 @@ Pitch **45** on R≈38.3. Hole bbox ≈ **110 × 110** — centers in [`../MOUNT
 | RS-15-12 | Body (10,20)–(61,82.5) · M3 @ (35.5, 31.5)/(35.5, 70.6) |
 | Input PCB | `(ox,oy)=(75,40)` · H1–H4 · LED→FRONT · Z=12 |
 | Buttons PCB | optional under lid · 2–4× M2 |
-| Lid | 4× M3 @ flange inset 8 |
+| Lid | **2× KHA-25C** internal @ BACK (40/174, Y170) · 2× M3 latch FRONT |
 
 ## Cables
 

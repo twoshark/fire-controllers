@@ -26,6 +26,7 @@ Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](.
 | --- | --- |
 | Output PCB | `(ox,oy)=(25,25)` · H1–H4 · LED→FRONT · Z=12 |
 | Wire | DTP→`J1` 12 AWG short · `J6` star → SOL 18 AWG |
+| Lid | **2× KHA-25C** BACK (40/174, Y160) · 2× M3 latch FRONT |
 
 ## Cables
 

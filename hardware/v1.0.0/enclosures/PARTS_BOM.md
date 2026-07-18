@@ -6,16 +6,16 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 
 | Use | MPN | Buy | Qty‑1 |
 | --- | --- | --- | ---: |
-| Input (in box) | RS-15-12 | Bravo | $8.60 |
+| Input (in box) | RS-15-12 | [Bravo](https://www.bravoelectro.com/rs-15-12.html) | $8.60 |
 | Output 12 V (OTS) | HLG-240H-12 | [Bravo](https://www.bravoelectro.com/hlg-240h-12.html) | $71.30 |
-| Board feed fuse | ATO **20 A** | `F9` | — |
+| Board feed fuse | ATO **20 A** | [20 pcs](https://www.amazon.com/20pcs-Standard-Fuses-Blade-Automotive/dp/B0CLGTWZHZ) | $4.39/pk |
 
 ## Connectors
 
 | Use | Part |
 | --- | --- |
 | AC IN (inputs) | C14 + rubber cover |
-| RS-485 | M12-5 panel + field plug + dust cap |
+| RS-485 | M12-5 panel + field plug + [dust caps](https://www.amazon.com/Elecbee-Protective-Plastic-Panel-Mount-Sockets/dp/B0B6HYB4KM) |
 | 12 V | DTP04-2P (box) / DTP06-2S (HLG) + wedges |
 | SOL | DT04-2P / DT06-2S + wedges + cavity plugs |
 
@@ -24,18 +24,19 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 | Item | Notes |
 | --- | --- |
 | EG STARTS triangle | [B07R565HM6](https://www.amazon.com/dp/B07R565HM6) · verify Ø |
-| POWER | KCD4 DPST + boot · **inputs only** · AC |
+| POWER | KCD4 DPST **IP65** · **inputs only** · AC |
 | RESET / BOOT / USB | open lid |
 
 ## Seal / mount
 
 | Item | Buy |
 | --- | --- |
-| Lid gasket · LED PC lens | scrap / Amazon |
-| M2 heat-set ≥20 + M2 screws | PCB (100 mil holes) |
-| M3×5.7 heat-set ≥24 | lids + RS-15 |
-| Outdoor SJTW + gel splice | HLG AC |
-| Adhesive HS / gel | HLG DC DTP re-term |
+| Lid gasket · LED acrylic | see [`SHOPPING_LIST.md`](SHOPPING_LIST.md) |
+| Lid hinge | Amazon ~1" SS butt ×8 (cheap) **or** [KHA-25C](https://www.alema.com/kha-25c-25mm-stainless-steel-butt-hinge-with-screw-holes.html) |
+| M2 heat-set ≥20 + M2 screws | PCB bosses |
+| M3×5.7 heat-set ≥40 | hinge leaves + front latches + RS-15 feet |
+| Outdoor SJTW + adhesive HS butt | HLG AC (not inside boxes) |
+| Adhesive HS | HLG DC DTP re-term |
 
 ## Cables
 
@@ -44,5 +45,5 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 | C13–C14 | 2 | 6 ft |
 | HLG AC SJTW | 2 | 6 ft |
 | HLG→DTP | 2 | ≤4 ft · 12 AWG |
-| RS-485 | 2 | Belden 9842 → M12 |
+| RS-485 | 2 | up to ~30 ft + ~50 ft · KWANGIL 100 ft 9842-equal → M12 |
 | SOL internals | — | 18 AWG/ch · star from `J6` |

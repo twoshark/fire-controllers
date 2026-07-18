@@ -1,20 +1,17 @@
 # mp-output-power — CAD
 
-Same shell as [`../sign-output-power/CAD_NOTES.md`](../sign-output-power/CAD_NOTES.md).
+Same envelope and cutouts as [`../sign-output-power/CAD_NOTES.md`](../sign-output-power/CAD_NOTES.md).
 
-## Size
+| Dim | Value |
+| --- | ---: |
+| Outer | **240 × 180 × 95** |
+| PanelPole OUT CL height | **40** (mate → mp-output) |
+| Fan CL | **48** |
+| C14 / POWER CL | **35** / **50** |
 
-**240 × 180 × 95 mm**
+## Cables (external)
 
-## Layout
-
-```text
-TOP VIEW:
-
-  [intake 09250-F/60+fan]  LRS-200 on Al  [exhaust fan+8147]
-  short end: [C14] [POWER] [PanelPole2 12V OUT]
-```
-
-Fans on **long walls**. LRS terminals face short-end connectors.
-
-Cutouts, cooling stack, keep-outs, print notes: identical to sign-output-power.
+| Cable | Length |
+| --- | ---: |
+| C13→C14 mains | **6 ft** |
+| Powerpole → mp-output | **≤ 4 ft** |

@@ -1,25 +1,38 @@
 # mp-output — CAD
 
-Printer bed ≤ 256 × 256 mm.
+Orientation: [`../README.md`](../README.md). Cutouts: [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md).
 
-## Size
+## Envelope
 
-**200 × 150 × 80 mm** (L×W×H)
+| Dim | mm |
+| --- | ---: |
+| Outer L × W × H | **200 × 150 × 80** |
+| Wall | 2.5–3.0 |
+| Lid | openable (top) |
 
-## Connector walls
+## Sides
+
+Align mate face with mp-output-power (**H = 40**).
 
 ```text
-WALL A: [PanelPole2 12V IN] [M12-5 RS-485] [HangTon USB]
-WALL B: [SOL0] [SOL1] [SOL2]   ← AT04-2P each
+12V MATE FACE:  [PanelPole2 IN Ø28.6]  CL = 40
+SIDE:           [POWER KCD4 30×22]     CL = 50
+OTHER:          [M12-5 Ø16.2] CL 50  [LED 40×10] CL 50
+SOL face:       [SOL0][SOL1][SOL2]     CL = 40  pitch ≥25
 ```
 
-| Feature | Cutout |
-| --- | --- |
-| PanelPole2 | **Ø1-1/8" (28.6 mm)** |
-| M12-5 RS-485 | Ø16.2 mm |
-| AT04-2P SOL0..SOL2 | rectangular · printed flange/pocket |
-| HangTon / RESET / BOOT / LED | same as sign-output |
+| Feature | Cutout | CL height |
+| --- | --- | ---: |
+| PanelPole2 IN | Ø28.6 | **40** |
+| POWER KCD4 | 30×22 | **50** |
+| M12-5 | Ø16.2 | **50** |
+| LED window | 40×10 | **50** |
+| SOL0..SOL2 | pocket ≈16×18 | **40** |
 
-## Internal
+Same output PCB keep-out **126 × 114**. Open lid for DFU/`F9`.
 
-Same as [`../sign-output/CAD_NOTES.md`](../sign-output/CAD_NOTES.md): PanelPole→`J1`, M12→`J2`, AT→`J6`/`J5a.1..3`.
+## Cables (external)
+
+| Cable | Length |
+| --- | ---: |
+| Powerpole ← mp-output-power | **≤ 4 ft** |

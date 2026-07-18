@@ -1,46 +1,51 @@
 # sign-output — CAD
 
-Printer bed ≤ 256 × 256 mm.
+Orientation: [`../README.md`](../README.md). Cutouts: [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md).
 
-## Size
+## Envelope
 
-**220 × 160 × 80 mm** (L×W×H)
+| Dim | mm |
+| --- | ---: |
+| Outer L × W × H | **220 × 160 × 80** |
+| Wall | 2.5–3.0 |
+| Lid | openable (top only — no arcade) |
 
-## Connector walls
+## Sides
+
+Heights = hole center from **outer bottom**. Mate face aligns with sign-output-power.
 
 ```text
-WALL A (power / data):
-  [PanelPole2 12V IN] [M12-5 RS-485] [HangTon USB]
-
-WALL B (solenoids — long face):
-  [SOL0] [SOL1] [SOL2] [SOL3] [SOL4]   ← AT04-2P each
+12V MATE FACE (short):  [PanelPole2 IN Ø28.6]  CL = 40  (centered)
+SIDE:                   [POWER KCD4 30×22]     CL = 50
+OTHER long:             [M12-5 Ø16.2] CL 50
+                        [LED 40×10] CL 50
+SOL face:               [SOL0][SOL1][SOL2][SOL3][SOL4]
 ```
 
-| Feature | Cutout |
+| Feature | Cutout | CL height | Pitch / notes |
+| --- | --- | ---: | --- |
+| PanelPole2 IN | **Ø28.6** | **40** | Rear depth 22.2 behind wall |
+| POWER KCD4 | 30×22 | **50** | Switches PanelPole + → `J1` |
+| M12-5 | Ø16.2 | **50** | → `J2` |
+| LED window | 40×10 | **50** | PCB LED edge X≈117; row 31.5 mm |
+| SOL0..SOL4 | pocket ≈16×18 each | **40** | Centers **≥25** apart; row CL matches mate height |
+
+SOL lean kit = free-hanging DT in printed pocket (or DT04-2P-L012 ≈22.5×17.2 + 2×M4).
+
+No panel RESET/BOOT/USB — open lid → `J7` / `SW` / `F9`.
+
+## Internal
+
+| Item | Size / place |
 | --- | --- |
-| PanelPole2 | **Ø1-1/8" (28.6 mm)** |
-| M12-5 RS-485 | Ø16.2 mm |
-| AT04-2P SOL0..SOL4 | rectangular per AT housing · printed flange/pocket |
-| HangTon USB | D-cut |
-| RESET / BOOT | Ø16 mm |
-| LED window | **40 × 10 mm** vertical |
+| Output PCB | **126 × 114** keep-out |
+| Wire to PanelPole | 12 AWG · short |
+| SOL leads | 18 AWG · `J6` + `J5a`/`J5b` |
 
-SOL pitch ≥30 mm. Label SOL0..SOL4.
+Orient: LEDs → window · `J5`/`J6` → SOL face · `J1` → mate face.
 
-## Internal layout
+## Cables (external)
 
-```text
-PanelPole2 ──12 AWG──► J1
-M12 RS-485 ──22–24 AWG──► J2
-AT SOL pin1 ──18 AWG──► J6 (both poles)
-AT SOL pin2 ──18 AWG──► J5a.n / J5b.1
-HangTon ──jumper──► J7
-```
-
-PCB orientation: [`PnP`](../../output/eda-exports/PnP_output.csv) — `J1` left, `J5`/`J6` top toward SOL wall, `J2`/LEDs right, USB bottom.
-
-Keep-outs: PanelPole ≥25 mm · M12 ≥35 mm · AT rear clearance for wedges · `F9` access · PCB ~120×110 +3 mm.
-
-## Print
-
-ASA or PETG · gasketed lid · AT housings captured so mating face is flush/proud of outer wall.
+| Cable | Length |
+| --- | ---: |
+| Powerpole ← sign-output-power | **≤ 4 ft** (DIY 12 AWG) |

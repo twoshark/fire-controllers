@@ -1,55 +1,55 @@
 # mp-input — CAD
 
-Printer bed ≤ 256 × 256 mm.
+Orientation: [`../README.md`](../README.md). Cutouts: [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md). Bed ≤ **256 × 256**.
 
-## Size
+## Envelope
 
-**200 × 140 × 85 mm** (L×W×H)
+| Dim | mm |
+| --- | ---: |
+| Outer L × W × H | **200 × 160 × 90** |
+| Wall | 2.5–3.0 |
+| Lid | openable (top) |
 
-## Front panel (operator)
-
-```text
-ROW:  [POWER] [CH1] [CH2] [CH3] [ALL]
-```
-
-| Control | Maps to |
-| --- | --- |
-| Arcade POWER | C14 hot → RS-15 AC/L |
-| CH1..CH3 | MCU CH0..CH2 |
-| ALL | buttons PCB D1..D3 only |
-| RESET / BOOT | Ø16 mm · Adafruit 559 / 481 → NRST / BOOT0 |
-
-Pitch ≥30 mm. Leave D4..D8 on buttons PCB unwired.
-
-## Connector wall
+## Top — triangle + ALL center
 
 ```text
-[C14] [M12-5 RS-485] [HangTon USB]
+            [CH1]
+      [CH3]  [ALL]  [CH2]
 ```
 
-| Feature | Cutout |
-| --- | --- |
-| IEC C14 | per inlet drawing |
-| M12-5 | Ø16.2 mm |
-| HangTon | D-cut per part |
-| LED window | **40 × 10 mm** vertical · LED column |
+| Dim | Value |
+| --- | ---: |
+| Button hole | **Ø28** (verify adapter ring; may be Ø24) |
+| Pitch CH↔CH / CH↔ALL | **≥50** |
+| Triangle bounding box | ~**100 × 90** |
 
-## Internal layout
+Same EG STARTS part as sign-input. LED **12 V** from RS-15. D4..D8 unused.
 
-Same PCB orientation as [`../sign-input/CAD_NOTES.md`](../sign-input/CAD_NOTES.md):
+## Sides
 
-| Edge | Toward |
-| --- | --- |
-| `CN2` | M12-5 |
-| `J5` | HangTon |
-| `J1` | RS-15-12 |
-| LED column | window |
-| `J2a` (CH0..2 used) | front buttons |
+Heights = hole center from **outer bottom**.
 
-RS-15-12: 62.5 × 51 × 28 mm · 2×M3 · next to C14/POWER.
+```text
+FRONT (LED):  [LED 40×10] CL 50
+LEFT (AC):    [C14] CL 35  [POWER KCD4] CL 50
+RIGHT:        [M12-5 Ø16.2] CL 50
+```
 
-PCB keep-out ≈ **80 × 75 mm** + 3 mm. No PCB mounting holes in v1.0.0.
+| Feature | Cutout | CL height |
+| --- | --- | ---: |
+| C14 | 27.5×20 or flange 27×19 | **35** |
+| POWER KCD4 | 30×22 | **50** |
+| M12-5 | Ø16.2 | **50** |
+| LED window | 40×10 | **50** |
 
-## Print
+No panel RESET/BOOT/USB.
 
-ASA or PETG · wall ≥3 mm · gasketed lid.
+## Internal
+
+Same input PCB keep-out **86 × 83** and RS-15 **62.5 × 51 × 28** as sign-input.
+
+## Cables (external)
+
+| Cable | Length |
+| --- | ---: |
+| C13→C14 mains | **6 ft** |

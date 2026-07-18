@@ -8,7 +8,7 @@ Confidence: **high** = keep · **med** = keep with note · **cut** = remove/redu
 | # | Item | Ext | Necessary? | Function | Verdict |
 | ---: | --- | ---: | --- | --- | --- |
 | 1 | RS-15-12 ×2 | $17.20 | Yes | 12 V for input electronics | **KEEP** |
-| 2 | HLG-185H-12 ×2 | $114.80 | Yes | Outdoor 12 V / 13 A · day-1 peaks | **KEEP** |
+| 2 | HLG-240H-12 ×2 | $142.60 | Yes | Outdoor 12 V / 16 A · day-1 peaks | **KEEP** |
 | 3 | bociloy 1" hinges 10pk | $5.29 | Yes | Internal lid hinge | **KEEP** |
 | 4 | M3 / M2 heat-sets | — | Yes | Latches · RS-15 · PCB · hinges | **OWNED** |
 | 5 | M2 / M3 screws | — | Yes | same | **OWNED** |
@@ -34,7 +34,8 @@ Confidence: **high** = keep · **med** = keep with note · **cut** = remove/redu
 
 | Cut | Δ | Why |
 | --- | ---: | --- |
-| DT 16→**8** · DTP 4→**2** · HLG-240→185 | −~$78 | Day-1 5+3 only |
+| DT 16→**8** · DTP 4→**2** | −$50 | Day-1 5+3 panels only |
+| HLG kept at **240** | — | 16 A headroom (user lock) |
 | CNC Kitchen inserts | −$22.40 | Owned |
 | M2/M3 screw packs | −$19.94 | Owned |
 | C13–C14 2pk | −$11.99 | Owned PC/monitor cords |

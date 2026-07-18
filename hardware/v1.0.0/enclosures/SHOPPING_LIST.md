@@ -1,14 +1,14 @@
 # Shopping list — 4 enclosures + 2 HLG
 
 **Printed:** sign-input · mp-input · sign-output · mp-output  
-**PSU:** 2× **HLG-185H-12** (IP67, 12 V / 13 A) — sized for **sign 5 SOL** + **mp 3 SOL** (no 8-ch expand).  
+**PSU:** 2× **HLG-240H-12** (IP67, 12 V / 16 A) — full PCB headroom; day-1 panels still **sign 5** + **mp 3** DT.  
 **RS-485:** runs up to **~30 ft** and **~50 ft** → order **100 ft** spool.  
 **Review:** [`PARTS_REVIEW.md`](PARTS_REVIEW.md) · hinge CAD: [`MOUNTING.md`](MOUNTING.md).  
 Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`](SEALING.md).
 
 **Rule:** every line has a real product URL and a listed USD price. Prices checked **2026-07-18**. Re-check at checkout.
 
-**Est. checkout:** **~$490** (+ Lowdoller ship if under $100).
+**Est. checkout:** **~$508** (+ Lowdoller ship if under $100).
 
 ---
 
@@ -41,9 +41,9 @@ Still need outdoor **SJTW** (or equivalent NEMA 5-15 outdoor cord) for HLG AC �
 | --- | --- | --- | --- | --- | --- | --- |
 | sign-input | C14 | KCD4 IP65 | — | M12-5 | — | RS-15-12 |
 | mp-input | C14 | KCD4 IP65 | — | M12-5 | — | RS-15-12 |
-| sign-output | — | — | DTP IN | M12-5 | **5× DT** | ← HLG-185H |
-| mp-output | — | — | DTP IN | M12-5 | **3× DT** | ← HLG-185H |
-| HLG ×2 | SJTW + adhesive HS butt (outdoor) | unplug to kill | DTP on pigtail | — | — | HLG-185H-12 |
+| sign-output | — | — | DTP IN | M12-5 | **5× DT** | ← HLG-240H |
+| mp-output | — | — | DTP IN | M12-5 | **3× DT** | ← HLG-240H |
+| HLG ×2 | SJTW + adhesive HS butt (outdoor) | unplug to kill | DTP on pigtail | — | — | HLG-240H-12 |
 
 ### Pin maps
 
@@ -55,14 +55,14 @@ Still need outdoor **SJTW** (or equivalent NEMA 5-15 outdoor cord) for HLG AC �
 
 ---
 
-## Cart 1 — Bravo Electro · **$132.00**
+## Cart 1 — Bravo Electro · **$159.80**
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
 | 2 | Mean Well **RS-15-12** | $8.60 | $17.20 | https://www.bravoelectro.com/rs-15-12.html |
-| 2 | Mean Well **HLG-185H-12** (IP67, 12 V / 13 A) | $57.40 | $114.80 | https://www.bravoelectro.com/hlg-185h-12.html |
+| 2 | Mean Well **HLG-240H-12** (IP67, 12 V / 16 A) | $71.30 | $142.60 | https://www.bravoelectro.com/hlg-240h-12.html |
 
-13 A covers sign **10 A** peak (5×2 A) and mp **6 A** peak (3×2 A). Do **not** load unused PCB channels without a larger PSU + more DT.
+16 A covers PCB ceiling (8×2 A). Day-1 DT stays **5** + **3** — buy more DT later if you panel unused channels.
 
 ---
 
@@ -128,21 +128,22 @@ Heat-sets + M2/M3 screws: **owned**. Inside boxes: screw / solder / adhesive but
 
 | Cart | Ext |
 | --- | ---: |
-| 1 Bravo PSU (HLG-185H) | $132.00 |
+| 1 Bravo PSU (HLG-240H) | $159.80 |
 | 2 Amazon 1" hinges | $5.29 |
 | 3 Lowdoller DT/DTP (+ ship) | $50.00 |
 | 4 Cable | $185.08 |
 | 5 Panel / hardware | $107.61 |
-| **Est. checkout** | **~$479.98** (+ Lowdoller ship) |
+| **Est. checkout** | **~$507.78** (+ Lowdoller ship) |
 
-Owned cuts: − inserts (−$22.40) · − M2/M3 screws (−$19.94) · − C13–C14 (−$11.99).  
+Owned cuts kept: inserts · M2/M3 screws · C13–C14. DT still day-1 **8** only.  
+
 TE flange: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**. Full necessity table: [`PARTS_REVIEW.md`](PARTS_REVIEW.md).
 
 ---
 
 ## Checklist
 
-- [ ] Bravo: RS-15×2, **HLG-185H-12×2**  
+- [ ] Bravo: RS-15×2, **HLG-240H-12×2**  
 - [ ] bociloy 1" ×8 · caliper holes vs [`MOUNTING.md`](MOUNTING.md)  
 - [ ] Lowdoller: **2× DTP** + **8× DT** (5 sign + 3 mp)  
 - [ ] KWANGIL **100 ft** + M12 4-set + dust caps + C14 + SJTW + 12 AWG  

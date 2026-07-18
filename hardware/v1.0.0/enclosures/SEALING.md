@@ -5,7 +5,7 @@ Target: **playa-practical**.
 | Class | Interfaces | Claim |
 | --- | --- | --- |
 | **IP67 (mated)** | DT · DTP · M12-5 | Connector face when correctly assembled with seals/wedges |
-| **IP67 (unit)** | HLG-185H-12 | Factory; mount shaded; FG earthed |
+| **IP67 (unit)** | HLG-240H-12 | Factory; mount shaded; FG earthed |
 | **Splash / dust** | Printed lids + gasket · LED PC+foam · KCD4 boot · C14 cover | Not certified whole-box IP67 |
 | **Not outdoor alone** | Arcade EG STARTS · C14 when unmated | Prefer inputs under canopy / shade |
 
@@ -18,7 +18,7 @@ Do **not** claim the printed PETG/ABS shell is IP67.
 | RS-485 | M12-5 | IP67 (gasketed nut) | open | Dust caps both ends |
 | AC (inputs) | C14 | cord helps | ~IP20 | Cover when unmated · canopy |
 | POWER (inputs) | KCD4 + boot | splash | boot | Silicone boot · AC only |
-| 12 V PSU | HLG-185H-12 | **IP67 unit** | — | Shade · FG |
+| 12 V PSU | HLG-240H-12 | **IP67 unit** | — | Shade · FG |
 | HLG DC → DTP | cut pigtail + crimp | — | — | **Adhesive heatshrink / gel** over re-term |
 | LED window | PC + foam | splash/dust | — | Not an open slot |
 | Lid | silicone gasket + **internal** bociloy 1" hinges | splash/dust | — | Gasket FRONT/L/R continuous; BACK inboard of knuckles · 20–30% crush |

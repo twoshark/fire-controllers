@@ -32,10 +32,13 @@ Printed-board truth lives in [`hardware/v1.0.0/`](hardware/v1.0.0/):
 ```text
 fire-controllers/
 ├── firmware/              # Embassy Rust firmware
-├── hardware/v1.0.0/     # Printed board truth + EasyEDA exports
+├── hardware/v1.0.0/       # Printed board truth + EasyEDA exports
+├── supply-depot/          # 7-tank propane vapor manifold → 1″ hose
 ├── docs/                  # Protocol + system architecture
 └── scripts/               # build / flash / test
 ```
+
+Propane supply (tanks → 1″ trunk): [`supply-depot/README.md`](supply-depot/README.md).
 
 ## Quick start
 
@@ -75,6 +78,6 @@ Chip: `STM32G0B1CBTx`. DFU: hold `SW2` (BOOT0), tap `SW1` (NRST), release `SW2`.
 
 ## Safety
 
-- Output 12 V from **HLG-185H-12** (IP67); earth FG; see `hardware/v1.0.0/enclosures/POWER_OTS.md`.
+- Output 12 V from **HLG-240H-12** (IP67); earth FG; see `hardware/v1.0.0/enclosures/POWER_OTS.md`.
 - Insert **20 A ATO** in output `F9` before load tests.
 - Loads: `J6` (+12V) → load → `J5x` (never return to board GND).

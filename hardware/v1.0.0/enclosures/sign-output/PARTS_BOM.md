@@ -7,4 +7,4 @@
 | M12-5 + dust cap | 1 |
 | DT panel + cable (SOL) | 5 / 5 |
 | Shell + lid gasket | 1 |
-| HLG-185H-12 (OTS) + DTP pigtail ≤4 ft | 1 |
+| HLG-240H-12 (OTS) + DTP pigtail ≤4 ft | 1 |

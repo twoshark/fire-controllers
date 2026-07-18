@@ -78,7 +78,7 @@ LED edge (`X≈79`) → LED window wall.
 | PSU | L × W × H | Mount |
 | --- | ---: | --- |
 | RS-15-12 (in input box) | **62.5 × 51 × 28** | 2× M3 L≤3–4 |
-| HLG-185H-12 (OTS) | **228 × 68 × 39** | structure / shade — [`POWER_OTS.md`](POWER_OTS.md) |
+| HLG-240H-12 (OTS) | **244 × 68 × 39** | structure / shade — [`POWER_OTS.md`](POWER_OTS.md) |
 
 ---
 

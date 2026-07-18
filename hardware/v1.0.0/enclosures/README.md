@@ -1,34 +1,42 @@
 # Enclosures (v1.0.0)
 
-3D-printed gasketed boxes for the four Hotline controllers.
+Six printed boxes (bed ≤ **256 × 256 mm**).
 
-| Enclosure | Hosts | Loads | Doc |
-| --- | --- | --- | --- |
-| **sign-input** | Input PCB + IRM-15-12 | Buttons CH0..CH4 + ALL | [`SIGN_INPUT.md`](SIGN_INPUT.md) |
-| **mp-input** | Input PCB + IRM-15-12 | Buttons CH0..CH2 + ALL | [`MP_INPUT.md`](MP_INPUT.md) |
-| **sign-output** | Output PCB + LRS-200-12 | Solenoids CH0..CH4 | [`SIGN_OUTPUT.md`](SIGN_OUTPUT.md) |
-| **mp-output** | Output PCB + LRS-150-12 | Solenoids CH0..CH2 | [`MP_OUTPUT.md`](MP_OUTPUT.md) |
+| Enclosure | Role | Docs |
+| --- | --- | --- |
+| [`sign-input/`](sign-input/) | Buttons CH1..CH5 + ALL · input PCB · RS-15-12 | CAD · BOM · Wiring |
+| [`mp-input/`](mp-input/) | Buttons CH1..CH3 + ALL · input PCB · RS-15-12 | CAD · BOM · Wiring |
+| [`sign-output/`](sign-output/) | Output PCB · SOL0..SOL4 (AT 2-pin each) · 12 V from power box | CAD · BOM · Wiring |
+| [`sign-output-power/`](sign-output-power/) | 120 VAC → 12 V · LRS-200-12 · sign-output | CAD · BOM · Wiring |
+| [`mp-output/`](mp-output/) | Output PCB · SOL0..SOL2 (AT 2-pin each) · 12 V from power box | CAD · BOM · Wiring |
+| [`mp-output-power/`](mp-output-power/) | 120 VAC → 12 V · LRS-200-12 · mp-output | CAD · BOM · Wiring |
 
-| Doc | Contents |
+| Root | Contents |
 | --- | --- |
-| [`SHOPPING_LIST.md`](SHOPPING_LIST.md) | Order carts |
-| [`PARTS_BOM.md`](PARTS_BOM.md) | Parts catalog |
-| [`WIRING.md`](WIRING.md) | Interconnect and pin maps |
-| [`CAD_NOTES.md`](CAD_NOTES.md) | Shell sizes and cutouts |
+| [`SHOPPING_LIST.md`](SHOPPING_LIST.md) | Order carts · pin maps |
+| [`PARTS_BOM.md`](PARTS_BOM.md) | Shared catalog |
+| [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) | Current / termination audit |
 
 ## System
 
 ```text
-sign-input ──RS-485──► sign-output (5 solenoids)
-mp-input   ──RS-485──► mp-output   (3 solenoids)
+sign-input ──RS-485──► sign-output ◄──12 V── sign-output-power ◄── 120 VAC
+mp-input   ──RS-485──► mp-output   ◄──12 V── mp-output-power   ◄── 120 VAC
 ```
 
 ## Power
 
-| Box | PSU | 12 V | AC |
-| --- | --- | --- | --- |
-| Inputs | IRM-15-12 | &lt;800 mA | C14 |
-| sign-output | LRS-200-12 | ≤10.3 A | C14 |
-| mp-output | LRS-150-12 | ≤6.2 A | C14 |
+| Box | Path |
+| --- | --- |
+| Inputs | C14 → POWER → RS-15-12 → PCB `J1` |
+| Output controllers | PanelPole2 12V IN → PCB `J1` (`F9` seated) |
+| Output power | C14 → POWER → LRS-200-12 → PanelPole2 12V OUT · fans on LRS +V/−V |
 
-Panel: C14 AC in, M12 screw-terminal field I/O (RS-485 5-pin; SOL 8-pin sign / 5-pin mp), HangTon USB-C. POWER switches AC into the PSU.
+## CAD gaps (v1.0.0 PCB exports)
+
+| Item | Status |
+| --- | --- |
+| PCB outline W×H | Not in EasyEDA exports — keep-outs use PnP bbox + margin |
+| PCB mounting holes | None in v1.0.0 BOM/PnP — use corner clips / adhesive standoffs until rev |
+| LED window | Size to LED column (~32 mm), not 80 mm |
+| Power-box fans | On **long walls** (across LRS width) — end-stack with 215 mm LRS does not fit ≤256 mm bed |

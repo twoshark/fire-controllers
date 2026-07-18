@@ -59,4 +59,4 @@ See [`PIN_MAP.md`](PIN_MAP.md). USB ESD `D2`; CC `R55`/`R56`; series `R53`/`R54`
 | `U5`/`U6` | `SN74LV14APWR` |
 | `Q9` | `IPB110P06LM` |
 
-Enclosure PSU: Mean Well `LRS-200-12` — selector **115V**, trim **12.0V**.
+Enclosure 12 V: from matching `*-output-power` box (`LRS-200-12`) via PanelPole2 (Anderson Powerpole) → board `J1`.

@@ -34,4 +34,4 @@ Do **not** strap unused diode cathodes onto the input PCB or ALL FIRE will light
 
 Export is **diodes only** (no connectors). For builds: solder flying leads to used pads, or rev the PCB with screw terminals (`ALL`, used `CHx`, `GND`).
 
-See [`../enclosures/WIRING.md`](../enclosures/WIRING.md).
+See [`../enclosures/sign-input/WIRING.md`](../enclosures/sign-input/WIRING.md) or [`../enclosures/mp-input/WIRING.md`](../enclosures/mp-input/WIRING.md).

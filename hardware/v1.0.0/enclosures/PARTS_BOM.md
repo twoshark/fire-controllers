@@ -1,69 +1,61 @@
 # Enclosure parts BOM
 
-Order sheet with pack quantities: [`SHOPPING_LIST.md`](SHOPPING_LIST.md).  
-Prices USD as of 2026-07-18.
+Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Ratings: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md).
+
+Prices USD 2026-07-18.
 
 ---
 
-## Catalog
+## Power supplies
 
-### Power supplies
-
-| Box | MPN | Buy | Qty‑1 |
-| --- | --- | ---: |
-| Each input | IRM-15-12 | [Bravo](https://www.bravoelectro.com/irm-15-12.html) | $8.60 |
-| sign-output | LRS-200-12 | [Bravo](https://www.bravoelectro.com/lrs-200-12.html) | $26.00 |
-| mp-output | LRS-150-12 | [Bravo](https://www.bravoelectro.com/lrs-150-12.html) | $19.80 |
+| Use | MPN | Size | Buy | Qty‑1 |
+| --- | --- | --- | ---: |
+| Input box | RS-15-12 | 62.5 × 51 × 28 mm | [Bravo](https://www.bravoelectro.com/rs-15-12.html) | $8.60 |
+| Output-power box | LRS-200-12 | 215 × 115 × 30 mm | [Bravo](https://www.bravoelectro.com/lrs-200-12.html) | $26.00 |
 
 LRS: selector **115 V**, trim **12.0 V**.
 
-### Panel connectors
+## Connectors
 
-| Use | Part | Pack $ |
-| --- | --- | ---: |
-| AC IN | C14 [B07PVP7XB7](https://www.amazon.com/dp/B07PVP7XB7) ×4 | $8.19 |
-| RS-485 + mp SOL | M12-5 [B0CFFX6JW4](https://www.amazon.com/dp/B0CFFX6JW4) 4-set | $23.79 |
-| Sign SOL | M12-8 [B0CFFY9X93](https://www.amazon.com/gp/product/B0CFFY9X93) 4-set | $36.49 |
-| USB-C bulkhead | HangTon [B0CDPR3BJS](https://www.amazon.com/dp/B0CDPR3BJS) 2-pack | $14.44 |
-| USB-C jumper | [B0CJY9PRNY](https://www.amazon.com/dp/B0CJY9PRNY) 4-pack | $8.98 |
+| Use | Part | Rating | Buy |
+| --- | --- | --- | --- |
+| AC IN | C14 | 10–15 A | [B07PVP7XB7](https://www.amazon.com/dp/B07PVP7XB7) |
+| RS-485 | M12-5 | 4 A · ≤22 AWG · signal | [B0CFFX6JW4](https://www.amazon.com/dp/B0CFFX6JW4) |
+| 12 V link | PanelPole2 | 30 A · 12–14 AWG | [B097QDKJJ2](https://www.amazon.com/dp/B097QDKJJ2) |
+| 12 V field | EX-12-5 | 12 AWG | [Powerwerx](https://powerwerx.com/powerpole-connector-extension-cable) |
+| SOL per CH | AT04-2P-KIT01 + AT06-2S-KIT01 | 13 A · 16–18 AWG | Amphenol / DigiKey |
+| USB-C | HangTon | debug | [B0CDPR3BJS](https://www.amazon.com/dp/B0CDPR3BJS) |
 
-M12: screw-terminal, panel female. IEC C14: panel male.
-
-### Controls
+## Controls
 
 | Item | Buy | Qty‑1 |
 | --- | --- | ---: |
 | RESET | Adafruit [559](https://www.adafruit.com/product/559) | $4.95 |
 | BOOT | Adafruit [481](https://www.adafruit.com/product/481) | $4.95 |
-| POWER (outputs) | WRG32F2FBBNN · Newark [05M1943](https://www.newark.com/zf-electronics/wrg32f2fbbnn/switch-rocker-dpst-16a-250vac/dp/05M1943) | $2.80 |
-| POWER / CH / ALL (inputs) | Builder arcade parts | — |
+| POWER | WRG32F2FBBNN · 16 A AC · 0.250" QC · [05M1943](https://www.newark.com/zf-electronics/wrg32f2fbbnn/switch-rocker-dpst-16a-250vac/dp/05M1943) | $2.80 |
 
-### Protection (on PCB / PSU)
+## Cooling (output-power)
+
+| Item | MPN | Qty‑1 |
+| --- | --- | ---: |
+| Fan 60×60×15 12 V | MF60151V2-1000U-A99 | $7.63 |
+| Intake filter | 09250-F/60 | $1.68 |
+| Exhaust guard | 8147 | $0.54 |
+| Spreader | 6061 Al 115 × 215 × 3 mm | — |
+
+## Protection
 
 | Layer | Part |
 | --- | --- |
-| Output 12 V feed | `F9` 25 A ATO |
-| Output channels | PTC `F1`..`F8` |
-| AC primary | IRM / LRS internal fuse |
+| Output 12 V | `F9` 25 A ATO |
+| Channels | PTC `F1`..`F8` 2 A hold |
+| AC | RS-15 / LRS internal |
 
-### Wire
+## Wire
 
-| Net | Gauge |
-| --- | --- |
-| AC L/N/PE | 18 AWG 300 V |
-| Solenoid +12 V / returns | 18 AWG |
-| RS-485, NRST, BOOT, USB | 24–28 AWG |
-
----
-
-## Per-box estimate (ex filament / arcade / PCB)
-
-| Box | ≈$ |
-| --- | ---: |
-| sign-input / mp-input | 42 |
-| sign-output | 64 |
-| mp-output | 56 |
-
-Kit total **$273.64** — [`SHOPPING_LIST.md`](SHOPPING_LIST.md).
-
-Pin maps: [`WIRING.md`](WIRING.md).
+| Net | Gauge | Why |
+| --- | --- | --- |
+| AC L/N/PE | 18 AWG | C14 / WRG32 QC |
+| 12 V link | **12 AWG** | matches PP30 + EX-12-5 |
+| SOL | **18 AWG** | matches AT 16–18 AWG · 2 A |
+| RS-485 | 22–24 AWG | M12 max ~22 AWG |

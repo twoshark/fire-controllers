@@ -1,31 +1,27 @@
-# Shopping list — 4 enclosures
+# Shopping list — 6 enclosures
 
-Build kit: **sign-input**, **mp-input**, **sign-output**, **mp-output**.
+**sign-input**, **mp-input**, **sign-output**, **sign-output-power**, **mp-output**, **mp-output-power**.
 
-Prices USD as of 2026-07-18. Re-check at checkout.
+Prices USD 2026-07-18. Ratings: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md).
 
 ---
 
 ## Per box
 
-| Box | AC | RS-485 | SOL | USB | PSU |
-| --- | --- | --- | --- | --- | --- |
-| sign-input | C14 | M12-5 | — | HangTon | IRM-15-12 |
-| mp-input | C14 | M12-5 | — | HangTon | IRM-15-12 |
-| sign-output | C14 | M12-5 | M12-8 | HangTon | LRS-200-12 |
-| mp-output | C14 | M12-5 | M12-5 | HangTon | LRS-150-12 |
-
-| Box | 12 V load | AC @115 V |
-| --- | --- | --- |
-| sign-output | ≈10.3 A | ~4 A |
-| mp-output | ≈6.2 A | ~2.8 A |
-| inputs | &lt;0.8 A | ~0.2 A |
+| Box | AC | 12 V link | RS-485 | SOL | USB | PSU |
+| --- | --- | --- | --- | --- | --- | --- |
+| sign-input | C14 | — | M12-5 | — | HangTon | RS-15-12 |
+| mp-input | C14 | — | M12-5 | — | HangTon | RS-15-12 |
+| sign-output | — | PanelPole2 IN | M12-5 | 5× AT 2-pin | HangTon | — |
+| mp-output | — | PanelPole2 IN | M12-5 | 3× AT 2-pin | HangTon | — |
+| sign-output-power | C14 | PanelPole2 OUT | — | — | — | LRS-200-12 |
+| mp-output-power | C14 | PanelPole2 OUT | — | — | — | LRS-200-12 |
 
 ---
 
 ## Pin maps
 
-### RS-485 M12-5
+### RS-485 M12-5 (signal only · 4 A · ≤22 AWG)
 
 | Pin | Signal |
 | ---: | --- |
@@ -36,22 +32,30 @@ Prices USD as of 2026-07-18. Re-check at checkout.
 | 5 | GND |
 | Shell | SHIELD → chassis PE |
 
-Field cable: male–male, TX↔RX crossover.
+Field cable: male–male, TX↔RX crossover. **Not** for solenoid power.
 
-### Sign SOL M12-8
+### 12 V link — Anderson Powerpole (PanelPole2)
+
+| Pole | Net |
+| --- | --- |
+| Red | `+12V` |
+| Black | `GND` |
+
+Panel: **PanelPole2** (PP30 contacts, 12–14 AWG, 30 A). Field: **EX-12-5** (12 AWG). Do not use 10 AWG EX-10 with PP30 contacts.
+
+### SOL — one AT 2-pin per channel (13 A · 16–18 AWG)
 
 | Pin | Net |
 | ---: | --- |
-| 1–2 | `+12V` paralleled |
-| 3–7 | OUT0..4 |
-| 8 | NC |
+| 1 | `+12V` (`J6`) |
+| 2 | `OUTn` |
 
-### Mp SOL M12-5
+| Box | Panel receptacles | Plugs (cable) | `OUTn` |
+| --- | --- | --- | --- |
+| sign-output | 5× AT04-2P-KIT01 | 5× AT06-2S-KIT01 | `J5a.1`..`J5a.4`, `J5b.1` |
+| mp-output | 3× AT04-2P-KIT01 | 3× AT06-2S-KIT01 | `J5a.1`..`J5a.3` |
 
-| Pin | Net |
-| ---: | --- |
-| 1–2 | `+12V` paralleled |
-| 3–5 | OUT0..2 |
+Field: 18 AWG zip · pin1 → solenoid → pin2. Crimp size-16 contacts (AT tool).
 
 ---
 
@@ -59,10 +63,9 @@ Field cable: male–male, TX↔RX crossover.
 
 | Qty | MPN | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
-| 2 | IRM-15-12 | $8.60 | $17.20 | [bravoelectro.com/irm-15-12](https://www.bravoelectro.com/irm-15-12.html) |
-| 1 | LRS-200-12 | $26.00 | $26.00 | [bravoelectro.com/lrs-200-12](https://www.bravoelectro.com/lrs-200-12.html) |
-| 1 | LRS-150-12 | $19.80 | $19.80 | [bravoelectro.com/lrs-150-12](https://www.bravoelectro.com/lrs-150-12.html) |
-| | | **Subtotal** | **$63.00** | |
+| 2 | RS-15-12 | $8.60 | $17.20 | [bravoelectro.com/rs-15-12](https://www.bravoelectro.com/rs-15-12.html) |
+| 2 | LRS-200-12 | $26.00 | $52.00 | [bravoelectro.com/lrs-200-12](https://www.bravoelectro.com/lrs-200-12.html) |
+| | | **Subtotal** | **$69.20** | |
 
 LRS: selector **115 V**, trim **12.0 V**.
 
@@ -72,8 +75,9 @@ LRS: selector **115 V**, trim **12.0 V**.
 
 | Qty | MPN | Role | Unit | Ext | Link |
 | ---: | --- | --- | ---: | ---: | --- |
-| 2 | WRG32F2FBBNN | Output POWER rocker | $2.80 | $5.60 | [05M1943](https://www.newark.com/zf-electronics/wrg32f2fbbnn/switch-rocker-dpst-16a-250vac/dp/05M1943) |
-| | | | **Subtotal** | **$5.60** | |
+| 2 | WRG32F2FBBNN | POWER (0.250" QC tabs) | $2.80 | $5.60 | [05M1943](https://www.newark.com/zf-electronics/wrg32f2fbbnn/switch-rocker-dpst-16a-250vac/dp/05M1943) |
+| 2 | 09250-F/60 | 60 mm intake filter | $1.68 | $3.36 | [17B6480](https://www.newark.com/qualtek/09250-f-60/fan-filter-assembly-plastic-60mm/dp/17B6480) |
+| | | | **Subtotal** | **$8.96** | |
 
 ---
 
@@ -81,11 +85,11 @@ LRS: selector **115 V**, trim **12.0 V**.
 
 | Qty | SKU | Role | Unit | Ext | Link |
 | ---: | --- | --- | ---: | ---: | --- |
-| 4 | 559 | RESET red 16 mm | $4.95 | $19.80 | [559](https://www.adafruit.com/product/559) |
-| 4 | 481 | BOOT blue 16 mm | $4.95 | $19.80 | [481](https://www.adafruit.com/product/481) |
+| 4 | 559 | RESET | $4.95 | $19.80 | [559](https://www.adafruit.com/product/559) |
+| 4 | 481 | BOOT | $4.95 | $19.80 | [481](https://www.adafruit.com/product/481) |
 | | | | **Subtotal** | **$39.60** | |
 
-Arcade POWER / CH / ALL FIRE buttons: supplied by builder.
+Arcade POWER / CH / ALL: builder-supplied (**AC-rated** for POWER).
 
 ---
 
@@ -93,12 +97,13 @@ Arcade POWER / CH / ALL FIRE buttons: supplied by builder.
 
 | Qty | Item | ASIN | Pack $ | Ext |
 | ---: | --- | --- | ---: | ---: |
-| 2 | M12-5 4-set (RS-485×4 + mp SOL + spares) | [B0CFFX6JW4](https://www.amazon.com/dp/B0CFFX6JW4) | $23.79 | $47.58 |
-| 1 | M12-8 4-set (sign SOL + spares) | [B0CFFY9X93](https://www.amazon.com/gp/product/B0CFFY9X93) | $36.49 | $36.49 |
+| 2 | M12-5 4-set (RS-485 only) | [B0CFFX6JW4](https://www.amazon.com/dp/B0CFFX6JW4) | $23.79 | $47.58 |
 | 1 | C14 inlet pack of 4 | [B07PVP7XB7](https://www.amazon.com/dp/B07PVP7XB7) | $8.19 | $8.19 |
-| | | | **Subtotal** | **$92.26** |
+| 4 | Powerwerx PanelPole2 | [B097QDKJJ2](https://www.amazon.com/dp/B097QDKJJ2) | $27.78 | $111.12 |
+| | | | **Subtotal** | **$166.89** |
 
-M12 listings must be screw-terminal / field-wireable. Panel half = female.
+M12-5: **4 A**/pin, signal use, ≤22 AWG. Listing is cable M/F sets — confirm panel-nut female + rear termination before relying on it; 4 panel + field ends fit in 2 packs with spare.  
+PanelPole2: Ø**1-1/8"**, PP30 (12–14 AWG), weather cover.
 
 ---
 
@@ -113,28 +118,56 @@ M12 listings must be screw-terminal / field-wireable. Panel half = female.
 
 ---
 
+## Cart 6 — DigiKey / Sager (fans + SOL AT kits)
+
+| Qty | MPN | Role | Unit | Ext | Link |
+| ---: | --- | --- | ---: | ---: | --- |
+| 4 | MF60151V2-1000U-A99 | 60 mm fan | $7.63 | $30.52 | [DigiKey](https://www.digikey.com/en/products/detail/sunon-fans/MF60151V2-1000U-A99/2770973) |
+| 2 | 8147 | Exhaust guard | $0.54 | $1.08 | [CR221-ND](https://www.digikey.com/en/products/detail/qualtek/8147/312840) |
+| 8 | AT04-2P-KIT01 | SOL panel receptacle + contacts | $4.99 | $39.92 | [Amphenol](https://www.amphenol-sine.com/AT04-2P-KIT01-2-Way-Pin-Receptacle-Wedge-and-Contacts-Kit_p_5768.html) |
+| 8 | AT06-2S-KIT01 | SOL cable plug + contacts | $4.99 | $39.92 | [Amphenol](https://www.amphenol-sine.com/AT06-2S-KIT01-2-Socket-Plug-Wedge-and-Contacts-Kit_p_5769.html) |
+| | | | **Subtotal** | **$111.44** | |
+
+AT kit unit $ from DigiKey listing class (~$5); confirm cart before order. Free-hanging housings — capture in printed panel pocket / flange (IP67 when mated).
+
+---
+
+## Cart 7 — Powerwerx (12 V field cables)
+
+| Qty | MPN | Role | Unit | Ext | Link |
+| ---: | --- | --- | ---: | ---: | --- |
+| 2 | EX-12-5 | 12 AWG Powerpole extension 5 ft | $12.99 | $25.98 | [powerwerx.com](https://powerwerx.com/powerpole-connector-extension-cable) |
+| | | | **Subtotal** | **$25.98** | |
+
+---
+
 ## Total
 
 | Cart | Ext |
 | --- | ---: |
-| Bravo | $63.00 |
-| Newark | $5.60 |
+| Bravo | $69.20 |
+| Newark | $8.96 |
 | Adafruit | $39.60 |
-| Amazon connectors | $92.26 |
+| Amazon connectors | $166.89 |
 | Amazon USB + cords | $73.18 |
-| **Sum** | **$273.64** |
+| DigiKey / Sager | $111.44 |
+| Powerwerx cables | $25.98 |
+| **Sum** | **$495.25** |
 
-Wire, ferrules, gasket, heat-set inserts: as needed for print/assembly.
+(+ aluminum plate · AT/Powerpole crimp tools if not owned)
 
 ---
 
 ## Checklist
 
-- [ ] Bravo PSUs  
-- [ ] Newark WRG×2  
-- [ ] Adafruit 559×4, 481×4  
-- [ ] Amazon M12-5×2, M12-8×1, C14×4  
-- [ ] Amazon HangTon×2, USB jumpers, C13×4  
-- [ ] Output PCB `F9` 25 A blade seated before load  
+- [ ] Bravo: 2× RS-15-12, 2× LRS-200-12  
+- [ ] Newark: WRG×2, 09250-F/60 ×2  
+- [ ] DigiKey: fans×4, 8147×2, AT04-2P-KIT01×8, AT06-2S-KIT01×8  
+- [ ] Adafruit: 559×4, 481×4  
+- [ ] Amazon: M12-5×2, C14×4, PanelPole2×4, HangTon×2, USB×1, C13×4  
+- [ ] Powerwerx: EX-12-5 ×2  
+- [ ] 2× Al plates 115 × 215 × 3 mm  
+- [ ] Output PCB `F9` seated  
+- [ ] AT + Powerpole crimp tools  
 
-[`WIRING.md`](WIRING.md) · [`SIGN_OUTPUT.md`](SIGN_OUTPUT.md) · [`MP_OUTPUT.md`](MP_OUTPUT.md)
+Per-box docs in each folder.

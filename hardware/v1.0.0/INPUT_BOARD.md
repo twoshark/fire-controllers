@@ -53,4 +53,4 @@ See [`PIN_MAP.md`](PIN_MAP.md). USB ESD `D12` (`USBLC6-2SC6`); CC pull-downs `R3
 | `U4` | `AP63203WU-7` |
 | `U5`/`U6` | `SN74LV14APWR` |
 
-Enclosure PSU: Mean Well `IRM-15-12` (auto-ranging) → board `J1`.
+Enclosure PSU: Mean Well `RS-15-12` (chassis, screw terminals) → board `J1`.

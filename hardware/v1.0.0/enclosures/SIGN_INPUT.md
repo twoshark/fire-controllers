@@ -4,7 +4,7 @@ Operator box for **5 channel buttons + ALL FIRE**, hosting the v1.0.0 input PCB.
 
 ## Role
 
-Field “sign” station: five independent fires plus a diode-ORed **ALL FIRE**. Full system POWER, HangTon USB-C DFU (lid closed), GX16 RS-485 uplink, 120 VAC in.
+Field “sign” station: five independent fires plus a diode-ORed **ALL FIRE**. Full system POWER, HangTon USB-C DFU (lid closed), M12 RS-485 uplink, 120 VAC in.
 
 ## Bill of materials (this box)
 
@@ -19,9 +19,9 @@ Use shared catalog in [`PARTS_BOM.md`](PARTS_BOM.md).
 | Arcade momentary ALL FIRE (yours) | 1 |
 | Arcade / latch POWER, AC-rated (yours) | 1 |
 | Adafruit **559** RESET + **481** BOOT | 1 / 1 |
-| GX16-6 RS-485 panel + mate | 1 |
+| M12-5 RS-485 female screw-terminal | 1 |
 | HangTon USB-C bulkhead + M–M jumper | 1 |
-| GX16-3 AC in + 1 A fuse | 1 |
+| IEC C14 AC in | 1 |
 | Printed shell + gasket | 1 |
 
 ## Channel assignment
@@ -63,11 +63,11 @@ User
   └─ BOOT      ──► BOOT0
 
 Host USB-C ──► HangTon panel ──► jumper ──► J5 DFU
-sign-output ──► GX16-6 RS-485 ──► CN2
-Wall 120VAC ──► GX16-3 ──► fuse ──► POWER ──► IRM
+sign-output ──► M12 RS-485 ──► CN2
+Wall 120VAC ──► C14 ──► POWER ──► IRM
 ```
 
-Priced budget BOM: [`PARTS_BOM.md`](PARTS_BOM.md) (~**$45**/box). Load box: [`SIGN_OUTPUT.md`](SIGN_OUTPUT.md).
+Parts: [`PARTS_BOM.md`](PARTS_BOM.md). Pair: [`SIGN_OUTPUT.md`](SIGN_OUTPUT.md).
 
 ## CAD
 

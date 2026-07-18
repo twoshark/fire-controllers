@@ -19,9 +19,9 @@ Use shared catalog in [`PARTS_BOM.md`](PARTS_BOM.md).
 | Arcade momentary ALL FIRE (yours) | 1 |
 | Arcade / latch POWER, AC-rated (yours) | 1 |
 | Adafruit **559** RESET + **481** BOOT | 1 / 1 |
-| GX16-6 RS-485 panel + mate | 1 |
+| M12-5 RS-485 female screw-terminal | 1 |
 | HangTon USB-C bulkhead + M–M jumper | 1 |
-| GX16-3 AC in + 1 A fuse | 1 |
+| IEC C14 AC in | 1 |
 | Printed shell + gasket | 1 |
 
 ## Channel assignment
@@ -56,9 +56,9 @@ User
   │                 (same set as CH1..CH3 — not CH3..CH7)
   ├─ POWER / RESET / BOOT — same as sign-input
 
-HangTon USB / GX16 RS-485 / GX16 AC — same budget platform as sign-input.
+HangTon USB / M12 RS-485 / C14 AC — same platform as sign-input.
 
-Priced budget BOM: [`PARTS_BOM.md`](PARTS_BOM.md) (~**$45**/box). Load box: [`MP_OUTPUT.md`](MP_OUTPUT.md).
+Parts: [`PARTS_BOM.md`](PARTS_BOM.md). Pair: [`MP_OUTPUT.md`](MP_OUTPUT.md).
 
 ## CAD
 

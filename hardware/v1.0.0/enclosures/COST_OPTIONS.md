@@ -1,16 +1,17 @@
 # Cost options
 
-Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · review [`PARTS_REVIEW.md`](PARTS_REVIEW.md) (**~$534** est., 2026-07-18).
+Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · review [`PARTS_REVIEW.md`](PARTS_REVIEW.md) (**~$480** est., 2026-07-18).
 
 | Cart | Ext |
 | --- | ---: |
 | Bravo RS-15×2 + HLG-185H-12×2 | $132.00 |
 | Amazon bociloy 1" hinges 10-pack | $5.29 |
-| CNC Kitchen inserts | $22.40 |
 | Lowdoller 2× DTP + 8× DT (+ ship) | $50.00 |
-| Cable (KWANGIL 100 ft + power cords) | $197.07 |
-| Panel / hardware | $127.55 |
-| **Est. sum** | **~$534.31** (+ Lowdoller ship) |
+| Cable (KWANGIL + SJTW + 12 AWG) | $185.08 |
+| Panel / hardware | $107.61 |
+| **Est. sum** | **~$479.98** (+ Lowdoller ship) |
+
+Owned (not in cart): M2/M3 heat-sets + screws · C13–C14 IEC cords.
 
 ### Locked decisions
 

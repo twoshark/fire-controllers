@@ -33,8 +33,8 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 | --- | --- |
 | Lid gasket · LED acrylic | see [`SHOPPING_LIST.md`](SHOPPING_LIST.md) |
 | Lid hinge | [bociloy 1"](https://www.amazon.com/bociloy-Cabinet-Rectangle-Stainless-Folding/dp/B0D43MBGXC) ×8 · CAD [`MOUNTING.md`](MOUNTING.md) |
-| M2 heat-set ≥40 + M2 screws | PCB + hinge leaves |
-| M3×5.7 heat-set ≥20 | front latches + RS-15 feet |
+| M2 heat-set + M2 screws | PCB + hinge leaves · **owned** |
+| M3 heat-set + M3 screws | front latches + RS-15 feet · **owned** |
 | Outdoor SJTW + adhesive HS butt | HLG AC (not inside boxes) |
 | Adhesive HS | HLG DC DTP re-term |
 
@@ -42,7 +42,7 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 
 | Use | Qty | Length |
 | --- | ---: | ---: |
-| C13–C14 | 2 | 6 ft |
+| C13–C14 | 2 | 6 ft · **owned** |
 | HLG AC SJTW | 2 | 6 ft |
 | HLG→DTP | 2 | ≤4 ft · 12 AWG |
 | RS-485 | 2 | up to ~30 ft + ~50 ft · KWANGIL 100 ft 9842-equal → M12 |

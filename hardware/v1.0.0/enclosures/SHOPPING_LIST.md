@@ -8,18 +8,30 @@ Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`]
 
 **Rule:** every line has a real product URL and a listed USD price. Prices checked **2026-07-18**. Re-check at checkout.
 
-**Est. checkout:** **~$534** (+ Lowdoller ship if under $100).
+**Est. checkout:** **~$490** (+ Lowdoller ship if under $100).
+
+---
+
+## On hand — do not buy
+
+| Item | Use |
+| --- | --- |
+| M2 + M3 heat-set inserts | PCB · hinges · latches · RS-15 |
+| M2 + M3 screws | same |
+| C13–C14 (PC/monitor IEC) cords ×2 | Input box mains → C14 inlet |
+
+Still need outdoor **SJTW** (or equivalent NEMA 5-15 outdoor cord) for HLG AC — not the same as C13–C14.
 
 ---
 
 ## Cables (lengths)
 
-| Run | Qty | Length |
-| --- | ---: | ---: |
-| C13→C14 (inputs) | 2 | **6 ft** |
-| SJTW to each HLG | 2 | **6 ft** · 16/3 |
-| HLG DC → output DTP | 2 | **≤ 4 ft** · 12 AWG |
-| RS-485 interconnect | 2 | up to **~30 ft** + **~50 ft** → M12-5 |
+| Run | Qty | Length | Source |
+| --- | ---: | ---: | --- |
+| C13→C14 (inputs) | 2 | **6 ft** | **OWNED** |
+| SJTW to each HLG | 2 | **6 ft** · 16/3 | buy |
+| HLG DC → output DTP | 2 | **≤ 4 ft** · 12 AWG | buy |
+| RS-485 interconnect | 2 | up to **~30 ft** + **~50 ft** → M12-5 | buy |
 
 ---
 
@@ -65,18 +77,7 @@ Premium: [Alema KHA-25C](https://www.alema.com/kha-25c-25mm-stainless-steel-butt
 
 ---
 
-## Cart 3 — CNC Kitchen USA · **$22.40**
-
-| Qty | Item | Unit | Ext | Link |
-| ---: | --- | ---: | ---: | --- |
-| 1 | Heat-set **M3×5.7** · 100 pcs | $10.90 | $10.90 | https://cnckitchenus.store/products/heat-set-insert-m3-x-5-7-100-pieces |
-| 1 | Heat-set **M2×3.0** · 100 pcs | $11.50 | $11.50 | https://cnckitchenus.store/products/heat-set-insert-m2-x-3-100-pieces |
-
-**M2:** PCB + hinge leaves. **M3:** front latches + RS-15 only (~20 needed; 100-pack is cheapest break).
-
----
-
-## Cart 4 — Lowdoller Motorsports (Deutsch) · **$50.00** (+ ship)
+## Cart 3 — Lowdoller Motorsports (Deutsch) · **$50.00** (+ ship)
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
@@ -92,20 +93,20 @@ Free ship was @ $100 — this cart is under; pay Lowdoller shipping at checkout.
 
 ---
 
-## Cart 5 — Cable · **$197.07**
+## Cart 4 — Cable · **$185.08**
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
 | 1 | **KWANGIL** RS-485 24 AWG 2-pr · Belden **9842 equal** · **100 ft** | $138.99 | $138.99 | https://kwangilwire.com/products/24awg-2pr-rs-485-shielded-cable-equal-to-belden-9842-str-tc-pe-ins-os-drain-tc-brd-pvc-jkt-120-ohm-for-low-voltage-analog-signals-digital-control |
-| 1 | Cable Matters **C13–C14** 6 ft · **2-pack** | $11.99 | $11.99 | https://www.amazon.com/Cable-Matters-2-Pack-Computer-Extension/dp/B01CH25VQQ |
 | 2 | ELECTERY **16/3 SJTW** outdoor 6 ft | $10.55 | $21.10 | https://www.walmart.com/ip/6-Ft-Black-Indoor-Outdoor-Extension-Cord-Heavy-Duty-Flexible-16-AWG-Power-Cable-SJTW-Waterproof-Weather-Resistant-Wire-3-Prong-Grounded-Wire-ELECTERY/2088408818 |
 | 1 | Powerwerx **12 AWG** red/black bonded copper · **25 ft** | $24.99 | $24.99 | https://www.valley-ent.com/store/red-black-bonded-zip-cord-easy-id-low-voltage-cable-gauge-12-length-25-feet.html |
 
-Select **24AWG / 100ft**. Do **not** use CAT5/6 for these runs.
+Select **24AWG / 100ft**. Do **not** use CAT5/6 for these runs.  
+C13–C14: **owned** — not in cart.
 
 ---
 
-## Cart 6 — Panel / hardware · **$127.55**
+## Cart 5 — Panel / hardware · **$107.61**
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
@@ -118,10 +119,8 @@ Select **24AWG / 100ft**. Do **not** use CAT5/6 for these runs.
 | 1 | ATO **20 A** blade fuses · **20 pcs** | $4.39 | $4.39 | https://www.amazon.com/20pcs-Standard-Fuses-Blade-Automotive/dp/B0CLGTWZHZ |
 | 1 | Clear acrylic 8×10 × **1 mm** · **2-pack** (LED windows) | $6.99 | $6.99 | https://www.amazon.com/Extruded-Plexiglass-Protective-Projects-Watercolor/dp/B0D4QVJRLT |
 | 1 | WOD closed-cell foam tape 1/8"×1/4"×75' (lid gaskets) | $13.79 | $13.79 | https://www.amazon.com/WOD-Tape-Weatherstrip-Insulation-Available/dp/B07H33916Y |
-| 1 | M3×6 pan Phillips · **100 pcs** | $9.95 | $9.95 | https://skycraftsurplus.com/products/m3-x-6mm-zinc-plated-steel-pan-head-screws-100-piece-lot.html |
-| 1 | M2/M2.5 pan Phillips assort · **200 pcs** (PCB + hinges) | $9.99 | $9.99 | https://www.amazon.com/Phillips-Machine-200-piece-Assortmrnt-M2-5x10mm/dp/B078ZJ3CML |
 
-Inside boxes: screw / solder / adhesive butt only. Outdoor HLG AC: adhesive HS (Wirefy).
+Heat-sets + M2/M3 screws: **owned**. Inside boxes: screw / solder / adhesive butt only. Outdoor HLG AC: adhesive HS (Wirefy).
 
 ---
 
@@ -131,13 +130,12 @@ Inside boxes: screw / solder / adhesive butt only. Outdoor HLG AC: adhesive HS (
 | --- | ---: |
 | 1 Bravo PSU (HLG-185H) | $132.00 |
 | 2 Amazon 1" hinges | $5.29 |
-| 3 CNC Kitchen inserts | $22.40 |
-| 4 Lowdoller DT/DTP (+ ship) | $50.00 |
-| 5 Cable (100 ft RS-485) | $197.07 |
-| 6 Panel / hardware | $127.55 |
-| **Est. checkout** | **~$534.31** (+ Lowdoller ship) |
+| 3 Lowdoller DT/DTP (+ ship) | $50.00 |
+| 4 Cable | $185.08 |
+| 5 Panel / hardware | $107.61 |
+| **Est. checkout** | **~$479.98** (+ Lowdoller ship) |
 
-Cuts vs prior 8-ch cart: −8 DT (−$32) · −2 DTP spare (−$18) · HLG-240→185 (−$27.80).  
+Owned cuts: − inserts (−$22.40) · − M2/M3 screws (−$19.94) · − C13–C14 (−$11.99).  
 TE flange: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**. Full necessity table: [`PARTS_REVIEW.md`](PARTS_REVIEW.md).
 
 ---
@@ -146,10 +144,10 @@ TE flange: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**. Full necessity table: [`P
 
 - [ ] Bravo: RS-15×2, **HLG-185H-12×2**  
 - [ ] bociloy 1" ×8 · caliper holes vs [`MOUNTING.md`](MOUNTING.md)  
-- [ ] CNC Kitchen: M2 + M3 inserts  
 - [ ] Lowdoller: **2× DTP** + **8× DT** (5 sign + 3 mp)  
-- [ ] KWANGIL **100 ft** + M12 4-set + dust caps + C14 + C13–C14 + SJTW + 12 AWG  
-- [ ] KCD4 IP65, adhesive HS, fuse, acrylic, foam, screws  
+- [ ] KWANGIL **100 ft** + M12 4-set + dust caps + C14 + SJTW + 12 AWG  
+- [ ] KCD4 IP65, adhesive HS, fuse, acrylic, foam  
+- [ ] On hand: heat-sets · M2/M3 screws · C13–C14 ×2  
 - [ ] Crimp DTP06-2S on each HLG DC · HS seal · ≤4 ft  
 - [ ] Mount HLGs shaded · FG earthed · `F9` **20 A** seated  
 - [ ] Measure SOL current @ 12 V before loading all channels  

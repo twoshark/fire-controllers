@@ -113,7 +113,7 @@ BOOT0 access:
 ## Safety and integration notes
 
 - PCB uses screw terminals for enclosure wiring
-- External waterproof panel connectors (IP67+) remain enclosure-side
+- Outdoor links (DT / DTP / M12) are IP67 when mated; printed box is playa-practical (see `enclosures/SEALING.md`)
 - SWD remains required for robust manufacturing/debug/recovery flow
 - Printed board truth: `hardware/v1.0.0/` (`PIN_MAP.md`, `INPUT_BOARD.md`, `OUTPUT_BOARD.md`, `exports/`)
 

@@ -35,7 +35,7 @@ sudo apt install dfu-util   # or brew install dfu-util
 
 ### Output board only
 
-- [ ] `F9` blade fuse **inserted** (25A ATO) before applying load current
+- [ ] `F9` blade fuse **inserted** (**20 A** ATO) before applying load current
 - [ ] `Q9` (TO-263) present between fuse and bulk caps
 - [ ] HLG-240H-12: FG earthed; DC → DTP → `J1`; mount shaded
 

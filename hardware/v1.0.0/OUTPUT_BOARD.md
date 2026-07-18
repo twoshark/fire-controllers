@@ -22,7 +22,7 @@ No external load-GND terminal.
 
 ```text
 J1.1 VIN
-  -> F9 (178.6165.0002 ATO holder + 25A blade, field-inserted)
+  -> F9 (178.6165.0002 ATO holder + 20A blade recommended, field-inserted)
        netlist blades: F9.3/4/5/6 = VIN; F9.1/2/7/8 = to Q9.2
   -> Q9 IPB110P06LM P-MOS reverse-polarity
        gate: R59 10k to GND + D1 MMSZ5240B to 12V_MAIN

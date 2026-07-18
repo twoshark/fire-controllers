@@ -4,10 +4,12 @@
 
 ## Loads
 
+Assumes ≤**1.5 A continuous** / ch hot (PTC derate) · **2 A** short duty. **Measure SOL MPN** before freeze.
+
 | Load | Current @ 12 V | Power |
 | --- | ---: | ---: |
-| sign-output (5× SOL) | **10 A** | 120 W |
-| mp-output (3× SOL) | **6 A** | 72 W |
+| sign-output (5× SOL) | **≤7.5 A** cont · **10 A** peak | ≤120 W |
+| mp-output (3× SOL) | **≤4.5 A** cont · **6 A** peak | ≤72 W |
 | PCB ceiling (8×2 A) | 16 A | 192 W |
 
 ## Part
@@ -33,6 +35,7 @@ Use Mean Well (or equivalent OEM). Avoid no-name “200W IP67” bricks.
     → waterproof splice → HLG AC L/N/FG
 HLG DC +/−
     → 12 AWG ≤4 ft → DTP06-2S → DTP04-2P on output box → J1
+         (adhesive heatshrink/gel over pigtail re-term)
 ```
 
 | Rule | Detail |
@@ -42,6 +45,7 @@ HLG DC +/−
 | Output V | Fixed ~12 V (blank type) |
 | Kill | Unplug AC; optional in-line IP67 switch on cord |
 | Loads | Board flybacks handle SOL; run in **CV** region |
+| Fuse | Board `F9` **20 A** ATO; HLG CC (~16 A) limits continuous overload |
 
 ## System
 

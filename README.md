@@ -76,5 +76,5 @@ Chip: `STM32G0B1CBTx`. DFU: hold `SW2` (BOOT0), tap `SW1` (NRST), release `SW2`.
 ## Safety
 
 - Output 12 V from **HLG-240H-12** (IP67); earth FG; see `hardware/v1.0.0/enclosures/POWER_OTS.md`.
-- Insert **25A ATO** in output `F9` before load tests.
+- Insert **20 A ATO** in output `F9` before load tests.
 - Loads: `J6` (+12V) → load → `J5x` (never return to board GND).

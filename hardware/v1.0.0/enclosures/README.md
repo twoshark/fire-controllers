@@ -31,10 +31,11 @@ mp-input   ──RS-485──► mp-output   ◄──DTP── HLG-240H-12 ◄�
 
 | Face | Contents |
 | --- | --- |
-| **Top** | Arcade (inputs) or openable lid |
-| **Sides** | C14 + POWER (inputs), DTP 12 V (outputs), M12, DT SOL, LED window |
-| **12 V** | Output DTP · CL **40 mm** · HLG pigtail |
-| **Service** | Open lid → USB-C / on-board RESET·BOOT |
+| **FRONT** | LED window |
+| **LEFT** | Inputs: C14 + POWER + M12 · Outputs: SOL + M12 |
+| **BACK** | Outputs: DTP 12 V (near `J1`) · CL **40** |
+| **Top** | Arcade (inputs) or lid |
+| **Service** | Open lid → USB-C / RESET·BOOT / `F9` |
 
 | Unit | Power control |
 | --- | --- |

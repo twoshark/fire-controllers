@@ -11,21 +11,25 @@ Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](.
 
 ## Top — triangle + ALL center
 
+Pitch **≥50**. Centers in [`../MOUNTING.md`](../MOUNTING.md). Hole **Ø28** (verify).
+
 ```text
             [CH1]
       [CH3]  [ALL]  [CH2]
 ```
 
-Hole **Ø28** (verify) · pitch **≥50**.
-
 ## Sides
 
-Same pattern as sign-input (C14+POWER LEFT · M12 RIGHT · LED FRONT).
+C14 + POWER + **M12 on LEFT** · LED **FRONT**. Y: C14 **30** · KCD4 **55** · M12 **80**.
 
 ## Internal
 
-Same input PCB outline **83.1×79.0** · KO **86×83** + RS-15 · 4× M2 bosses H1–H4 / lid **M3** ([`../MOUNTING.md`](../MOUNTING.md)). D4..D8 unused.
+| Item | Spec |
+| --- | --- |
+| RS-15-12 | Body (10,15)–(61,77.5) · M3 @ (35.5, 26.5)/(35.5, 65.6) |
+| Input PCB | `(ox,oy)=(70,30)` · H1–H4 · Z=12 |
+| Channels | D4..D8 unused |
 
-## Cables
+## DFAM
 
-C13→C14 **6 ft**. Bed OK with brim.
+Body/lid support-free; retainer clips for M12. Bed OK with brim.

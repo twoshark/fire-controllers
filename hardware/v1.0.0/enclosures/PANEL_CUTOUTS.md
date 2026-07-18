@@ -16,6 +16,8 @@ PCB mount pads: hole **100 mil (Ø2.54)** · pad **160 mil (Ø4.06)** → **M2**
 | Output PCB | **124.0 × 112.4** | **126 × 114** | `PWR`/`LINK`/`CH0`…`CH7` X≈117.2; Y span **31.5**; pitch ≈**3.5** |
 | Buttons daughter | **71.0 × 44.7** | under lid | 4× Ø2.54 corners |
 
+Floor origins / boss XY: [`MOUNTING.md`](MOUNTING.md). Face map: input **M12 LEFT**; output **DTP BACK** · **SOL LEFT** · **M12 LEFT**.
+
 ### Input connector mids
 
 | Ref | Mid X | Mid Y | Notes |
@@ -53,7 +55,7 @@ LED edge (`X≈79`) → LED window wall.
 | RS-485 | M12-5 PG9/M16 | **Ø16.2** / **Ø16.1** | + dust cap |
 | 12 V | DTP04-2P in pocket | pocket **≈18 × 22** + lip | **25 A**; IP67 mated |
 | SOL | DT04-2P in pocket | pocket **≈16 × 18** + lip | 13 A; pitch ≥25 |
-| Arcade | EG STARTS | **Ø28** (verify ring; may be Ø24) | — |
+| Arcade | EG STARTS | **Ø28** (verify ring; may be Ø24) | sign **hex ring** bbox ~**110×110**; mp pitch ≥50 |
 | LED window | PC + foam gasket | **40 × 10** | not open slot |
 
 ### Fixed heights / pitches
@@ -61,8 +63,9 @@ LED edge (`X≈79`) → LED window wall.
 | Dim | Value |
 | --- | ---: |
 | DTP 12 V center height | **40** |
-| DTP horizontal | centered on short-end mate face |
+| DTP horizontal | centered on **BACK** face (near `J1`) |
 | Output outer | **220 × 170 × 85** |
+| Panel Y along faces | [`MOUNTING.md`](MOUNTING.md) |
 | SOL pitch (CL) | **≥25** |
 | Arcade pitch sign / mp | **≥45** / **≥50** |
 | Cutout → corner | **≥12** |

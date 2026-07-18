@@ -2,7 +2,7 @@
 
 Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md) · [`../SEALING.md`](../SEALING.md).
 
-Bed ≤ **256 × 256**. Print body open-up; lid groove up.
+Bed ≤ **256 × 256**. Body open-up; lid groove-up; DT/M12 retainers = **separate clips**.
 
 ## Envelope
 
@@ -12,43 +12,36 @@ Bed ≤ **256 × 256**. Print body open-up; lid groove up.
 | Inner (3 mm wall) | **214 × 174 × 84** |
 | Wall | 3.0 |
 
-## Top — EG STARTS hex (ALL at top)
+## Top — EG STARTS hex ring (ALL + CH1..5)
 
-```text
-              [ALL]
-         [CH1]     [CH2]
-         [CH5]     [CH3]
-              [CH4]
-```
+Pitch **45** on R≈38.3. Hole bbox ≈ **110 × 110** — centers in [`../MOUNTING.md`](../MOUNTING.md).
 
 | Dim | Value |
 | --- | ---: |
-| Button hole | **Ø28** (verify ring) |
-| Pitch | **≥45** |
-| Hex bbox | ~**110 × 100** |
+| Button hole | **Ø28** (verify ring; may be Ø24) |
 
-## Sides (CL from outer bottom)
+## Sides (CL from outer bottom · Y from FRONT)
 
-| Feature | Cutout | CL | Wall |
-| --- | --- | ---: | --- |
-| C14 | 27.5×20 | **35** | LEFT |
-| POWER KCD4+boot | 30×22 | **50** | LEFT |
-| M12-5 | Ø16.2 | **50** | RIGHT |
-| LED 40×10 + PC lens | — | **50** | FRONT |
+| Feature | Cutout | CL | Wall | Y |
+| --- | --- | ---: | --- | ---: |
+| C14 | 27.5×20 | **35** | **LEFT** | **35** |
+| POWER KCD4+boot | 30×22 | **50** | **LEFT** | **60** |
+| M12-5 | Ø16.2 | **50** | **LEFT** | **85** |
+| LED 40×10 + PC lens | — | **50** | **FRONT** | mid |
 
-## Internal (see MOUNTING.md)
+## Internal
 
 | Item | Spec |
 | --- | --- |
-| Input PCB | Outline **83.1×79.0** · KO **86×83** · LED→FRONT · 4× M2 bosses ([`../MOUNTING.md`](../MOUNTING.md) H1–H4) · Z=12 |
-| RS-15-12 | **62.5×51×28** · LEFT near C14 · 2× M3 |
-| Buttons PCB | Outline **71.0×44.7** · under top · 2–4× M2 |
-| Lid | 4× M3 · gasket groove |
+| RS-15-12 | Body (10,20)–(61,82.5) · M3 @ (35.5, 31.5)/(35.5, 70.6) |
+| Input PCB | `(ox,oy)=(75,40)` · H1–H4 · LED→FRONT · Z=12 |
+| Buttons PCB | optional under lid · 2–4× M2 |
+| Lid | 4× M3 @ flange inset 8 |
 
 ## Cables
 
-C13→C14 **6 ft**.
+C13→C14 **6 ft**. M12 dust cap when unused.
 
-## Supports
+## DFAM
 
-None if DFM followed (chamfered pockets, groove up). Brim optional ≤5 mm.
+No supports on body/lid. Panel connectors use **separate retainer clips**.

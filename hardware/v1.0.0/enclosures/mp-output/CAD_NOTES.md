@@ -4,11 +4,12 @@ Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](.
 
 **No POWER rocker** — kill by unplugging the **HLG-240H-12** AC cord.
 
-## Envelope (grown — was too tight)
+## Envelope
 
 | Dim | mm |
 | --- | ---: |
 | Outer L × W × H | **220 × 170 × 85** |
 | Inner | **214 × 164 × 79** |
 
-Same face map as sign-output with SOL0..2 only. PCB outline **124.0×112.4** · KO **126×114** · 4× M2 bosses H1–H4. DTP **H=40**. HLG DTP pigtail **≤ 4 ft**.
+Same face map as sign-output: DTP **BACK** · SOL0..2 **LEFT** · M12 **LEFT** · LED **FRONT**.  
+LEFT Y: M12 **30** · SOL0..2 **55 / 80 / 105**. PCB `(25,25)` · H1–H4. DTP **H=40**. HLG pigtail **≤ 4 ft**. Retainer clips for DT/DTP.

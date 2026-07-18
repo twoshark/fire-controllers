@@ -1,5 +1,7 @@
 # CAD verification
 
+**Model each unit as two parts:** BODY + LID — index [`CAD_PARTS.md`](CAD_PARTS.md).
+
 Printer bed ≤ **256 × 256 mm**. Wall **3.0 mm** nominal (2.5 min at thin features).
 
 Axis: outer **L × W × H** = **+X × +Y × +Z** (right × back × up). FRONT = LED wall.

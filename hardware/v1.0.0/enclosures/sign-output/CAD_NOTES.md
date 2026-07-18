@@ -1,33 +1,14 @@
-# sign-output — CAD
+# sign-output — CAD index
 
-Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md) · [`../SEALING.md`](../SEALING.md).
+**Print two parts:** [`BODY.md`](BODY.md) · [`LID.md`](LID.md).  
+Workflow: [`../CAD_PARTS.md`](../CAD_PARTS.md). Kill 12 V: unplug **HLG-240H-12** ([`../POWER_OTS.md`](../POWER_OTS.md)).
 
-**No POWER rocker** — kill by unplugging the **HLG-240H-12** AC cord ([`../POWER_OTS.md`](../POWER_OTS.md)).
-
-## Envelope
+| Export | Role |
+| --- | --- |
+| `sign-output-body.stl` | Box · DTP + M12 + SOL0..4 · PCB |
+| `sign-output-lid.stl` | Plain lid · gasket · hinges (no arcade) |
 
 | Dim | mm |
 | --- | ---: |
-| Outer L × W × H | **220 × 170 × 85** |
+| Outer | **220 × 170 × 85** |
 | Inner | **214 × 164 × 79** |
-
-## Sides (Y from FRONT — [`../MOUNTING.md`](../MOUNTING.md))
-
-| Feature | Cutout | CL | Face | Y |
-| --- | --- | ---: | --- | ---: |
-| DTP04-2P | clip ≈18×22 | **40** | **BACK** | mid-X |
-| M12-5 | Ø16.2 | **50** | **LEFT** | **30** |
-| SOL0..4 | clip ≈16×18 · pitch 25 | **40** | **LEFT** | **55…155** |
-| LED + lens | 40×10 | **50** | **FRONT** | mid |
-
-## Internal
-
-| Item | Spec |
-| --- | --- |
-| Output PCB | `(ox,oy)=(25,25)` · H1–H4 · LED→FRONT · Z=12 |
-| Wire | DTP→`J1` 12 AWG short · `J6` star → SOL 18 AWG |
-| Lid | **2× bociloy 1"** BACK pin (40/174, Y160) · M2 hinge @ mid-pin Y+7.5 · 2× M3 latch FRONT |
-
-## Cables
-
-DTP from HLG DC pigtail **≤ 4 ft**. DFAM: **separate retainer clips** for DTP/DT (default).

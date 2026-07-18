@@ -32,9 +32,9 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 | Item | Buy |
 | --- | --- |
 | Lid gasket · LED acrylic | see [`SHOPPING_LIST.md`](SHOPPING_LIST.md) |
-| Lid hinge | Amazon ~1" SS butt ×8 (cheap) **or** [KHA-25C](https://www.alema.com/kha-25c-25mm-stainless-steel-butt-hinge-with-screw-holes.html) |
-| M2 heat-set ≥20 + M2 screws | PCB bosses |
-| M3×5.7 heat-set ≥40 | hinge leaves + front latches + RS-15 feet |
+| Lid hinge | [bociloy 1"](https://www.amazon.com/bociloy-Cabinet-Rectangle-Stainless-Folding/dp/B0D43MBGXC) ×8 · CAD [`MOUNTING.md`](MOUNTING.md) |
+| M2 heat-set ≥40 + M2 screws | PCB + hinge leaves |
+| M3×5.7 heat-set ≥20 | front latches + RS-15 feet |
 | Outdoor SJTW + adhesive HS butt | HLG AC (not inside boxes) |
 | Adhesive HS | HLG DC DTP re-term |
 

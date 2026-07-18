@@ -1,16 +1,16 @@
 # Cost options
 
-Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) (**~$613** est., 2026-07-18).
+Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · review [`PARTS_REVIEW.md`](PARTS_REVIEW.md) (**~$612** est., 2026-07-18).
 
 | Cart | Ext |
 | --- | ---: |
 | Bravo RS-15×2 + HLG-240H-12×2 | $159.80 |
-| Amazon 1" SS hinges 10-pack | $5.99 |
+| Amazon bociloy 1" hinges 10-pack | $5.29 |
 | CNC Kitchen inserts | $22.40 |
 | Lowdoller 4× DTP + 16× DT (free ship) | $100.00 |
 | Cable (KWANGIL 100 ft + power cords) | $197.07 |
 | Panel / hardware | $127.55 |
-| **Est. sum** | **$612.81** |
+| **Est. sum** | **$612.11** |
 
 ### Locked decisions
 

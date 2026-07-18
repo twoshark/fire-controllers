@@ -164,22 +164,24 @@ Gerber Ø2.54 corners — use **2 diagonal** or all 4. Mount under lid / to lid 
 
 ## Lid — internal hinges + front latches
 
-**Do not print hinges.** Prefab **Sugatsune KHA-25C** (304 SS, polyacetal bushing).
+**Do not print hinges.** Prefab Amazon **bociloy 1"** SS butt (cart default).
 
 | Spec | Value |
 | --- | --- |
-| MPN | **KHA-25C** |
-| Size | H **25** mm along pin · leaf ~**16** mm from pin · closed stack ~**6.3** mm |
-| Holes | 2 per leaf · P1=**6** · P2=**13** (not countersunk) |
-| Load | **3 kg** per pair (datasheet) — lids well under |
-| Buy | [Sugatsune](https://www.sugatsune.com/butt-hinge-kha-25c/) · Alema/Wurth · Amazon “KHA-25C” |
-| Qty | **2 per box** · **8** total |
+| Buy | [bociloy 1" 10-pack](https://www.amazon.com/bociloy-Cabinet-Rectangle-Stainless-Folding/dp/B0D43MBGXC) · **$5.29** (2026-07-18) |
+| Open | **25 × 28** mm (pin length × leaf-to-leaf) |
+| Folded | **25 × 16.5** mm · leaf **1.2** mm thick |
+| Leaf depth | ~**14** mm from pin axis to outer edge |
+| Holes | Listing **Hole Count: 2** → treat as **1 hole per leaf** until calipered |
+| Qty | **2 per box** · **8** total (pack of 10) |
+
+**Premium alt (no CAD change from old layout):** Sugatsune **KHA-25C** — 2 holes/leaf @ P1=6 / P2=13, M3 screws ([Alema](https://www.alema.com/kha-25c-25mm-stainless-steel-butt-hinge-with-screw-holes.html)).
 
 ### Placement (all four boxes)
 
 ```text
 Hinge pin on BACK edge (internal) · lid opens toward FRONT
-2× KHA-25C · leaves inside cavity (not through outer wall)
+2× bociloy 1" · leaves inside cavity (not through outer wall)
 Latches: 2× M3 at FRONT corners (screw into body flange inserts)
 ```
 
@@ -189,15 +191,31 @@ Latches: 2× M3 at FRONT corners (screw into body flange inserts)
 | mp-input | 194×154 | **(35, 150)** | **(159, 150)** | (8,8) (186,8) |
 | sign/mp-output | 214×164 | **(40, 160)** | **(174, 160)** | (8,8) (206,8) |
 
-Y = near back wall (inner W − ~4). Pin axis parallel to **+X**. Each hinge spans **25** mm in X (leaf H); centers above are mid-pin.
+Y = near back wall (inner W − ~4). Pin axis parallel to **+X**. Pin length **25** mm; centers above are **mid-pin**.
 
-**Body leaf:** M3 heat-sets in vertical bosses on inner BACK wall / flange, leaf face toward cavity.  
-**Lid leaf:** M3 heat-sets in lid underside near back edge.  
-Screws: **M3×6** pan (8 per box for hinges + 2 latch = 10).
+### Boss / hole pattern (bociloy — CAD target)
 
-Keep-out: no PCB / wire in the **20 × 30** mm zone around each hinge when closed. Lid swing: leave **≥90°** clear above BACK face (no tall panel glands on BACK above hinge — DTP stays mid-height OK).
+Coordinate origin for one hinge: pin axis at placement (X₀, Y₀), +X along pin, +Y into cavity (away from outer BACK wall).
 
-Gasket groove in **lid**, print groove-up. Groove 3.5 W × 2.0 D · 20–30% crush. Run gasket continuous on FRONT/LEFT/RIGHT; on BACK run **inboard of hinge knuckles** (or split gasket with butt joints at pin ends) so hinges stay internal and dry.
+| Feature | Body leaf | Lid leaf |
+| --- | --- | --- |
+| Heat-set | **M2×3** (small leaf holes; discard included wood screws) | same |
+| Hole CL from pin | **Y = 7.5** mm | **Y = 7.5** mm |
+| Hole along pin | **X = 0** (mid-pin) | **X = 0** |
+| Print hole | ~**Ø3.2** | ~**Ø3.2** |
+| Boss OD | **≥7** | **≥7** |
+| Screw | **M2×6** pan | **M2×6** pan |
+
+**If the pack arrives with 2 holes/leaf:** keep Y=7.5; place holes at mid-pin **±6.5** mm along X (typical for 25 mm leaves). Re-measure before final print.
+
+**Body leaf:** bosses on inner BACK wall / flange, leaf face toward cavity.  
+**Lid leaf:** bosses on lid underside near back edge.  
+**Latches:** still **M3** heat-set + **M3×10** pan (2 per box).  
+**RS-15:** still **M3** (unchanged).
+
+Keep-out: no PCB / wire in the **20 × 30** mm zone around each hinge when closed. Lid swing: leave **≥90°** clear above BACK face.
+
+Gasket groove in **lid**, print groove-up. Groove 3.5 W × 2.0 D · 20–30% crush. Run gasket continuous on FRONT/LEFT/RIGHT; on BACK run **inboard of hinge knuckles** so hinges stay internal and dry.
 
 ---
 
@@ -275,10 +293,9 @@ DTP on **BACK** face, centered in X, CL height **40**.
 
 | Item | Approx |
 | --- | ---: |
-| KHA-25C hinge | **8** (2×4 boxes) |
-| M2×4–5 heat-set | ≥20 (PCB + spare; +4 if buttons) |
-| M3×5.7 heat-set | ≥**48** (hinge 32 + latch 8 + RS-15 4 + spare) |
-| M2×6–8 pan | ≥20 |
-| M3×6 pan | ≥40 (hinge leaves) |
+| bociloy 1" hinge | **8** (2×4 boxes) · pack of 10 |
+| M2×3 heat-set | ≥**40** (PCB H1–H4×4 + hinge 16 + spare; +buttons) |
+| M3×5.7 heat-set | ≥**20** (latch 8 + RS-15 4 + spare) — **not** for Amazon hinge leaves |
+| M2×6–8 pan | ≥40 (PCB + hinges) |
 | M3×10–12 pan | ≥12 (front latches + spare) |
 | M3×6–8 into RS-15 | ≥4 (L≤4 into PSU) |

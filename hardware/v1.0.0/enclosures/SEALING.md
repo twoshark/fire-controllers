@@ -21,7 +21,7 @@ Do **not** claim the printed PETG/ABS shell is IP67.
 | 12 V PSU | HLG-240H-12 | **IP67 unit** | — | Shade · FG |
 | HLG DC → DTP | cut pigtail + crimp | — | — | **Adhesive heatshrink / gel** over re-term |
 | LED window | PC + foam | splash/dust | — | Not an open slot |
-| Lid | silicone gasket + **internal** KHA-25C hinges | splash/dust | — | Gasket FRONT/L/R continuous; BACK inboard of knuckles · 20–30% crush |
+| Lid | silicone gasket + **internal** bociloy 1" hinges | splash/dust | — | Gasket FRONT/L/R continuous; BACK inboard of knuckles · 20–30% crush |
 | Arcade | EG STARTS | not certified | nut | Silicone under bezel · canopy |
 
 ## Rules
@@ -30,6 +30,6 @@ Do **not** claim the printed PETG/ABS shell is IP67.
 2. Kill 12 V by unplugging HLG AC (no AC-rated rocker on the 12 V path).
 3. Printed pockets: compression lip + foam — **not** panel IP67 without flanged TE parts.
 4. Cap unused M12; DT/DTP **cavity plugs** on open cavities.
-5. LED = PC lens + foam. Lid = silicone gasket; hinges **internal** (Sugatsune KHA-25C) — no external hinge cutouts.
+5. LED = PC lens + foam. Lid = silicone gasket; hinges **internal** (bociloy 1" SS) — no external hinge cutouts.
 6. After crimping DTP on HLG DC: seal the jacket cut (adhesive HS or gel).
 7. Park **input** boxes under canopy when possible (arcade + C14 are the weak faces).

@@ -34,7 +34,7 @@ mp-input   ──RS-485──► mp-output   ◄──DTP── HLG-240H-12 ◄�
 | **FRONT** | LED window |
 | **LEFT** | Inputs: C14 + POWER + M12 · Outputs: SOL + M12 |
 | **BACK** | Outputs: DTP 12 V (near `J1`) · CL **40** |
-| **Top** | Arcade (inputs) or lid · **internal KHA-25C** hinges on BACK |
+| **Top** | Arcade (inputs) or lid · **internal bociloy 1"** hinges on BACK |
 | **Service** | Open lid (front latches) → USB-C / RESET·BOOT / `F9` |
 
 | Unit | Power control |

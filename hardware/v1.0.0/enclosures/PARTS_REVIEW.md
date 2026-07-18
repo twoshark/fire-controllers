@@ -1,58 +1,76 @@
-# Parts review — necessity · cost · function
+# Parts review — session audit
 
-Cart truth: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Reviewed **2026-07-18**.  
-**Scope lock:** sign-output **5 SOL** · mp-output **3 SOL** — **no** 8-channel expand buy.
+Cart truth: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Audited **2026-07-18** against this session’s locks.
 
-Confidence: **high** = keep · **med** = keep with note · **cut** = remove/reduce.
+## Session criteria
 
-| # | Item | Ext | Necessary? | Function | Verdict |
-| ---: | --- | ---: | --- | --- | --- |
-| 1 | RS-15-12 ×2 | $17.20 | Yes | 12 V for input electronics | **KEEP** |
-| 2 | HLG-240H-12 ×2 | $142.60 | Yes | Outdoor 12 V / 16 A · PCB headroom | **KEEP** |
-| 3 | bociloy 1" hinges 10pk | $5.29 | Yes | Internal lid hinge | **KEEP** |
-| 4 | M3 / M2 heat-sets | — | Yes | Latches · RS-15 · PCB · hinges | **OWNED** |
-| 5 | M2 / M3 screws | — | Yes | same | **OWNED** |
-| 6 | DTP kit ×**2** | $18.00 | Yes | 2× HLG↔box 12 V | **KEEP** |
-| 7 | DT kit ×**8** | $32.00 | Yes | sign 5 + mp 3 | **KEEP** |
-| 8 | KWANGIL RS-485 100 ft | $138.99 | Yes for 30+50 ft | Full-duplex 120 Ω STP | **KEEP** |
-| 9 | C13–C14 cords | — | Yes | Input mains | **OWNED** |
-| 10 | SJTW 6 ft ×2 | $21.10 | Yes | HLG AC outdoors (NEMA, not IEC) | **KEEP** |
-| 11 | 12 AWG 25 ft | $24.99 | Partial | Only ~8 ft needed | **KEEP*** |
-| 12 | EG STARTS ×2 | — | Yes | Arcade inputs | **OWNED** |
-| 13 | M12 5-pin 4-set | $22.39 | Yes | 2 RS-485 runs | **KEEP** |
-| 14 | M12 dust caps | $12.69 | Yes (locked) | Unmated outdoor | **KEEP** |
-| 15 | C14 + cover 2pk | $5.99 | Yes | Input AC inlet | **KEEP** |
-| 16 | KCD4 IP65 ×2 | $2.40 | Yes | Input POWER | **KEEP** |
-| 17 | Wirefy HS 200pc | $14.99 | Yes | Outdoor HLG AC + DC re-term | **KEEP*** |
-| 18 | ATO 20 A 20pc | $4.39 | Yes | `F9` ×2 + spare | **KEEP** |
-| 19 | Acrylic 8×10 2pk | $6.99 | Yes | LED windows | **KEEP** |
-| 20 | Foam tape 75 ft | $13.79 | Yes | Lid gasket | **KEEP*** |
+| # | Criterion | Status |
+| ---: | --- | --- |
+| 1 | Real product URL + listed USD on every buy line | **PASS** |
+| 2 | Cost-disciplined; keep function | **PASS** · est. **~$469** |
+| 3 | RS-485 runs ~30 ft + ~50 ft → **100 ft** 120 Ω 2-pr STP | **PASS** · KWANGIL (not CAT5) |
+| 4 | Outdoor PSU **HLG-240H-12** · **16 A** headroom | **PASS** |
+| 5 | M12 dust caps kept | **PASS** |
+| 6 | No 8-ch expand buy — panels **sign 5** + **mp 3** | **PASS** · DT ×8 |
+| 7 | DTP = one kit per power link (not 4) | **PASS** · DTP ×2 |
+| 8 | Owned stock not re-bought | **PASS** · see below |
+| 9 | C13–C14 ≠ outdoor HLG AC (SJTW still bought) | **PASS** |
+| 10 | Inside boxes: screw/solder/butt · no DryConn | **PASS** |
+| 11 | Outdoor HLG AC + DC re-term: adhesive HS | **PASS** · **owned** |
+| 12 | Lid hinges Amazon 1" · CAD M2 bosses | **PASS** · [`MOUNTING.md`](MOUNTING.md) |
 
-\*Overbuy still cheaper than a second specialty order.
+## Cart + owned
 
-## Cuts applied
+| # | Item | Ext | Function | Verdict |
+| ---: | --- | ---: | --- | --- |
+| 1 | RS-15-12 ×2 | $17.20 | Input 12 V electronics | **KEEP** |
+| 2 | HLG-240H-12 ×2 | $142.60 | Outdoor 12 V / 16 A | **KEEP** (locked) |
+| 3 | bociloy 1" hinges 10pk | $5.29 | Internal lids (use 8) | **KEEP** |
+| 4 | M2/M3 heat-sets | — | PCB · hinge · latch · RS-15 | **OWNED** |
+| 5 | M2/M3 screws | — | same | **OWNED** |
+| 6 | DTP ×2 | $18.00 | 2× HLG↔box 12 V | **KEEP** |
+| 7 | DT ×8 | $32.00 | SOL 5+3 | **KEEP** |
+| 8 | KWANGIL RS-485 100 ft | $138.99 | Full-duplex 120 Ω | **KEEP** |
+| 9 | C13–C14 | — | Input IEC mains | **OWNED** |
+| 10 | SJTW 6 ft ×2 | $21.10 | HLG AC outdoor NEMA | **KEEP** |
+| 11 | 12 AWG 25 ft | $24.99 | HLG DC ≤4 ft ×2 | **KEEP*** (~8 ft needed) |
+| 12 | EG STARTS | — | Arcade lids | **OWNED** |
+| 13 | M12 5-pin 4-set | $22.39 | 2 RS-485 runs | **KEEP** |
+| 14 | M12 dust caps | $12.69 | Unmated outdoor | **KEEP** (locked) |
+| 15 | C14 + cover 2pk | $5.99 | Input inlets | **KEEP** |
+| 16 | KCD4 IP65 ×2 | $2.40 | Input POWER | **KEEP** |
+| 17 | Adhesive heatshrink | — | HLG AC + DC re-term | **OWNED** |
+| 18 | ATO 20 A 20pc | $4.39 | `F9` ×2 + spare | **KEEP*** |
+| 19 | Acrylic 8×10 2pk | $6.99 | LED windows | **KEEP** |
+| 20 | Foam tape 75 ft | $13.79 | Lid gaskets | **KEEP*** |
 
-| Cut | Δ | Why |
-| --- | ---: | --- |
-| DT 16→**8** · DTP 4→**2** | −$50 | Day-1 5+3 panels only |
-| HLG kept at **240** | — | 16 A headroom (user lock) |
-| CNC Kitchen inserts | −$22.40 | Owned |
-| M2/M3 screw packs | −$19.94 | Owned |
-| C13–C14 2pk | −$11.99 | Owned PC/monitor cords |
+\*Cheapest break / length overbuy; still buy once.
 
-## Do not cut
+## Already cut this session
+
+| Cut | Why |
+| --- | --- |
+| DT 16→8 · DTP 4→2 | Day-1 channels only |
+| HLG-185 (brief) → back to **240** | User wants 16 A |
+| CNC Kitchen inserts · screw packs | Owned |
+| C13–C14 · EG STARTS · Wirefy HS | Owned |
+| Quickcar · Belden-by-ft · KHA-25C · DryConn · GATSUN | Cheaper/equal or wrong |
+
+## Do not cut further (without new info)
 
 | Item | Why |
 | --- | --- |
-| HLG / DTP / DT / M12 | Outdoor interfaces for day-1 |
-| SJTW (or outdoor NEMA cord) | HLG AC — different from C13–C14 |
-| 2-pair 120 Ω STP | Full-duplex @ 30–50 ft |
-| M12 caps | Unmated outdoor |
+| HLG-240 / DTP / DT / M12+caps | Outdoor interfaces |
+| KWANGIL 2-pr 120 Ω | Spec cable @ 30–50 ft |
+| SJTW | Outdoor NEMA ≠ monitor IEC |
+| bociloy hinges | CAD locked |
+| C14 · KCD4 · F9 · acrylic · foam | Required assembly |
 
-## Not expand-related (left alone)
+## Optional later (not in cart)
 
-| Item | Note |
-| --- | --- |
-| Output PCB (8 FETs) | Hardware still 8-ch; enclosure only panels **5** / **3** |
-| M12 4-set | Needed for **2** RS-485 links |
-| RS-485 100 ft | Run length, not channel count |
+| Idea | Δ | Note |
+| --- | ---: | --- |
+| Stage 50 ft RS-485 first | −~$60 | Second order for long run |
+| Drop SJTW if you have outdoor 16/3 | −$21 | Confirm NEMA outdoor, not C13 |
+| TE flange DT/DTP | +$40–55 | Better panel seal |
+| +8 DT later | +$32 | Unused PCB channels |

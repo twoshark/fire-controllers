@@ -35,8 +35,8 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 | Lid hinge | [bociloy 1"](https://www.amazon.com/bociloy-Cabinet-Rectangle-Stainless-Folding/dp/B0D43MBGXC) ×8 · CAD [`MOUNTING.md`](MOUNTING.md) |
 | M2 heat-set + M2 screws | PCB + hinge leaves · **owned** |
 | M3 heat-set + M3 screws | front latches + RS-15 feet · **owned** |
-| Outdoor SJTW + adhesive HS butt | HLG AC (not inside boxes) |
-| Adhesive HS | HLG DC DTP re-term |
+| Outdoor SJTW + adhesive HS butt | HLG AC (not inside boxes) · HS **owned** |
+| Adhesive HS | HLG DC DTP re-term · **owned** |
 
 ## Cables
 

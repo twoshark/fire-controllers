@@ -8,7 +8,7 @@ Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`]
 
 **Rule:** every line has a real product URL and a listed USD price. Prices checked **2026-07-18**. Re-check at checkout.
 
-**Est. checkout:** **~$484** (+ Lowdoller ship if under $100).
+**Est. checkout:** **~$469** (+ Lowdoller ship if under $100).
 
 ---
 
@@ -20,8 +20,9 @@ Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`]
 | M2 + M3 screws | same |
 | C13–C14 (PC/monitor IEC) cords ×2 | Input box mains → C14 inlet |
 | EG STARTS triangle arcade buttons | sign-input + mp-input lids |
+| Adhesive heatshrink | HLG AC outdoor splice + DC DTP re-term |
 
-Still need outdoor **SJTW** (or equivalent NEMA 5-15 outdoor cord) for HLG AC — not the same as C13–C14.
+Still need outdoor **SJTW** (or equivalent NEMA 5-15 outdoor cord) for HLG AC — not the same as C13–C14. Prefer **adhesive-lined** HS outdoors if that’s what you stock.
 
 ---
 
@@ -63,7 +64,7 @@ Still need outdoor **SJTW** (or equivalent NEMA 5-15 outdoor cord) for HLG AC �
 | 2 | Mean Well **RS-15-12** | $8.60 | $17.20 | https://www.bravoelectro.com/rs-15-12.html |
 | 2 | Mean Well **HLG-240H-12** (IP67, 12 V / 16 A) | $71.30 | $142.60 | https://www.bravoelectro.com/hlg-240h-12.html |
 
-16 A covers PCB ceiling (8×2 A). Day-1 DT stays **5** + **3** — buy more DT later if you panel unused channels.
+16 A covers PCB ceiling (8×2 A). Day-1 DT stays **5** + **3**.
 
 ---
 
@@ -73,8 +74,7 @@ Still need outdoor **SJTW** (or equivalent NEMA 5-15 outdoor cord) for HLG AC �
 | ---: | --- | ---: | ---: | --- |
 | 1 | bociloy **1"** SS butt hinge · **10-pack** (use 8) | $5.29 | $5.29 | https://www.amazon.com/bociloy-Cabinet-Rectangle-Stainless-Folding/dp/B0D43MBGXC |
 
-**CAD locked** (open **25×28** mm): pin centers unchanged; **M2** boss at mid-pin, **7.5 mm** into cavity — [`MOUNTING.md`](MOUNTING.md). Caliper on arrival if 2 holes/leaf.  
-Premium: [Alema KHA-25C](https://www.alema.com/kha-25c-25mm-stainless-steel-butt-hinge-with-screw-holes.html) @ **$4.34** ×8 (M3 pattern).
+**CAD locked** (open **25×28** mm): pin centers unchanged; **M2** boss at mid-pin, **7.5 mm** into cavity — [`MOUNTING.md`](MOUNTING.md). Caliper on arrival if 2 holes/leaf.
 
 ---
 
@@ -87,10 +87,8 @@ Premium: [Alema KHA-25C](https://www.alema.com/kha-25c-25mm-stainless-steel-butt
 
 | Kit | Why |
 | --- | --- |
-| DTP ×**2** | One mating pair per HLG→box 12 V link (2 links) |
-| DT ×**8** | sign **5** + mp **3** (day-1 panel layout) |
-
-Free ship was @ $100 — this cart is under; pay Lowdoller shipping at checkout.
+| DTP ×**2** | One mating pair per HLG→box 12 V link |
+| DT ×**8** | sign **5** + mp **3** |
 
 ---
 
@@ -102,12 +100,11 @@ Free ship was @ $100 — this cart is under; pay Lowdoller shipping at checkout.
 | 2 | ELECTERY **16/3 SJTW** outdoor 6 ft | $10.55 | $21.10 | https://www.walmart.com/ip/6-Ft-Black-Indoor-Outdoor-Extension-Cord-Heavy-Duty-Flexible-16-AWG-Power-Cable-SJTW-Waterproof-Weather-Resistant-Wire-3-Prong-Grounded-Wire-ELECTERY/2088408818 |
 | 1 | Powerwerx **12 AWG** red/black bonded copper · **25 ft** | $24.99 | $24.99 | https://www.valley-ent.com/store/red-black-bonded-zip-cord-easy-id-low-voltage-cable-gauge-12-length-25-feet.html |
 
-Select **24AWG / 100ft**. Do **not** use CAT5/6 for these runs.  
-C13–C14: **owned** — not in cart.
+Select **24AWG / 100ft**. Do **not** use CAT5/6.
 
 ---
 
-## Cart 5 — Panel / hardware · **$83.63**
+## Cart 5 — Panel / hardware · **$68.64**
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
@@ -115,12 +112,11 @@ C13–C14: **owned** — not in cart.
 | 1 | Elecbee M12 dust caps · **5-pack** | $12.69 | $12.69 | https://www.amazon.com/Elecbee-Protective-Plastic-Panel-Mount-Sockets/dp/B0B6HYB4KM |
 | 1 | QTEATAK C14 panel inlet **with cover** · **2-pack** | $5.99 | $5.99 | https://www.amazon.com/gp/product/B081C32LWG |
 | 2 | KCD4 DPST **IP65** rocker 30×22 (Metabee) | $1.20 | $2.40 | https://www.metabee.com/waterproof-baot-rocker-switch-kcd4-4pin-on-off-16a-250vac-dpst-square-green-led.html |
-| 1 | Wirefy adhesive heatshrink · **200 pcs** 3:1 (HLG AC outdoors + DC re-term) | $14.99 | $14.99 | https://www.amazon.com/dp/B089D82FLG |
 | 1 | ATO **20 A** blade fuses · **20 pcs** | $4.39 | $4.39 | https://www.amazon.com/20pcs-Standard-Fuses-Blade-Automotive/dp/B0CLGTWZHZ |
 | 1 | Clear acrylic 8×10 × **1 mm** · **2-pack** (LED windows) | $6.99 | $6.99 | https://www.amazon.com/Extruded-Plexiglass-Protective-Projects-Watercolor/dp/B0D4QVJRLT |
 | 1 | WOD closed-cell foam tape 1/8"×1/4"×75' (lid gaskets) | $13.79 | $13.79 | https://www.amazon.com/WOD-Tape-Weatherstrip-Insulation-Available/dp/B07H33916Y |
 
-Heat-sets · M2/M3 screws · arcade buttons: **owned**. Inside boxes: screw / solder / adhesive butt only. Outdoor HLG AC: adhesive HS (Wirefy).
+Inside boxes: screw / solder / adhesive butt only (no DryConn). Outdoor HLG: owned adhesive HS.
 
 ---
 
@@ -132,12 +128,10 @@ Heat-sets · M2/M3 screws · arcade buttons: **owned**. Inside boxes: screw / so
 | 2 Amazon 1" hinges | $5.29 |
 | 3 Lowdoller DT/DTP (+ ship) | $50.00 |
 | 4 Cable | $185.08 |
-| 5 Panel / hardware | $83.63 |
-| **Est. checkout** | **~$483.80** (+ Lowdoller ship) |
+| 5 Panel / hardware | $68.64 |
+| **Est. checkout** | **~$468.81** (+ Lowdoller ship) |
 
-Owned: inserts · screws · C13–C14 · arcade buttons. DT still day-1 **8** only.  
-
-TE flange: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**. Full necessity table: [`PARTS_REVIEW.md`](PARTS_REVIEW.md).
+Session audit: [`PARTS_REVIEW.md`](PARTS_REVIEW.md). TE flange add-on: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**.
 
 ---
 
@@ -147,8 +141,8 @@ TE flange: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**. Full necessity table: [`P
 - [ ] bociloy 1" ×8 · caliper holes vs [`MOUNTING.md`](MOUNTING.md)  
 - [ ] Lowdoller: **2× DTP** + **8× DT** (5 sign + 3 mp)  
 - [ ] KWANGIL **100 ft** + M12 4-set + dust caps + C14 + SJTW + 12 AWG  
-- [ ] KCD4 IP65, adhesive HS, fuse, acrylic, foam  
-- [ ] On hand: heat-sets · M2/M3 screws · C13–C14 ×2 · arcade buttons  
+- [ ] KCD4 IP65, fuse, acrylic, foam  
+- [ ] On hand: heat-sets · screws · C13–C14 · arcade · heatshrink  
 - [ ] Crimp DTP06-2S on each HLG DC · HS seal · ≤4 ft  
 - [ ] Mount HLGs shaded · FG earthed · `F9` **20 A** seated  
 - [ ] Measure SOL current @ 12 V before loading all channels  

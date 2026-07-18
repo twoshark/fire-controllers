@@ -1,6 +1,6 @@
 # Cost options
 
-Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · review [`PARTS_REVIEW.md`](PARTS_REVIEW.md) (**~$484** est., 2026-07-18).
+Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · audit [`PARTS_REVIEW.md`](PARTS_REVIEW.md) (**~$469** est., 2026-07-18).
 
 | Cart | Ext |
 | --- | ---: |
@@ -8,19 +8,19 @@ Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · review [`PARTS_REV
 | Amazon bociloy 1" hinges 10-pack | $5.29 |
 | Lowdoller 2× DTP + 8× DT (+ ship) | $50.00 |
 | Cable (KWANGIL + SJTW + 12 AWG) | $185.08 |
-| Panel / hardware | $83.63 |
-| **Est. sum** | **~$483.80** (+ Lowdoller ship) |
+| Panel / hardware | $68.64 |
+| **Est. sum** | **~$468.81** (+ Lowdoller ship) |
 
-Owned (not in cart): M2/M3 heat-sets + screws · C13–C14 IEC cords · EG STARTS arcade buttons.
+**Owned:** M2/M3 heat-sets + screws · C13–C14 · EG STARTS · adhesive heatshrink.
 
 ### Locked decisions
 
 | Choice | Why |
 | --- | --- |
 | HLG-240H-12 ×2 | 16 A · full PCB headroom |
-| DT ×8 · DTP ×2 | Day-1 channels only (5+3) · one power link per box |
-| KWANGIL 100 ft | Covers ~30 ft + ~50 ft RS-485 runs + spare |
-| M12 dust caps | Protect unmated outdoor ports |
+| DT ×8 · DTP ×2 | Day-1 channels only (5+3) |
+| KWANGIL 100 ft | ~30 ft + ~50 ft RS-485 |
+| M12 dust caps | Unmated outdoor |
 
 ### Add-ons
 
@@ -30,14 +30,13 @@ Owned (not in cart): M2/M3 heat-sets + screws · C13–C14 IEC cords · EG START
 | **C** | TE DT/DTP **flange** panel mounts | +$40–55 | Real panel seal vs printed pocket |
 | **G** | One HLG for both outputs | −$71 | Shared 16 A — only if loads never overlap hard |
 | **DT expand** | +8 DT kits | +$32 | Panel unused PCB channels later |
-| **Belden** | Genuine Belden 9842 (ProWire) | much higher | Brand-name cable vs UL equal |
+| **Belden** | Genuine Belden 9842 | much higher | Brand vs UL equal |
 
 ### Do not cut
 
 | Item | Why |
 | --- | --- |
-| HLG-240H (or equiv IP67 MW) | Outdoor 12 V · 16 A headroom |
-| DTP for 12 V link | 25 A · IP67 mated |
-| DT for SOL · M12 for RS-485 | Outdoor |
-| 120 Ω 2-pair STP (Belden 9842 or UL equal) | Spec’d RS-485 cable |
-| M12 dust caps | Unmated outdoor protection |
+| HLG-240H | Outdoor 12 V · 16 A |
+| DTP / DT / M12 + caps | Outdoor |
+| 120 Ω 2-pair STP | Spec RS-485 |
+| SJTW (unless owned outdoor NEMA) | HLG AC |

@@ -8,7 +8,7 @@ Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`]
 
 **Rule:** every line has a real product URL and a listed USD price. Prices checked **2026-07-18**. Re-check at checkout.
 
-**Est. checkout:** **~$508** (+ Lowdoller ship if under $100).
+**Est. checkout:** **~$484** (+ Lowdoller ship if under $100).
 
 ---
 
@@ -19,6 +19,7 @@ Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`]
 | M2 + M3 heat-set inserts | PCB · hinges · latches · RS-15 |
 | M2 + M3 screws | same |
 | C13–C14 (PC/monitor IEC) cords ×2 | Input box mains → C14 inlet |
+| EG STARTS triangle arcade buttons | sign-input + mp-input lids |
 
 Still need outdoor **SJTW** (or equivalent NEMA 5-15 outdoor cord) for HLG AC — not the same as C13–C14.
 
@@ -106,11 +107,10 @@ C13–C14: **owned** — not in cart.
 
 ---
 
-## Cart 5 — Panel / hardware · **$107.61**
+## Cart 5 — Panel / hardware · **$83.63**
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
-| 2 | EG STARTS triangle LED ×5 | $11.99 | $23.98 | https://www.amazon.com/dp/B07R565HM6 |
 | 1 | MECCANIXITY M12 5-pin M+F · **4-set** IP67 | $22.39 | $22.39 | https://www.amazon.com/dp/B0CFFX6JW4 |
 | 1 | Elecbee M12 dust caps · **5-pack** | $12.69 | $12.69 | https://www.amazon.com/Elecbee-Protective-Plastic-Panel-Mount-Sockets/dp/B0B6HYB4KM |
 | 1 | QTEATAK C14 panel inlet **with cover** · **2-pack** | $5.99 | $5.99 | https://www.amazon.com/gp/product/B081C32LWG |
@@ -120,7 +120,7 @@ C13–C14: **owned** — not in cart.
 | 1 | Clear acrylic 8×10 × **1 mm** · **2-pack** (LED windows) | $6.99 | $6.99 | https://www.amazon.com/Extruded-Plexiglass-Protective-Projects-Watercolor/dp/B0D4QVJRLT |
 | 1 | WOD closed-cell foam tape 1/8"×1/4"×75' (lid gaskets) | $13.79 | $13.79 | https://www.amazon.com/WOD-Tape-Weatherstrip-Insulation-Available/dp/B07H33916Y |
 
-Heat-sets + M2/M3 screws: **owned**. Inside boxes: screw / solder / adhesive butt only. Outdoor HLG AC: adhesive HS (Wirefy).
+Heat-sets · M2/M3 screws · arcade buttons: **owned**. Inside boxes: screw / solder / adhesive butt only. Outdoor HLG AC: adhesive HS (Wirefy).
 
 ---
 
@@ -132,10 +132,10 @@ Heat-sets + M2/M3 screws: **owned**. Inside boxes: screw / solder / adhesive but
 | 2 Amazon 1" hinges | $5.29 |
 | 3 Lowdoller DT/DTP (+ ship) | $50.00 |
 | 4 Cable | $185.08 |
-| 5 Panel / hardware | $107.61 |
-| **Est. checkout** | **~$507.78** (+ Lowdoller ship) |
+| 5 Panel / hardware | $83.63 |
+| **Est. checkout** | **~$483.80** (+ Lowdoller ship) |
 
-Owned cuts kept: inserts · M2/M3 screws · C13–C14. DT still day-1 **8** only.  
+Owned: inserts · screws · C13–C14 · arcade buttons. DT still day-1 **8** only.  
 
 TE flange: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**. Full necessity table: [`PARTS_REVIEW.md`](PARTS_REVIEW.md).
 
@@ -148,7 +148,7 @@ TE flange: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**. Full necessity table: [`P
 - [ ] Lowdoller: **2× DTP** + **8× DT** (5 sign + 3 mp)  
 - [ ] KWANGIL **100 ft** + M12 4-set + dust caps + C14 + SJTW + 12 AWG  
 - [ ] KCD4 IP65, adhesive HS, fuse, acrylic, foam  
-- [ ] On hand: heat-sets · M2/M3 screws · C13–C14 ×2  
+- [ ] On hand: heat-sets · M2/M3 screws · C13–C14 ×2 · arcade buttons  
 - [ ] Crimp DTP06-2S on each HLG DC · HS seal · ≤4 ft  
 - [ ] Mount HLGs shaded · FG earthed · `F9` **20 A** seated  
 - [ ] Measure SOL current @ 12 V before loading all channels  

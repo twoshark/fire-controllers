@@ -1,6 +1,6 @@
 # Cost options
 
-Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · review [`PARTS_REVIEW.md`](PARTS_REVIEW.md) (**~$508** est., 2026-07-18).
+Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · review [`PARTS_REVIEW.md`](PARTS_REVIEW.md) (**~$484** est., 2026-07-18).
 
 | Cart | Ext |
 | --- | ---: |
@@ -8,10 +8,10 @@ Authoritative cart: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · review [`PARTS_REV
 | Amazon bociloy 1" hinges 10-pack | $5.29 |
 | Lowdoller 2× DTP + 8× DT (+ ship) | $50.00 |
 | Cable (KWANGIL + SJTW + 12 AWG) | $185.08 |
-| Panel / hardware | $107.61 |
-| **Est. sum** | **~$507.78** (+ Lowdoller ship) |
+| Panel / hardware | $83.63 |
+| **Est. sum** | **~$483.80** (+ Lowdoller ship) |
 
-Owned (not in cart): M2/M3 heat-sets + screws · C13–C14 IEC cords.
+Owned (not in cart): M2/M3 heat-sets + screws · C13–C14 IEC cords · EG STARTS arcade buttons.
 
 ### Locked decisions
 

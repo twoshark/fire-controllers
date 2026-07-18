@@ -18,7 +18,7 @@ Confidence: **high** = keep · **med** = keep with note · **cut** = remove/redu
 | 9 | C13–C14 cords | — | Yes | Input mains | **OWNED** |
 | 10 | SJTW 6 ft ×2 | $21.10 | Yes | HLG AC outdoors (NEMA, not IEC) | **KEEP** |
 | 11 | 12 AWG 25 ft | $24.99 | Partial | Only ~8 ft needed | **KEEP*** |
-| 12 | EG STARTS ×2 | $23.98 | Yes | Arcade inputs | **KEEP** |
+| 12 | EG STARTS ×2 | — | Yes | Arcade inputs | **OWNED** |
 | 13 | M12 5-pin 4-set | $22.39 | Yes | 2 RS-485 runs | **KEEP** |
 | 14 | M12 dust caps | $12.69 | Yes (locked) | Unmated outdoor | **KEEP** |
 | 15 | C14 + cover 2pk | $5.99 | Yes | Input AC inlet | **KEEP** |

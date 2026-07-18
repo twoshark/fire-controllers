@@ -23,7 +23,7 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 
 | Item | Notes |
 | --- | --- |
-| EG STARTS triangle | [B07R565HM6](https://www.amazon.com/dp/B07R565HM6) · verify Ø |
+| EG STARTS triangle | **owned** · verify Ø for lid holes |
 | POWER | KCD4 DPST **IP65** · **inputs only** · AC |
 | RESET / BOOT / USB | open lid |
 

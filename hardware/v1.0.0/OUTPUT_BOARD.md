@@ -59,4 +59,4 @@ See [`PIN_MAP.md`](PIN_MAP.md). USB ESD `D2`; CC `R55`/`R56`; series `R53`/`R54`
 | `U5`/`U6` | `SN74LV14APWR` |
 | `Q9` | `IPB110P06LM` |
 
-Enclosure 12 V: Mean Well **HLG-240H-12** (IP67 OTS) → DTP → board `J1`. See `enclosures/POWER_OTS.md`.
+Enclosure 12 V: Mean Well **HLG-185H-12** (IP67 OTS) → DTP → board `J1`. See `enclosures/POWER_OTS.md`.

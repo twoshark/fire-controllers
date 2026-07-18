@@ -1,14 +1,14 @@
 # Shopping list — 4 enclosures + 2 HLG
 
 **Printed:** sign-input · mp-input · sign-output · mp-output  
-**PSU:** 2× **HLG-240H-12** (IP67, 12 V / 16 A) — headroom for each output box at **8 channels**.  
+**PSU:** 2× **HLG-185H-12** (IP67, 12 V / 13 A) — sized for **sign 5 SOL** + **mp 3 SOL** (no 8-ch expand).  
 **RS-485:** runs up to **~30 ft** and **~50 ft** → order **100 ft** spool.  
 **Review:** [`PARTS_REVIEW.md`](PARTS_REVIEW.md) · hinge CAD: [`MOUNTING.md`](MOUNTING.md).  
 Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`](SEALING.md).
 
 **Rule:** every line has a real product URL and a listed USD price. Prices checked **2026-07-18**. Re-check at checkout.
 
-**Est. checkout:** **~$612**.
+**Est. checkout:** **~$534** (+ Lowdoller ship if under $100).
 
 ---
 
@@ -29,9 +29,9 @@ Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`]
 | --- | --- | --- | --- | --- | --- | --- |
 | sign-input | C14 | KCD4 IP65 | — | M12-5 | — | RS-15-12 |
 | mp-input | C14 | KCD4 IP65 | — | M12-5 | — | RS-15-12 |
-| sign-output | — | — | DTP IN | M12-5 | up to 8× DT | ← HLG-240H |
-| mp-output | — | — | DTP IN | M12-5 | up to 8× DT | ← HLG-240H |
-| HLG ×2 | SJTW + adhesive HS butt (outdoor) | unplug to kill | DTP on pigtail | — | — | HLG-240H-12 |
+| sign-output | — | — | DTP IN | M12-5 | **5× DT** | ← HLG-185H |
+| mp-output | — | — | DTP IN | M12-5 | **3× DT** | ← HLG-185H |
+| HLG ×2 | SJTW + adhesive HS butt (outdoor) | unplug to kill | DTP on pigtail | — | — | HLG-185H-12 |
 
 ### Pin maps
 
@@ -43,12 +43,14 @@ Ratings / seal: [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) · [`SEALING.md`]
 
 ---
 
-## Cart 1 — Bravo Electro · **$159.80**
+## Cart 1 — Bravo Electro · **$132.00**
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
 | 2 | Mean Well **RS-15-12** | $8.60 | $17.20 | https://www.bravoelectro.com/rs-15-12.html |
-| 2 | Mean Well **HLG-240H-12** (IP67, 12 V / 16 A) | $71.30 | $142.60 | https://www.bravoelectro.com/hlg-240h-12.html |
+| 2 | Mean Well **HLG-185H-12** (IP67, 12 V / 13 A) | $57.40 | $114.80 | https://www.bravoelectro.com/hlg-185h-12.html |
+
+13 A covers sign **10 A** peak (5×2 A) and mp **6 A** peak (3×2 A). Do **not** load unused PCB channels without a larger PSU + more DT.
 
 ---
 
@@ -74,14 +76,19 @@ Premium: [Alema KHA-25C](https://www.alema.com/kha-25c-25mm-stainless-steel-butt
 
 ---
 
-## Cart 4 — Lowdoller Motorsports (Deutsch) · **$100.00** (free ship)
+## Cart 4 — Lowdoller Motorsports (Deutsch) · **$50.00** (+ ship)
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
-| 4 | **DTP** 2-pin plug+receptacle kit · PN 35570 | $9.00 | $36.00 | https://lowdoller-motorsports.com/products/deutsch-dt-2-kit-pn-35557 |
-| 16 | **DT** 2-pin plug+receptacle kit · PN 35557 | $4.00 | $64.00 | https://lowdoller-motorsports.com/products/deutsch-dt-2-kit-dt06-2s-dt04-2p-pn-35557 |
+| 2 | **DTP** 2-pin plug+receptacle kit · PN 35570 | $9.00 | $18.00 | https://lowdoller-motorsports.com/products/deutsch-dt-2-kit-pn-35557 |
+| 8 | **DT** 2-pin plug+receptacle kit · PN 35557 | $4.00 | $32.00 | https://lowdoller-motorsports.com/products/deutsch-dt-2-kit-dt06-2s-dt04-2p-pn-35557 |
 
-DTP: 2× box + 2× HLG. DT: **16** = both outputs at **8 SOL** + free ship.
+| Kit | Why |
+| --- | --- |
+| DTP ×**2** | One mating pair per HLG→box 12 V link (2 links) |
+| DT ×**8** | sign **5** + mp **3** (day-1 panel layout) |
+
+Free ship was @ $100 — this cart is under; pay Lowdoller shipping at checkout.
 
 ---
 
@@ -122,24 +129,25 @@ Inside boxes: screw / solder / adhesive butt only. Outdoor HLG AC: adhesive HS (
 
 | Cart | Ext |
 | --- | ---: |
-| 1 Bravo PSU (HLG-240H) | $159.80 |
+| 1 Bravo PSU (HLG-185H) | $132.00 |
 | 2 Amazon 1" hinges | $5.29 |
 | 3 CNC Kitchen inserts | $22.40 |
-| 4 Lowdoller DT/DTP (free ship) | $100.00 |
+| 4 Lowdoller DT/DTP (+ ship) | $50.00 |
 | 5 Cable (100 ft RS-485) | $197.07 |
 | 6 Panel / hardware | $127.55 |
-| **Est. checkout** | **$612.11** |
+| **Est. checkout** | **~$534.31** (+ Lowdoller ship) |
 
+Cuts vs prior 8-ch cart: −8 DT (−$32) · −2 DTP spare (−$18) · HLG-240→185 (−$27.80).  
 TE flange: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**. Full necessity table: [`PARTS_REVIEW.md`](PARTS_REVIEW.md).
 
 ---
 
 ## Checklist
 
-- [ ] Bravo: RS-15×2, **HLG-240H-12×2**  
+- [ ] Bravo: RS-15×2, **HLG-185H-12×2**  
 - [ ] bociloy 1" ×8 · caliper holes vs [`MOUNTING.md`](MOUNTING.md)  
 - [ ] CNC Kitchen: M2 + M3 inserts  
-- [ ] Lowdoller: 4× DTP + **16× DT** ($100 free ship)  
+- [ ] Lowdoller: **2× DTP** + **8× DT** (5 sign + 3 mp)  
 - [ ] KWANGIL **100 ft** + M12 4-set + dust caps + C14 + C13–C14 + SJTW + 12 AWG  
 - [ ] KCD4 IP65, adhesive HS, fuse, acrylic, foam, screws  
 - [ ] Crimp DTP06-2S on each HLG DC · HS seal · ≤4 ft  

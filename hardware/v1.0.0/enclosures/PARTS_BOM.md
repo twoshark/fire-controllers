@@ -7,7 +7,7 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 | Use | MPN | Buy | Qty‑1 |
 | --- | --- | --- | ---: |
 | Input (in box) | RS-15-12 | [Bravo](https://www.bravoelectro.com/rs-15-12.html) | $8.60 |
-| Output 12 V (OTS) | HLG-240H-12 | [Bravo](https://www.bravoelectro.com/hlg-240h-12.html) | $71.30 |
+| Output 12 V (OTS) | HLG-185H-12 | [Bravo](https://www.bravoelectro.com/hlg-185h-12.html) | $57.40 |
 | Board feed fuse | ATO **20 A** | [20 pcs](https://www.amazon.com/20pcs-Standard-Fuses-Blade-Automotive/dp/B0CLGTWZHZ) | $4.39/pk |
 
 ## Connectors

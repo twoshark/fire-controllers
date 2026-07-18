@@ -27,7 +27,7 @@ Inner ≈ outer − **6** (2×3 mm walls).
 | sign-output | **220 × 170 × 85** | 214×164×79 | PCB `(25,25)` + DTP BACK + SOL LEFT |
 | mp-output | **220 × 170 × 85** | 214×164×79 | Same · SOL0..2 |
 
-12 V supply is OTS **HLG-240H-12** — [`POWER_OTS.md`](POWER_OTS.md).
+12 V supply is OTS **HLG-185H-12** — [`POWER_OTS.md`](POWER_OTS.md).
 
 ## Inserts
 

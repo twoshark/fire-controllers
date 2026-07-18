@@ -35,7 +35,7 @@ The system is comprised of 2 boards, each with their own microcontroller, connec
 
 **Serial Link**: RS-485 differential signaling over shielded twisted pair cable (Belden 9842 or equivalent 2-pair 24AWG shielded RS-485 cable, 120Ω characteristic impedance). Both boards include dual RS-485 transceivers for full duplex. At 115200 baud, a 3-byte frame transmits in ~260μs, well within the <10ms latency budget.
 
-**Power**: Input boxes: C14 → RS-15-12 → PCB `J1`. Output boxes: outdoor HLG-240H-12 (IP67) → DTP → PCB `J1`. Each PCB generates 3.3V via onboard `AP63203WU-7` buck.
+**Power**: Input boxes: C14 → RS-15-12 → PCB `J1`. Output boxes: outdoor HLG-185H-12 (IP67) → DTP → PCB `J1`. Each PCB generates 3.3V via onboard `AP63203WU-7` buck.
 
 **Enclosure Wiring**: Screw terminals on the PCB; outdoor links use DT / DTP / M12-5 (IP67 when mated). Clear silkscreen. Seal truth: `hardware/v1.0.0/enclosures/SEALING.md`.
 
@@ -61,7 +61,7 @@ The board takes in power and an array of input states.
 
 ### Inputs
 
-- 12V DC from outdoor Mean Well HLG-240H-12 (IP67, 12V/16A) via DTP → board `J1` → onboard `AP63203WU-7` buck for 3.3V MCU rail
+- 12V DC from outdoor Mean Well HLG-185H-12 (IP67, 12V/13A) via DTP → board `J1` → onboard `AP63203WU-7` buck for 3.3V MCU rail
 - RS-485 full-duplex serial link with the input controller (dedicated RX and TX pairs)
 - 8x digital override inputs via pull-up + RC debounce + Schmitt-trigger frontend (switch-to-GND). Override closed forces ON, open defers to serial command.
 - USB-C debug/programming port
@@ -80,7 +80,7 @@ The board produces 8 outputs based on the state received over serial. If an over
 
 # Resolved Design Decisions
 
-1. **Power supply**: **Input boxes**: C14 → RS-15-12 (12V chassis) → PCB `J1`. **Output boxes**: outdoor Mean Well **HLG-240H-12** (IP67, 12V/16A, 192W) → DTP → PCB `J1`. Each PCB uses onboard `AP63203WU-7` 3.3V buck. Channel PTCs `1812L200/16GR` (16V). Truth: `hardware/v1.0.0/enclosures/POWER_OTS.md`.
+1. **Power supply**: **Input boxes**: C14 → RS-15-12 (12V chassis) → PCB `J1`. **Output boxes**: outdoor Mean Well **HLG-185H-12** (IP67, 12V/13A, 156W) → DTP → PCB `J1` — sized for sign **5 SOL** / mp **3 SOL** (no 8-ch expand buy). Each PCB uses onboard `AP63203WU-7` 3.3V buck. Channel PTCs `1812L200/16GR` (16V). Truth: `hardware/v1.0.0/enclosures/POWER_OTS.md`.
 2. **Override detection**: Each override input uses pull-up + RC debounce + Schmitt-trigger buffering. Firmware reads digital level directly (closed switch = override ON; open switch = serial control).
 3. **Input interface**: Each channel is a simple switch-to-GND digital input with RC + Schmitt cleanup. No ADC divider path is used.
 4. **Outdoor connectors**: Deutsch DT (SOL) / DTP (12V) / M12-5 (RS-485) — IP67 when mated; wired to PCB screw terminals. IEC C14 + KCD4 + arcade on inputs (splash/canopy). See `enclosures/SEALING.md`.

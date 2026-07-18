@@ -4,7 +4,7 @@
 DTP IN → J1     [seat F9]
 M12-5 → J2
 SOL0..SOL2 (DT) → J6 + J5a
-Kill 12 V: unplug HLG-240H-12 AC cord
+Kill 12 V: unplug HLG-185H-12 AC cord
 ```
 
 | SOL | OUT |

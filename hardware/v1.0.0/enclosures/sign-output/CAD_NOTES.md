@@ -2,7 +2,7 @@
 
 Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md) · [`../SEALING.md`](../SEALING.md).
 
-**No POWER rocker** — kill by unplugging the **HLG-240H-12** AC cord ([`../POWER_OTS.md`](../POWER_OTS.md)).
+**No POWER rocker** — kill by unplugging the **HLG-185H-12** AC cord ([`../POWER_OTS.md`](../POWER_OTS.md)).
 
 ## Envelope
 

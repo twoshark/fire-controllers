@@ -1,6 +1,6 @@
 # Outdoor 12 V supply
 
-120 VAC → 12 V DC for each output box: Mean Well **HLG-240H-12** (OTS, IP67).
+120 VAC → 12 V DC for each output box: Mean Well **HLG-185H-12** (OTS, IP67).
 
 ## Loads
 
@@ -8,25 +8,26 @@ Assumes ≤**1.5 A continuous** / ch hot (PTC derate) · **2 A** short duty. **M
 
 | Load | Current @ 12 V | Power |
 | --- | ---: | ---: |
-| sign-output (5× SOL) | **≤7.5 A** cont · **10 A** peak | ≤120 W |
-| mp-output (3× SOL) | **≤4.5 A** cont · **6 A** peak | ≤72 W |
-| PCB ceiling (8×2 A) | 16 A | 192 W |
+| sign-output (**5× SOL**) | **≤7.5 A** cont · **10 A** peak | ≤120 W |
+| mp-output (**3× SOL**) | **≤4.5 A** cont · **6 A** peak | ≤72 W |
+
+No cart provision for populating unused PCB channels (board still has 8 FET outputs).
 
 ## Part
 
 | Qty | MPN | Rating | IP | Unit | Ext | Buy |
 | ---: | --- | --- | --- | ---: | ---: | --- |
-| **2** | **HLG-240H-12** | **12 V · 16 A · 192 W** · 90–305 VAC | **IP67** | $71.30 | **$142.60** | [Bravo](https://www.bravoelectro.com/hlg-240h-12.html) |
+| **2** | **HLG-185H-12** | **12 V · 13 A · 156 W** · 90–305 VAC | **IP67** | $57.40 | **$114.80** | [Bravo](https://www.bravoelectro.com/hlg-185h-12.html) |
 
-Fanless · metal case · Class I (earth FG) · CV+CC · 7 yr warranty · **244 × 68 × 39 mm**.
+Fanless · metal case · Class I (earth FG) · CV+CC · 7 yr warranty · **228 × 68 × 39 mm**.
 
 | Alt | When |
 | --- | --- |
-| HLG-185H-12 ×2 · 13 A · $57.40 | Cost cut; OK for 10 A / 6 A |
-| HLG-240H (sign) + HLG-185H (mp) | Mix |
-| XLG-200-12-A · 16 A · IP67 | Same class |
+| HLG-240H-12 ×2 · 16 A · $71.30 | Only if later expanding both boxes toward 8 SOL |
+| HLG-185H (sign) + HLG-120H (mp) | −~$4; two SKUs for little gain |
+| XLG-150-12-A · IP67 | Same class alternate |
 
-Use Mean Well (or equivalent OEM). Avoid no-name “200W IP67” bricks.
+Use Mean Well (or equivalent OEM). Avoid no-name IP67 bricks.
 
 ## Hookup
 
@@ -45,13 +46,13 @@ HLG DC +/−
 | Output V | Fixed ~12 V (blank type) |
 | Kill | Unplug AC; optional in-line IP67 switch on cord |
 | Loads | Board flybacks handle SOL; run in **CV** region |
-| Fuse | Board `F9` **20 A** ATO; HLG CC (~16 A) limits continuous overload |
+| Fuse | Board `F9` **20 A** ATO; HLG CC (~**13 A**) limits continuous overload |
 
 ## System
 
 ```text
-sign-input ──RS-485──► sign-output ◄──DTP── HLG-240H-12 ◄── 120 VAC
-mp-input   ──RS-485──► mp-output   ◄──DTP── HLG-240H-12 ◄── 120 VAC
+sign-input ──RS-485──► sign-output ◄──DTP── HLG-185H-12 ◄── 120 VAC
+mp-input   ──RS-485──► mp-output   ◄──DTP── HLG-185H-12 ◄── 120 VAC
 ```
 
 Printed boxes: **4** (2 input + 2 output).

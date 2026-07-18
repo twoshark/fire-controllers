@@ -22,7 +22,7 @@ Channel PTC `1812L200/16GR`: **2.0 A hold @ ~20 °C** — derates to ~**1.4–1.
 | RS-485 | M12-5 A-code | signal · ≤22–24 AWG | ≪1 A | IP67 mated | Solder/field | **OK** |
 | POWER (inputs) | KCD4 **DPST** + silicone boot · **125 VAC** | 16–20 A class | ~0.2 A AC | splash w/ boot | QC | **OK on AC only** |
 | AC inlet (inputs) | IEC C14 + cover | 10–15 A | ≪1 A | cover when unmated | QC | **OK** · not IP67 |
-| Outdoor PSU | HLG-240H-12 | 16 A @ 12 V | ≤10 / 6 A peak | **IP67 unit** | factory + sealed DTP re-term | **OK** |
+| Outdoor PSU | HLG-185H-12 | 13 A @ 12 V | ≤10 / 6 A peak | **IP67 unit** | factory + sealed DTP re-term | **OK** |
 
 ### Preferred TE Deutsch (over Amazon assortments)
 
@@ -41,7 +41,7 @@ Amazon “10-set” kits are acceptable only if they include **correct contacts,
 | --- | --- |
 | `J1` / `J6` KF128-7.5 | KEFA C474954 (listed 24 A; treat conservatively). Parallel **both** `J6` poles |
 | SOL +12 V | **Star** from `J6` · 12 AWG stub → **18 AWG/ch** |
-| `F9` ATO | Field fuse **20 A** (was 25 A). Hard-fault / reverse; **HLG CC (~16 A)** is continuous overload limit |
+| `F9` ATO | Field fuse **20 A** (was 25 A). Hard-fault / reverse; **HLG CC (~13 A)** is continuous overload limit |
 | Kill 12 V | Unplug HLG AC cord |
 
 No panel USB / RESET / BOOT. Seal detail: [`SEALING.md`](SEALING.md).

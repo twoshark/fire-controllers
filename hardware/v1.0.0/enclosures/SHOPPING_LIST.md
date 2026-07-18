@@ -89,7 +89,9 @@ LRS: **115 V**, trim **12.0 V**. Mech: RS-15 **62.5×51×28** · LRS **215×115�
 | 1 | 60 mm fan filter/grill **4-pack** | search “60mm fan filter 4 pack” | ~$10 |
 | 1 | 12 AWG red/black zip **≥10 ft** | 2× ≤4 ft DTP jumpers + internal | ~$8 |
 | 1 | Clear PC sheet scrap + foam gasket strip | LED lenses ×6 · lid gasket material | ~$8 |
-| | | **Subtotal** | **~$195** |
+| 1 | M3×5.7 heat-set inserts **≥50** | Ruthex / CNC Kitchen | ~$12 |
+| 1 | M4×6–8 heat-set inserts **≥12** | for LRS plates | ~$6 |
+| | | **Subtotal** | **~$213** |
 
 DTP kit: 4 panel + 4 cable ends + spare; use included cavity plugs. DT kit: 8 SOL + spare + plugs. No Powerwerx cart.
 
@@ -100,8 +102,8 @@ DTP kit: 4 panel + 4 cable ends + spare; use included cavity plugs. DT kit: 8 SO
 | Cart | Ext |
 | --- | ---: |
 | Bravo | $69.20 |
-| Amazon | ~$195 |
-| **Sum** | **~$264** |
+| Amazon | ~$213 |
+| **Sum** | **~$282** |
 
 (+ Al plate scrap · Deutsch crimp tool if not owned)
 
@@ -112,7 +114,7 @@ Was ~$530 → lean PanelPole ~$297 → **this ~$256** with better sealing.
 ## Checklist
 
 - [ ] Bravo: RS-15×2, LRS-200×2  
-- [ ] Amazon: EG STARTS×2, M12+caps, C14+covers, 4×6 ft cords, DT 10-set, **DTP 10-set**, KCD4+boots, fans/filters, 12 AWG  
+- [ ] Amazon: EG STARTS×2, M12+caps, C14+covers, 4×6 ft cords, DT 10-set, **DTP 10-set**, KCD4+boots, fans/filters, 12 AWG, **M3/M4 inserts**  
 - [ ] DIY two DTP jumpers **≤ 4 ft** (DTP06-2S both ends)  
 - [ ] Al plates · `F9` seated  
 - [ ] Verify C14 cutout style + EG STARTS ring Ø before CAD freeze  

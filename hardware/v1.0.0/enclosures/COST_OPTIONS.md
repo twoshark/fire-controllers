@@ -14,13 +14,13 @@ Six boxes. Revised cart (~$256): [`SHOPPING_LIST.md`](SHOPPING_LIST.md).
 
 ---
 
-## Recommended cart (~$264)
+## Recommended cart (~$282)
 
 | Keep | Ext |
 | --- | ---: |
 | Bravo 2× RS-15 + 2× LRS-200 | $69.20 |
-| Amazon (connectors, seal extras, fans, cords, 12 AWG, lens/gasket stock) | ~$195 |
-| **Sum** | **~$264** |
+| Amazon (connectors, seal extras, fans, cords, inserts, lens/gasket) | ~$213 |
+| **Sum** | **~$282** |
 
 ---
 

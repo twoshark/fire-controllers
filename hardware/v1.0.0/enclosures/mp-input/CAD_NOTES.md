@@ -1,14 +1,13 @@
 # mp-input — CAD
 
-Orientation: [`../README.md`](../README.md). Cutouts: [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md). Seal: [`../SEALING.md`](../SEALING.md).
+Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md) · [`../SEALING.md`](../SEALING.md).
 
 ## Envelope
 
 | Dim | mm |
 | --- | ---: |
 | Outer L × W × H | **200 × 160 × 90** |
-| Wall | 2.5–3.0 |
-| Lid | openable + gasket |
+| Inner | **194 × 154 × 84** |
 
 ## Top — triangle + ALL center
 
@@ -17,21 +16,16 @@ Orientation: [`../README.md`](../README.md). Cutouts: [`../PANEL_CUTOUTS.md`](..
       [CH3]  [ALL]  [CH2]
 ```
 
-| Dim | Value |
-| --- | ---: |
-| Button hole | **Ø28** (verify) |
-| Pitch | **≥50** |
+Hole **Ø28** (verify) · pitch **≥50**.
 
 ## Sides
 
-```text
-FRONT: [LED 40×10] CL 50
-LEFT:  [C14] CL 35  [POWER KCD4+boot] CL 50
-RIGHT: [M12-5 Ø16.2] CL 50
-```
+Same pattern as sign-input (C14+POWER LEFT · M12 RIGHT · LED FRONT).
 
-Same PCB keep-out **86 × 83** + RS-15 as sign-input. D4..D8 unused.
+## Internal
+
+Same input PCB KO **86×83** + RS-15 + M3 inserts ([`../MOUNTING.md`](../MOUNTING.md)). D4..D8 unused.
 
 ## Cables
 
-C13→C14 **6 ft**.
+C13→C14 **6 ft**. Bed OK with brim.

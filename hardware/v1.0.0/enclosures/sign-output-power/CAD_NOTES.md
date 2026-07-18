@@ -1,21 +1,24 @@
 # sign-output-power — CAD
 
-Orientation: [`../README.md`](../README.md). Cutouts: [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md). Seal: [`../SEALING.md`](../SEALING.md).
+Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](../MOUNTING.md) · [`../SEALING.md`](../SEALING.md).
 
-## Envelope
+## Envelope (grown for LRS + wires · bed-max L)
 
 | Dim | mm |
 | --- | ---: |
-| Outer L × W × H | **240 × 180 × 95** |
+| Outer L × W × H | **256 × 200 × 100** |
+| Inner | **250 × 194 × 94** |
 
-Fans on **long** walls. LRS **215 × 115 × 30**.
+**Print note:** L = 256 — use **no brim** on length, or rotate 90° if brim required.
 
-## Sides
+## Layout (critical)
 
 ```text
-12V MATE FACE:  [DTP04-2P OUT] CL = 40
-AC END:         [C14] CL 35  [POWER KCD4+boot] CL 50
-LONG WALLS:     fan Ø57 + 50×50 screws CL 48 + filter/grill
+SHORT mate end:     [DTP OUT] CL 40     ← faces sign-output
+LONG wall (term):   [C14] CL 35  [POWER+boot] CL 50   near LRS terminals
+LONG walls:         fans recessed  CL 48
+LRS:                215×115×30 on Al plate; terminals → AC long wall
+                    far end clearance ≥5; terminal-end wire bay ≥30
 ```
 
 | Feature | Cutout | CL |
@@ -25,11 +28,14 @@ LONG WALLS:     fan Ø57 + 50×50 screws CL 48 + filter/grill
 | POWER | 30×22 | **50** |
 | Fan | Ø57 + 50×50 | **48** |
 
-POWER on this box kills AC to LRS → kills 12 V to sign-output.
-
 ## Internal
 
-LRS on Al **215 × 115 × 3**. Fans on LRS +V/−V. Foam gasket under fans.
+| Item | Spec |
+| --- | --- |
+| Al plate | **215×115×3** · 4× M4 · hole span verify on LRS |
+| LRS-200-12 | on plate · M4 L≤5 into PSU |
+| Fans ×2 | wall pockets · foam · on LRS +V/−V |
+| Lid | 6× M3 · gasket |
 
 ## Cables
 
@@ -37,3 +43,5 @@ LRS on Al **215 × 115 × 3**. Fans on LRS +V/−V. Foam gasket under fans.
 | --- | ---: |
 | C13→C14 | **6 ft** |
 | DTP → sign-output | **≤ 4 ft** |
+
+LRS: **115 V**, trim **12.0 V**.

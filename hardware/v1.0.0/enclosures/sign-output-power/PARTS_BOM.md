@@ -10,4 +10,5 @@
 | Al 215 × 115 × 3 | 1 |
 | C13–C14 cord 6 ft | 1 |
 | DTP jumper ≤4 ft · 12 AWG | 1 |
-| Shell + lid gasket | 1 |
+| Shell **256×200×100** + lid gasket | 1 |
+| M4 heat-set (plate) | 4 |

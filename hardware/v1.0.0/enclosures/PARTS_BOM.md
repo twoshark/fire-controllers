@@ -28,13 +28,15 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Seal: [`SEALING.md`](SEALING.md).
 | POWER | KCD4 + silicone boot · **AC boxes only** (4×) |
 | RESET / BOOT / USB | open lid → board |
 
-## Cooling / seal extras
+## Cooling / seal / mount extras
 
 | Item | Buy |
 | --- | --- |
 | Fan 60 mm ×4 + filter/grill | Amazon packs |
 | Spreader | Al 215 × 115 × 3 |
 | Lid gasket · LED PC lens | scrap / Amazon |
+| M3×5.7 heat-set ≥50 | Ruthex / CNC Kitchen |
+| M4×6–8 heat-set ≥12 | LRS plates |
 
 ## Cables
 

@@ -13,10 +13,12 @@ Six printed boxes (bed ≤ **256 × 256 mm**).
 
 | Root | Contents |
 | --- | --- |
-| [`SHOPPING_LIST.md`](SHOPPING_LIST.md) | Cart · ~$264 |
+| [`SHOPPING_LIST.md`](SHOPPING_LIST.md) | Cart · ~$282 |
 | [`COST_OPTIONS.md`](COST_OPTIONS.md) | Add-backs / cuts |
 | [`SEALING.md`](SEALING.md) | Dust/rain strategy |
 | [`PANEL_CUTOUTS.md`](PANEL_CUTOUTS.md) | Diameters · pitches · keep-outs |
+| [`MOUNTING.md`](MOUNTING.md) | Inserts · pillars · lid |
+| [`CAD_VERIFICATION.md`](CAD_VERIFICATION.md) | Size / bed / DFM audit |
 | [`PARTS_BOM.md`](PARTS_BOM.md) | Shared catalog |
 | [`CONNECTOR_RATINGS.md`](CONNECTOR_RATINGS.md) | Current / seal audit |
 
@@ -78,11 +80,13 @@ Part: **KCD4** DPST · **30 × 22 mm** · side wall · silicone boot.
 | Output controllers | DTP IN → PCB `J1` (`F9` seated) |
 | Output power | C14 → POWER → LRS-200-12 → DTP OUT · fans on LRS +V/−V |
 
-## CAD gaps
+## CAD status
 
 | Item | Status |
 | --- | --- |
+| Envelopes | Locked in [`CAD_VERIFICATION.md`](CAD_VERIFICATION.md) (power **256×200×100**) |
+| Mounting | [`MOUNTING.md`](MOUNTING.md) — M3/M4 heat-set + clamp pillars |
 | PCB outline | PnP keep-outs in [`PANEL_CUTOUTS.md`](PANEL_CUTOUTS.md) |
-| PCB mounting holes | None — pillars + M3 heat-set inserts |
 | LED window | **40 × 10** + PC lens + gasket |
 | EG STARTS / C14 | Verify ring Ø and snap vs flange before freeze |
+| Print | Body open-up · lid groove up · power box no brim on 256 edge |

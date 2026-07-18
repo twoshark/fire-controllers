@@ -1,40 +1,32 @@
 # sign-output — CAD
 
-Orientation: [`../README.md`](../README.md). Cutouts: [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md). Seal: [`../SEALING.md`](../SEALING.md).
+Refs: [`../CAD_VERIFICATION.md`](../CAD_VERIFICATION.md) · [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md) · [`../SEALING.md`](../SEALING.md).
 
-## Envelope
+**No POWER rocker** — kill via sign-output-power.
+
+## Envelope (grown for pockets)
 
 | Dim | mm |
 | --- | ---: |
-| Outer L × W × H | **220 × 160 × 80** |
-| Wall | 2.5–3.0 |
-| Lid | openable + gasket |
-
-**No POWER rocker** — kill 12 V via sign-output-power AC switch.
+| Outer L × W × H | **220 × 170 × 85** |
+| Inner | **214 × 164 × 79** |
 
 ## Sides
 
-```text
-12V MATE FACE:  [DTP04-2P pocket ≈18×22]  CL = 40  (centered)
-OTHER:          [M12-5 Ø16.2] CL 50  [LED 40×10] CL 50
-SOL face:       [SOL0..SOL4] DT pockets  CL = 40  pitch ≥25
-```
-
-| Feature | Cutout | CL |
-| --- | --- | ---: |
-| DTP IN | pocket ≈18×22 | **40** |
-| M12-5 | Ø16.2 | **50** |
-| LED | 40×10 + lens | **50** |
-| SOL0..4 | pocket ≈16×18 | **40** |
+| Feature | Cutout | CL | Face |
+| --- | --- | ---: | --- |
+| DTP04-2P | pocket ≈18×22 · ≤15 into cavity | **40** | MATE (short) |
+| M12-5 | Ø16.2 | **50** | side |
+| LED + lens | 40×10 | **50** | FRONT |
+| SOL0..4 | pocket ≈16×18 · pitch ≥25 | **40** | SOL face |
 
 ## Internal
 
-| Item | Place |
+| Item | Spec |
 | --- | --- |
-| Output PCB | keep-out **126 × 114**; pillars + M3 inserts |
-| DTP → `J1` | 12 AWG short |
-| `J6` → SOL | star · 12 AWG stub → 18 AWG/ch |
+| Output PCB | KO **126×114** · LED→FRONT · `J5`/`J6`→SOL · `J1`→DTP · 4× M3 · Z=12 |
+| Wire | DTP→`J1` 12 AWG short · `J6` star → SOL |
 
 ## Cables
 
-DTP jumper from sign-output-power **≤ 4 ft**.
+DTP jumper **≤ 4 ft**. Supports: none if chamfered pockets.

@@ -63,6 +63,8 @@ LED edge (`X≈79`) → LED window wall.
 | --- | ---: |
 | DTP 12 V center height | **40** |
 | DTP horizontal | centered on short-end mate face |
+| Power-box outer (bed-max) | **256 × 200 × 100** |
+| Output-box outer (grown) | **220 × 170 × 85** |
 | SOL pitch (CL) | **≥25** |
 | Arcade pitch sign / mp | **≥45** / **≥50** |
 | Cutout → corner | **≥12** |

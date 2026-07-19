@@ -42,16 +42,16 @@ Underside: Ø**7 mm** extrude ≥**5 mm** → Ø**3.2 mm** cut.
 
 Sketch Ø**3.4 mm** → extrude **−cut** through. Optional Ø**6 mm** × **1.5 mm** counterbore.
 
-## 5. LED window (top) — dividers + clear insert
+## 5. LED window (top, front) — dividers + clear insert
 
-LEDs point **up**. Full recipe: [`../LED_WINDOW.md`](../LED_WINDOW.md).
+LEDs point **up**; strip along **front** of lid. Recipe: [`../LED_WINDOW.md`](../LED_WINDOW.md).
 
 | | mm |
 | --- | ---: |
-| Pocket center **(Xc, Yc)** | **(165.2, 102.5)** |
-| Recess | **9.4 × 38.4 × 1.5** deep |
-| Cells | **10×** **2.8 × 2.8** · pitch **3.50** along Y (`CH7` front → `PWR` back) |
-| Clear insert (separate print) | **9.0 × 38.0 × 1.2** clear PETG/PLA |
+| Pocket center **(Xc, Yc)** | **(70.9, 34.7)** |
+| Recess | **38.4 × 9.4 × 1.5** deep (long axis **+X**) |
+| Cells | **10×** **2.8 × 2.8** · pitch **3.50** along X (`PWR` left → `CH7` right) |
+| Clear insert (separate print) | **38.0 × 9.0 × 1.2** clear PETG/PLA |
 
 ## 6. Export
 

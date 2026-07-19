@@ -26,14 +26,14 @@ Same size as sign-output; only **SOL0..2** (3 channels).
 
 ## 3. Floor bosses — output PCB (M2)
 
-Boss top Z = **12 mm**. Flat LEDs-up — same as sign-output ([`../MOUNTING.md`](../MOUNTING.md)).
+Boss top Z = **12 mm**. CW LED-edge→FRONT — same as sign-output ([`../MOUNTING.md`](../MOUNTING.md)).
 
 | Boss | Gerber (mm) | Outer X (mm) | Outer Y (mm) |
 | --- | ---: | ---: | ---: |
-| H1 | (17.907, −28.194) | **65.91** | **61.19** |
-| H2 | (120.777, −3.048) | **168.78** | **36.05** |
-| H3 | (3.640, −107.950) | **51.64** | **140.95** |
-| H4 | (120.777, −107.950) | **168.78** | **140.95** |
+| H1 | (17.907, −28.194) | **112.20** | **134.05** |
+| H2 | (120.777, −3.048) | **137.35** | **31.17** |
+| H3 | (3.640, −107.950) | **32.45** | **148.31** |
+| H4 | (120.777, −107.950) | **32.45** | **31.17** |
 
 Each: Ø**7 mm** → Z=12 → Ø**3.2 mm** cut.
 

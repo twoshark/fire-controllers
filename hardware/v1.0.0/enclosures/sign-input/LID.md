@@ -53,31 +53,31 @@ Boss = **7.5 mm toward FRONT** from pin.
 ## 5. Arcade button holes (through)
 
 Hole Ø**28 mm** (verify EG STARTS ring — may be Ø**24 mm**).  
-Ring center: **(110, 90) mm**.
+Ring center shifted **back** to clear front LED strip: **(110, 100) mm**.
 
 | Button | Center X (mm) | Center Y (mm) |
 | --- | ---: | ---: |
-| ALL | **110.0** | **90.0** |
-| CH1 | **110.0** | **51.7** |
-| CH2 | **146.4** | **78.2** |
-| CH3 | **132.5** | **121.0** |
-| CH4 | **87.5** | **121.0** |
-| CH5 | **73.6** | **78.2** |
+| ALL | **110.0** | **100.0** |
+| CH1 | **110.0** | **61.7** |
+| CH2 | **146.4** | **88.2** |
+| CH3 | **132.5** | **131.0** |
+| CH4 | **87.5** | **131.0** |
+| CH5 | **73.6** | **88.2** |
 
 For each: sketch circle Ø**28 mm** → extrude **−cut** through lid.
 
-## 6. LED window (top) — dividers + clear insert
+## 6. LED window (top, front) — dividers + clear insert
 
-LEDs point **up**. Full recipe: [`../LED_WINDOW.md`](../LED_WINDOW.md).
+LEDs point **up**; strip along **front** of lid (board LED edge forward). Recipe: [`../LED_WINDOW.md`](../LED_WINDOW.md).
 
 | | mm |
 | --- | ---: |
-| Pocket center **(Xc, Yc)** | **(192.3, 81.5)** |
-| Recess | **9.4 × 38.4 × 1.5** deep |
-| Cells | **10×** **2.8 × 2.8** · pitch **3.50** along Y |
-| Clear insert (separate print) | **9.0 × 38.0 × 1.2** clear PETG/PLA |
+| Pocket center **(Xc, Yc)** | **(118.4, 34.8)** |
+| Recess | **38.4 × 9.4 × 1.5** deep (long axis **+X**) |
+| Cells | **10×** **2.8 × 2.8** · pitch **3.50** along X |
+| Clear insert (separate print) | **38.0 × 9.0 × 1.2** clear PETG/PLA |
 
-Right of arcade hex — verify ≥**12** mm from nearest button edge after import.
+Keep ≥**14** mm from CH1 edge.
 
 ## 7. Optional — buttons PCB bosses
 

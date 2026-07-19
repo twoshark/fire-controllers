@@ -30,7 +30,7 @@ Floor origins / boss XY: [`MOUNTING.md`](MOUNTING.md). Face map: input **M12 LEF
 | `J5` USB-C | 48.9 | −73.8 | open lid |
 | `SW1`/`SW2` | ≈77.7 | −64 / −57 | RESET/BOOT |
 
-LED edge (`X≈79`) → under **lid** window (LEDs face up).
+LED edge (`X≈79`) → under **lid FRONT** window strip (LEDs face up; arcade farther back).
 
 ### Output connector mids
 

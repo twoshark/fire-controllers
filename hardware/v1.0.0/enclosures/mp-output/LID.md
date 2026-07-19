@@ -42,16 +42,16 @@ Underside: Ø**7 mm** → Ø**3.2 mm** cut (≥**5 mm** tall).
 
 Ø**3.4 mm** through-cut. Optional Ø**6 mm** × **1.5 mm** counterbore.
 
-## 5. LED window (top) — dividers + clear insert
+## 5. LED window (top, front) — dividers + clear insert
 
 Same as sign-output. Recipe: [`../LED_WINDOW.md`](../LED_WINDOW.md).
 
 | | mm |
 | --- | ---: |
-| Pocket center **(Xc, Yc)** | **(165.2, 102.5)** |
-| Recess | **9.4 × 38.4 × 1.5** deep |
-| Cells | **10×** **2.8 × 2.8** · pitch **3.50** along Y |
-| Clear insert (separate print) | **9.0 × 38.0 × 1.2** clear PETG/PLA |
+| Pocket center **(Xc, Yc)** | **(70.9, 34.7)** |
+| Recess | **38.4 × 9.4 × 1.5** deep (long axis **+X**) |
+| Cells | **10×** **2.8 × 2.8** · pitch **3.50** along X |
+| Clear insert (separate print) | **38.0 × 9.0 × 1.2** clear PETG/PLA |
 
 ## 6. Export
 

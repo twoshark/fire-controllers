@@ -36,7 +36,7 @@ mp-input   ──RS-485──► mp-output   ◄──DTP── HLG-240H-12 ◄�
 | **FRONT** | Lid latches only (no LED cutout) |
 | **LEFT** | Inputs: C14 + POWER + M12 · Outputs: SOL + M12 |
 | **BACK** | Outputs: DTP 12 V · CL **40** |
-| **Top / lid** | LED window + dividers + clear insert · arcade (inputs) · **internal bociloy 1"** hinges on BACK |
+| **Top / lid** | Front LED strip + dividers + clear insert · arcade farther back (inputs) · **internal bociloy 1"** hinges on BACK |
 | **Service** | Open lid (front latches) → USB-C / RESET·BOOT / `F9` |
 
 | Unit | Power control |

@@ -45,17 +45,17 @@ Keep-out footprint for the PSU body: rectangle **(13, 23) mm** → **(64, 85.5) 
 ## 4. Floor bosses — input PCB (M2)
 
 Standoff: boss top at **Z ≥ 12 mm**.  
-**Flat, LEDs up** (`enc_x = ox + Xg`, `enc_y = oy − Yg`). See [`../MOUNTING.md`](../MOUNTING.md). Lid window: [`../LED_WINDOW.md`](../LED_WINDOW.md).
+**CW, LEDs up, LED edge → FRONT** — board closes the front of the box. See [`../MOUNTING.md`](../MOUNTING.md). Lid window: [`../LED_WINDOW.md`](../LED_WINDOW.md).
 
 | Boss | Gerber (mil) | Outer X (mm) | Outer Y (mm) | Notes |
 | --- | ---: | ---: | ---: | --- |
-| H1 | **1020, −725** | **138.91** | **66.41** | nearest `J1` |
-| H2 | **3115, −160** | **192.12** | **52.06** | LED edge (right) |
-| H3 | **925, −2955** | **136.50** | **123.06** | |
-| H4 | **3115, −2960** | **192.12** | **123.18** | LED edge (right) |
+| H1 | **1020, −725** | **133.58** | **88.15** | |
+| H2 | **3115, −160** | **147.93** | **34.94** | LED / front |
+| H3 | **925, −2955** | **76.94** | **90.56** | |
+| H4 | **3115, −2960** | **76.81** | **34.94** | LED / front |
 | — | 1700, −2145 | — | — | **no boss** |
 
-**Check on imported board (from H1):** H2=(+53.21, −14.35) · H3=(−2.41, +56.64) · H4=(+53.21, +56.77) mm.
+**Check on imported board (from H1):** H2=(+14.35, −53.21) · H3=(−56.64, +2.41) · H4=(−56.77, −53.21) mm.
 
 For each H1–H4:
 

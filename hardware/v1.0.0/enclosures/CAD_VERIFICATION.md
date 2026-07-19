@@ -13,7 +13,7 @@ Axis: outer **L × W × H** = **+X × +Y × +Z** (right × back × up). LED wind
 | 1 | Envelope vs contents | **PASS*** | Floor pack OK; arcade = compact hex ring; *measure EG STARTS Ø + DT/DTP housings |
 | 2 | Heat-set inserts | **PASS** | M2 PCB + hinge; M3 latch + RS-15 — [`MOUNTING.md`](MOUNTING.md) |
 | 3 | Pillar locations | **PASS** | PCB H1–H4, RS-15, **bociloy 1"** hinge bosses, front latch M3 — [`MOUNTING.md`](MOUNTING.md) |
-| 4 | Layout | **PASS** | LEDs→lid (+Z); M12 LEFT; SOL LEFT; DTP BACK; service under lid |
+| 4 | Layout | **PASS** | LEDs→lid front strip (+Z); arcade back; M12 LEFT; SOL LEFT; DTP BACK |
 | 5 | Wiring | **PASS** | Faces match terminal mids; star `J6`; ≤80 mm preferred |
 | 6 | Build plate | **PASS** | Largest **220×180** |
 | 7 | Supports / DFAM | **PASS*** | *DT/DTP = **separate retainer clips** (default); lid groove-up; body open-up |
@@ -24,9 +24,9 @@ Inner ≈ outer − **6** (2×3 mm walls).
 
 | Box | Outer L×W×H | Inner | Floor pack |
 | --- | ---: | ---: | --- |
-| sign-input | **220 × 180 × 90** | 214×174×84 | RS-15 LEFT + PCB `(110,45)` + hex lid + LED pocket |
-| mp-input | **200 × 160 × 90** | 194×154×84 | RS-15 LEFT + PCB `(95,35)` + LED pocket |
-| sign-output | **220 × 170 × 85** | 214×164×79 | PCB `(45,30)` + DTP BACK + SOL LEFT + LED pocket |
+| sign-input | **220 × 180 × 90** | 214×174×84 | RS-15 LEFT + PCB front `(ox,oy)=(149,28)` + hex @ `(110,100)` + front LED |
+| mp-input | **200 × 160 × 90** | 194×154×84 | RS-15 LEFT + PCB front + arcade @ `(100,100)` + front LED |
+| sign-output | **220 × 170 × 85** | 214×164×79 | PCB front + DTP BACK + SOL LEFT + front LED |
 | mp-output | **220 × 170 × 85** | 214×164×79 | Same · SOL0..2 |
 
 12 V supply is OTS **HLG-240H-12** — [`POWER_OTS.md`](POWER_OTS.md).
@@ -42,7 +42,7 @@ Inner ≈ outer − **6** (2×3 mm walls).
 
 | Rule | Value |
 | --- | --- |
-| PCB LED edge | **lid** (RIGHT column; LEDs +Z) |
+| PCB LED edge | **lid FRONT** strip along +X (LEDs +Z) |
 | Input M12 | **LEFT** (near `CN2`) |
 | Input C14 + KCD4 | LEFT (near RS-15) |
 | Output DTP | **BACK** (harness to `J1` on LEFT of PCB) |

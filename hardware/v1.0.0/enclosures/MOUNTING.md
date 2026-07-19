@@ -43,25 +43,26 @@ Origin = inner floor, front-left (inside wall)
 +X right · +Y back · +Z up
 ```
 
-**PCB placement — flat, LEDs up (det +1, no side-wall aim):**
+**PCB placement — CW 90°, LEDs up, LED edge → FRONT of lid (det +1):**
 
 ```text
-enc_x = ox + X_gerber
-enc_y = oy − Y_gerber
+enc_x = ox + Y_gerber
+enc_y = oy + (X_led − X_gerber)
 
-(ox, oy) = enclosure position of Gerber (0, 0)
+X_led = board outline max X  (input 83.058 · output 123.952)
+(ox, oy) = enclosure position of Gerber (X_led, 0)  // LED-edge corner at Gerber Y=0
 ```
 
-Outer floor XY = inner + **3** (wall). LED column → **RIGHT** side of the cavity; lid window above it — [`LED_WINDOW.md`](LED_WINDOW.md).
+Outer floor XY = inner + **3** (wall). Board sits toward the **FRONT**; lid LED strip is a front row along **+X** — [`LED_WINDOW.md`](LED_WINDOW.md). Arcade buttons sit **farther back** so they clear the window.
 
 | Box | Inner L×W | `(ox, oy)` inner | Why |
 | --- | ---: | ---: | --- |
-| sign-input | 214×174 | **(110, 45)** | RS-15 LEFT; PCB RIGHT clears arcade hex |
-| mp-input | 194×154 | **(95, 35)** | Same; LED X clears arcade CH2 |
-| sign-output | 214×164 | **(45, 30)** | Clearance |
-| mp-output | 214×164 | **(45, 30)** | Same |
+| sign-input | 214×174 | **(148.994, 28)** | RS-15 LEFT; PCB front; LED strip Y≈35 |
+| mp-input | 194×154 | **(143.994, 25)** | Same, tighter |
+| sign-output | 214×164 | **(137.395, 25)** | LED strip at front of lid |
+| mp-output | 214×164 | **(137.395, 25)** | Same |
 
-**Supersedes 2026-07-18 CW (LED→FRONT wall).** That map aimed LEDs at the FRONT face; optical axis is now **+Z**. Keep ≥10 mm wall clearance to PCB outline.
+Keep ≥10 mm wall clearance to PCB outline.
 
 ---
 
@@ -94,23 +95,23 @@ Outline **W = 83.06**. Skip `(43.180, −54.483)`.
 
 | Boss | Gerber mil | Outer X | Outer Y | Δ from H1 (mm) |
 | --- | ---: | ---: | ---: | --- |
-| H1 | 1020, −725 | **138.91** | **66.41** | — |
-| H2 | 3115, −160 | **192.12** | **52.06** | (+53.21, −14.35) |
-| H3 | 925, −2955 | **136.50** | **123.06** | (−2.41, +56.64) |
-| H4 | 3115, −2960 | **192.12** | **123.18** | (+53.21, +56.77) |
+| H1 | 1020, −725 | **133.58** | **88.15** | — |
+| H2 | 3115, −160 | **147.93** | **34.94** | (+14.35, −53.21) |
+| H3 | 925, −2955 | **76.94** | **90.56** | (−56.64, +2.41) |
+| H4 | 3115, −2960 | **76.81** | **34.94** | (−56.77, −53.21) |
 
-PCB footprint (inner): X[110, 193] × Y[45, 124]. Lid LED pocket **(192.3, 81.5)**.
+PCB footprint (inner): X[70, 149] × Y[28, 111]. Lid LED pocket **(118.4, 34.8)**. Arcade hex center **(110, 100)** (back of front LED strip).
 
 ### mp-input · outer = inner + 3
 
 | Boss | Gerber mil | Outer X | Outer Y |
 | --- | ---: | ---: | ---: |
-| H1 | 1020, −725 | **123.91** | **56.41** |
-| H2 | 3115, −160 | **177.12** | **42.06** |
-| H3 | 925, −2955 | **121.50** | **113.06** |
-| H4 | 3115, −2960 | **177.12** | **113.18** |
+| H1 | 1020, −725 | **128.58** | **85.15** |
+| H2 | 3115, −160 | **142.93** | **31.94** |
+| H3 | 925, −2955 | **71.94** | **87.56** |
+| H4 | 3115, −2960 | **71.81** | **31.94** |
 
-Same Δ-from-H1 as sign-input. Footprint (inner): X[95, 178] × Y[35, 114]. Lid LED pocket **(177.3, 71.5)**.
+Same Δ-from-H1 as sign-input. Footprint (inner): X[65, 144] × Y[25, 108]. Lid LED pocket **(113.4, 31.8)**. Arcade center **(100, 100)**.
 
 ---
 
@@ -142,14 +143,14 @@ Outline **W = 123.95**. Skip mid-pair and fuse NPTH `(10.541, −5.461)`.
 
 | Boss | Gerber mm | Outer X | Outer Y | Δ from H1 (mm) |
 | --- | ---: | ---: | ---: | --- |
-| H1 | (17.907, −28.194) | **65.91** | **61.19** | — |
-| H2 | (120.777, −3.048) | **168.78** | **36.05** | (+102.87, −25.15) |
-| H3 | (3.640, −107.950) | **51.64** | **140.95** | (−14.27, +79.76) |
-| H4 | (120.777, −107.950) | **168.78** | **140.95** | (+102.87, +79.76) |
+| H1 | (17.907, −28.194) | **112.20** | **134.05** | — |
+| H2 | (120.777, −3.048) | **137.35** | **31.17** | (+25.15, −102.88) |
+| H3 | (3.640, −107.950) | **32.45** | **148.31** | (−79.75, +14.26) |
+| H4 | (120.777, −107.950) | **32.45** | **31.17** | (−79.75, −102.88) |
 
-PCB footprint (inner): X[45, 169] × Y[30, 142]. Mid Ø2.54 pair skipped. Lid LED pocket **(165.2, 102.5)**.
+PCB footprint (inner): X[25, 137] × Y[25, 149]. Mid Ø2.54 pair skipped. Lid LED pocket **(70.9, 34.7)**.
 
-Face map (flat, LEDs up): LEDs → **lid / RIGHT** · `J1` → **LEFT** · panel still **DTP BACK** · **SOL + M12 LEFT** (harness length OK).
+Face map (CW, LEDs up): LEDs → **lid FRONT** · `J1` → **BACK** · **DTP BACK** · **SOL + M12 LEFT**.
 
 ---
 
@@ -225,27 +226,27 @@ Gasket groove in **lid**, print groove-up. Groove 3.5 W × 2.0 D · 20–30% cru
 
 ## Arcade lid holes (centers — verify EG STARTS Ø)
 
-**sign-input** — **compact hex ring** (fits 180 mm depth). ALL at lid center; others on R = **38.3** (chord pitch **45**). Lid center ≈ outer **(110, 90)**. Hole bbox ≈ **110 × 110**.
+**sign-input** — **compact hex ring**. Center shifted **back** so CH1 clears the front LED strip. R = **38.3** (chord pitch **45**). Lid center ≈ outer **(110, 100)**.
 
-| Button | ΔX | ΔY | Angle |
+| Button | ΔX | ΔY | Angle | Absolute (X, Y) |
+| --- | ---: | ---: | ---: | ---: |
+| ALL | 0 | 0 | — | **(110.0, 100.0)** |
+| CH1 | 0 | −38.3 | 270° | **(110.0, 61.7)** |
+| CH2 | +36.4 | −11.8 | 342° | **(146.4, 88.2)** |
+| CH3 | +22.5 | +31.0 | 54° | **(132.5, 131.0)** |
+| CH4 | −22.5 | +31.0 | 126° | **(87.5, 131.0)** |
+| CH5 | −36.4 | −11.8 | 198° | **(73.6, 88.2)** |
+
+Margins ≥12 from lid edge. LED pocket at Y≈**35** — keep ≥**14** mm from nearest button edge.
+
+**mp-input** — pitch **≥50**, center outer **(100, 100)** (back of LED strip):
+
+| Button | ΔX | ΔY | Absolute (X, Y) |
 | --- | ---: | ---: | ---: |
-| ALL | 0 | 0 | — |
-| CH1 | 0 | −38.3 | 270° |
-| CH2 | +36.4 | −11.8 | 342° |
-| CH3 | +22.5 | +31.0 | 54° |
-| CH4 | −22.5 | +31.0 | 126° |
-| CH5 | −36.4 | −11.8 | 198° |
-
-Margins ≥12 from lid edge. Absolute = center + Δ.
-
-**mp-input** — pitch **≥50**, center outer **(100, 80)**:
-
-| Button | ΔX | ΔY |
-| --- | ---: | ---: |
-| ALL | 0 | 0 |
-| CH1 | 0 | −50 |
-| CH2 | +43.3 | +25 |
-| CH3 | −43.3 | +25 |
+| ALL | 0 | 0 | **(100.0, 100.0)** |
+| CH1 | 0 | −50 | **(100.0, 50.0)** |
+| CH2 | +43.3 | +25 | **(143.3, 125.0)** |
+| CH3 | −43.3 | +25 | **(56.7, 125.0)** |
 
 ---
 

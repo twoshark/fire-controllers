@@ -44,16 +44,18 @@ Keep-out footprint for the PSU body: rectangle **(13, 23) mm** → **(64, 85.5) 
 
 ## 4. Floor bosses — input PCB (M2)
 
-Standoff: boss top at **Z ≥ 12 mm** (~9 mm up from floor). Centers (outer XY):
+Standoff: boss top at **Z ≥ 12 mm** (~9 mm up from floor).  
+Verified from Gerber Ø2.54 drill → LED-edge→FRONT transform → outer XY (2026-07-18).
 
-| Boss | X (mm) | Y (mm) |
-| --- | ---: | ---: |
-| H1 | **96.4** | **100.2** |
-| H2 | **82.1** | **46.9** |
-| H3 | **153.1** | **102.6** |
-| H4 | **153.2** | **46.9** |
+| Boss | Gerber (mil) | Outer X (mm) | Outer Y (mm) | Notes |
+| --- | ---: | ---: | ---: | --- |
+| H1 | **1020, −725** | **96.41** | **100.15** | nearest `J1` |
+| H2 | **3115, −160** | **82.06** | **46.94** | LED edge |
+| H3 | **925, −2955** | **153.06** | **102.56** | |
+| H4 | **3115, −2960** | **153.18** | **46.94** | LED edge |
+| — | 1700, −2145 | — | — | **no boss** (5th hole) |
 
-For each:
+For each H1–H4:
 
 1. Sketch on floor Z = 3 mm: circle Ø**7 mm**.  
 2. Extrude **+join** to Z = **12 mm**.  

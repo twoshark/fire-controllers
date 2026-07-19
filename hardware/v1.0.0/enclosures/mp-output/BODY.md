@@ -26,14 +26,14 @@ Same size as sign-output; only **SOL0..2** (3 channels).
 
 ## 3. Floor bosses — output PCB (M2)
 
-Boss top Z = **12 mm**:
+Boss top Z = **12 mm**. Same as sign-output (same PCB / placement).
 
-| Boss | X (mm) | Y (mm) |
-| --- | ---: | ---: |
-| H1 | **56.2** | **134.0** |
-| H2 | **31.0** | **31.2** |
-| H3 | **135.9** | **148.3** |
-| H4 | **135.9** | **31.2** |
+| Boss | Gerber (mm) | Outer X (mm) | Outer Y (mm) |
+| --- | ---: | ---: | ---: |
+| H1 | (17.907, −28.194) | **56.19** | **134.04** |
+| H2 | (120.777, −3.048) | **31.05** | **31.17** |
+| H3 | (3.640, −107.950) | **135.95** | **148.31** |
+| H4 | (120.777, −107.950) | **135.95** | **31.17** |
 
 Each: Ø**7 mm** → extrude to Z = 12 mm → Ø**3.2 mm** cut.
 

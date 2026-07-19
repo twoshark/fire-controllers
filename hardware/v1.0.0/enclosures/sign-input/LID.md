@@ -1,73 +1,61 @@
 # sign-input — LID
 
+**All sizes in mm.** CAD document units = mm.  
 Export: `sign-input-lid.stl` · Print with **gasket groove up**.  
-Coords: **outer base** (0,0) = front-left corner of the lid (same footprint as body). See [`../CAD_PARTS.md`](../CAD_PARTS.md).
+Coords: **outer base (0, 0) mm** = front-left. See [`../CAD_PARTS.md`](../CAD_PARTS.md).
 
 ## Envelope
 
-| | mm |
+| | Size |
 | --- | ---: |
-| L × W | **220 × 180** |
-| Thickness | **5** (use 4–5) |
+| L × W | **220 × 180 mm** |
+| Thickness | **5 mm** (4–5 mm OK) |
 
 ---
 
 ## 1. Lid plate
 
-1. Sketch on XY at Z=0: rectangle **220 × 180** from **(0, 0)**.  
-2. Extrude **+join** to **Z = 5**.
+1. Sketch on XY at Z = 0 mm: rectangle **220 × 180 mm** from **(0, 0) mm**.  
+2. Extrude **+join** to **Z = 5 mm**.
 
 ## 2. Gasket groove (print this face up)
 
-Groove on the face that will crush the foam (print-up = groove face).
-
-1. Sketch on **Z = 5** (top of plate):  
-   - Outer path: inset ~**4 mm** from each edge (rectangle ~212 × 172).  
-   - Inner path: offset **3.5 mm** inward from that path (groove width).  
-   - On the **BACK** edge: pull the groove **inboard** (~15–20 mm from Y=180) so it clears hinge knuckles.  
-2. Extrude **−cut** **2.0 mm** deep (groove depth).
+1. Sketch on **Z = 5 mm**:  
+   - Outer path: inset ~**4 mm** from each edge (~**212 × 172 mm**).  
+   - Inner path: offset **3.5 mm** inward (groove width).  
+   - On **BACK**: pull groove inboard ~**15–20 mm** from Y = 180 mm (clear hinges).  
+2. Extrude **−cut** **2.0 mm** deep.
 
 ## 3. Hinge bosses (lid leaf, M2) — underside
 
-Pin mids match the body (outer XY):
+| Hinge | Pin mid X (mm) | Pin mid Y (mm) | Boss X (mm) | Boss Y (mm) |
+| --- | ---: | ---: | ---: | ---: |
+| A | **43** | **173** | **43** | **165.5** |
+| B | **177** | **173** | **177** | **165.5** |
 
-| Hinge | Pin mid X | Pin mid Y |
-| --- | ---: | ---: |
-| A | **43** | **173** |
-| B | **177** | **173** |
+Boss = **7.5 mm toward FRONT** from pin.
 
-Boss centers **7.5 mm toward FRONT**:
-
-| Hinge | Boss X | Boss Y |
-| --- | ---: | ---: |
-| A | **43** | **165.5** |
-| B | **177** | **165.5** |
-
-Work on the **underside** (Z=0 face after flip, or sketch on Z=0 and extrude −Z before export):
-
-1. Sketch circle Ø**7** at boss XY.  
-2. Extrude **+join** ≥5 mm into the lid thickness / down as a pad.  
-3. Sketch Ø**3.2** · extrude **−cut** for M2 heat-set.
+1. Sketch circle Ø**7 mm** at boss XY.  
+2. Extrude **+join** ≥**5 mm**.  
+3. Sketch Ø**3.2 mm** · extrude **−cut**.
 
 ## 4. Latch holes (M3 clearance)
 
-Through-holes so M3 screws reach the body inserts:
-
-| Latch | X | Y |
+| Latch | X (mm) | Y (mm) |
 | --- | ---: | ---: |
 | L | **11** | **11** |
 | R | **209** | **11** |
 
-1. Sketch on lid top: circle Ø**3.4** (clearance) at each XY.  
+1. Sketch circle Ø**3.4 mm** at each XY.  
 2. Extrude **−cut** through the lid.  
-3. Optional: Ø**6** counterbore ~1.5 mm for screw head.
+3. Optional: Ø**6 mm** counterbore ~**1.5 mm** deep for screw head.
 
 ## 5. Arcade button holes (through)
 
-Hole Ø**28** (measure your EG STARTS ring — may be Ø24).  
-Ring center (outer XY): **(110, 90)**.
+Hole Ø**28 mm** (verify EG STARTS ring — may be Ø**24 mm**).  
+Ring center: **(110, 90) mm**.
 
-| Button | Center X | Center Y |
+| Button | Center X (mm) | Center Y (mm) |
 | --- | ---: | ---: |
 | ALL | **110.0** | **90.0** |
 | CH1 | **110.0** | **51.7** |
@@ -76,15 +64,12 @@ Ring center (outer XY): **(110, 90)**.
 | CH4 | **87.5** | **121.0** |
 | CH5 | **73.6** | **78.2** |
 
-For each:
-
-1. Sketch on lid top: circle Ø**28** at the center.  
-2. Extrude **−cut** through the lid.
+For each: sketch circle Ø**28 mm** → extrude **−cut** through lid.
 
 ## 6. Optional — buttons PCB bosses
 
-Under the lid: 2–4× M2 bosses (Ø7 / hole Ø3.2) for the buttons daughter. Orient so the harness can reach the input board.
+Under lid: 2–4× M2 bosses (OD Ø**7 mm** / hole Ø**3.2 mm**).
 
 ## 7. Export
 
-`sign-input-lid.stl`. No C14 / M12 / LED on the lid — those are on the body.
+`sign-input-lid.stl`.

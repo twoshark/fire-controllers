@@ -1,51 +1,52 @@
 # mp-output — BODY
 
+**All sizes in mm.** CAD document units = mm.  
 Export: `mp-output-body.stl` · Print cavity **up**.  
-Coords: **outer base (0,0)** = front-left. [`../CAD_PARTS.md`](../CAD_PARTS.md).  
+Coords: **outer (0, 0) mm** = front-left. [`../CAD_PARTS.md`](../CAD_PARTS.md).  
 Same size as sign-output; only **SOL0..2** (3 channels).
 
 ## Envelope
 
-| | mm |
+| | Size |
 | --- | ---: |
-| L × W × H | **220 × 170 × 85** |
-| Wall / floor | **3.0** |
+| L × W × H | **220 × 170 × 85 mm** |
+| Wall / floor | **3.0 mm** |
 
 ---
 
 ## 1. Outer box
 
-1. Sketch rectangle **220 × 170** from **(0, 0)**.  
-2. Extrude **+join** to Z=**85**.
+1. Sketch rectangle **220 × 170 mm** from **(0, 0) mm**.  
+2. Extrude **+join** to Z = **85 mm**.
 
 ## 2. Hollow cavity
 
-1. Sketch on Z=3: rectangle from **(3, 3)** size **214 × 164**.  
+1. Sketch on Z = 3 mm: rectangle from **(3, 3) mm**, size **214 × 164 mm**.  
 2. Extrude **−cut** through the top.
 
 ## 3. Floor bosses — output PCB (M2)
 
-Boss top Z=**12**:
+Boss top Z = **12 mm**:
 
-| Boss | X | Y |
+| Boss | X (mm) | Y (mm) |
 | --- | ---: | ---: |
 | H1 | **56.2** | **134.0** |
 | H2 | **31.0** | **31.2** |
 | H3 | **135.9** | **148.3** |
 | H4 | **135.9** | **31.2** |
 
-Each: Ø**7** → extrude to Z=12 → Ø**3.2** cut.
+Each: Ø**7 mm** → extrude to Z = 12 mm → Ø**3.2 mm** cut.
 
 ## 4. BACK — DTP pocket
 
-1. Sketch on Y=170: rect ≈**18 × 22**, center **(X=110, Z=40)**.  
-2. Extrude **−cut** through. Retainer clip separate.
+1. Sketch on Y = 170 mm: rect ≈**18 × 22 mm**, center **(X = 110 mm, Z = 40 mm)**.  
+2. Extrude **−cut** through **3 mm** wall. Retainer clip separate.
 
 ## 5. LEFT — M12 + SOL0..2 only
 
-Sketch on X=0 · extrude **−cut**:
+Sketch on X = 0 mm · extrude **−cut**:
 
-| Feature | Center (Y, Z) | Shape |
+| Feature | Center Y, Z (mm) | Shape (mm) |
 | --- | ---: | --- |
 | M12-5 | **(30, 50)** | Ø**16.2** |
 | SOL0 | **(55, 40)** | ≈**16 × 18** |
@@ -56,26 +57,26 @@ Do **not** cut SOL3/SOL4.
 
 ## 6. FRONT — LED window
 
-1. Sketch on Y=0: **40 × 10** centered at **(110, Z=50)**.  
+1. Sketch on Y = 0 mm: **40 × 10 mm** centered at **(X = 110 mm, Z = 50 mm)**.  
 2. Extrude **−cut** through.
 
 ## 7. Hinge bosses (M2)
 
-| Hinge | Pin mid (X, Y) | Boss (X, Y) |
+| Hinge | Pin mid (X, Y) mm | Boss (X, Y) mm |
 | --- | ---: | ---: |
 | A | **(43, 163)** | **(43, 155.5)** |
 | B | **(177, 163)** | **(177, 155.5)** |
 
-Ø**7** → Ø**3.2** cut.
+Ø**7 mm** → Ø**3.2 mm** cut (≥**5 mm** tall).
 
 ## 8. Latch inserts (M3)
 
-| Latch | X | Y |
+| Latch | X (mm) | Y (mm) |
 | --- | ---: | ---: |
 | L | **11** | **11** |
 | R | **209** | **11** |
 
-Ø**9** → Ø**4.2** cut.
+Ø**9 mm** → Ø**4.2 mm** cut (≥**6 mm** tall).
 
 ## 9. Export
 

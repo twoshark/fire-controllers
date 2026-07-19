@@ -66,10 +66,23 @@ Ring center: **(110, 90) mm**.
 
 For each: sketch circle Ø**28 mm** → extrude **−cut** through lid.
 
-## 6. Optional — buttons PCB bosses
+## 6. LED window (top) — dividers + clear insert
+
+LEDs point **up**. Full recipe: [`../LED_WINDOW.md`](../LED_WINDOW.md).
+
+| | mm |
+| --- | ---: |
+| Pocket center **(Xc, Yc)** | **(192.3, 81.5)** |
+| Recess | **9.4 × 38.4 × 1.5** deep |
+| Cells | **10×** **2.8 × 2.8** · pitch **3.50** along Y |
+| Clear insert (separate print) | **9.0 × 38.0 × 1.2** clear PETG/PLA |
+
+Right of arcade hex — verify ≥**12** mm from nearest button edge after import.
+
+## 7. Optional — buttons PCB bosses
 
 Under lid: 2–4× M2 bosses (OD Ø**7 mm** / hole Ø**3.2 mm**).
 
-## 7. Export
+## 8. Export
 
-`sign-input-lid.stl`.
+`sign-input-lid.stl` · clear insert `sign-input-led-window.stl`.

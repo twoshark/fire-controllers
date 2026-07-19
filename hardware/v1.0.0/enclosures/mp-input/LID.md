@@ -59,6 +59,17 @@ Each: sketch circle → extrude **−cut** through lid.
       [CH3]  [ALL]  [CH2]
 ```
 
-## 6. Export
+## 6. LED window (top) — dividers + clear insert
 
-`mp-input-lid.stl`.
+LEDs point **up**. Full recipe: [`../LED_WINDOW.md`](../LED_WINDOW.md).
+
+| | mm |
+| --- | ---: |
+| Pocket center **(Xc, Yc)** | **(177.3, 71.5)** |
+| Recess | **9.4 × 38.4 × 1.5** deep |
+| Cells | **10×** **2.8 × 2.8** · pitch **3.50** along Y |
+| Clear insert (separate print) | **9.0 × 38.0 × 1.2** clear PETG/PLA |
+
+## 7. Export
+
+`mp-input-lid.stl` · clear insert `mp-input-led-window.stl`.

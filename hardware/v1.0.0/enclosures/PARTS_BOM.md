@@ -31,7 +31,7 @@ Order: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Cutouts: [`PANEL_CUTOUTS.md`](PAN
 
 | Item | Buy |
 | --- | --- |
-| Lid gasket · LED acrylic | see [`SHOPPING_LIST.md`](SHOPPING_LIST.md) |
+| Lid gasket · clear LED inserts (print) | foam: [`SHOPPING_LIST.md`](SHOPPING_LIST.md) · CAD [`LED_WINDOW.md`](LED_WINDOW.md) |
 | Lid hinge | [bociloy 1"](https://www.amazon.com/bociloy-Cabinet-Rectangle-Stainless-Folding/dp/B0D43MBGXC) ×8 · CAD [`MOUNTING.md`](MOUNTING.md) |
 | M2 heat-set + M2 screws | PCB + hinge leaves · **owned** |
 | M3 heat-set + M3 screws | front latches + RS-15 feet · **owned** |

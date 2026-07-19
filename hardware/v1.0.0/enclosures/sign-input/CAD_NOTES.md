@@ -2,12 +2,13 @@
 
 **Print two parts:** [`BODY.md`](BODY.md) (box) · [`LID.md`](LID.md) (lid).  
 All XY in those files are **outer-base** (0,0)=front-left; steps are sketch → extrude/cut.  
-Workflow: [`../CAD_PARTS.md`](../CAD_PARTS.md). Refs: [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md).
+Workflow: [`../CAD_PARTS.md`](../CAD_PARTS.md). Refs: [`../MOUNTING.md`](../MOUNTING.md) · [`../LED_WINDOW.md`](../LED_WINDOW.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md).
 
 | Export | Role |
 | --- | --- |
 | `sign-input-body.stl` | Open-top box · panels · PCB/RS-15 bosses |
-| `sign-input-lid.stl` | Lid · gasket · hinges · hex arcade |
+| `sign-input-lid.stl` | Lid · gasket · hinges · hex arcade · LED window + dividers |
+| `sign-input-led-window.stl` | Clear insert (print clear filament) |
 
 | Dim | mm |
 | --- | ---: |

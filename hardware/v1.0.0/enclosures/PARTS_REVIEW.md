@@ -41,7 +41,7 @@ Cart truth: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Audited **2026-07-18** again
 | 16 | KCD4 IP65 ×2 | $2.40 | Input POWER | **KEEP** |
 | 17 | Adhesive heatshrink | — | HLG AC + DC re-term | **OWNED** |
 | 18 | ATO 20 A 20pc | $4.39 | `F9` ×2 + spare | **KEEP*** |
-| 19 | Acrylic 8×10 2pk | $6.99 | LED windows | **KEEP** |
+| 19 | Acrylic 8×10 2pk | $6.99 | LED windows | **CUT** — print clear inserts ([`LED_WINDOW.md`](LED_WINDOW.md)) |
 | 20 | Foam tape 75 ft | $13.79 | Lid gaskets | **KEEP*** |
 
 \*Cheapest break / length overbuy; still buy once.
@@ -55,6 +55,7 @@ Cart truth: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Audited **2026-07-18** again
 | CNC Kitchen inserts · screw packs | Owned |
 | C13–C14 · EG STARTS · Wirefy HS | Owned |
 | Quickcar · Belden-by-ft · KHA-25C · DryConn · GATSUN | Cheaper/equal or wrong |
+| Acrylic LED sheet | Lid windows = clear printed inserts |
 
 ## Do not cut further (without new info)
 
@@ -64,7 +65,7 @@ Cart truth: [`SHOPPING_LIST.md`](SHOPPING_LIST.md). Audited **2026-07-18** again
 | KWANGIL 2-pr 120 Ω | Spec cable @ 30–50 ft |
 | SJTW | Outdoor NEMA ≠ monitor IEC |
 | bociloy hinges | CAD locked |
-| C14 · KCD4 · F9 · acrylic · foam | Required assembly |
+| C14 · KCD4 · F9 · foam · clear filament | Required assembly |
 
 ## Optional later (not in cart)
 

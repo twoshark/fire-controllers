@@ -26,16 +26,16 @@ No AC inlet / rocker — power is DTP from outdoor HLG.
 
 ## 3. Floor bosses — output PCB (M2)
 
-Boss top Z = **12 mm**. CW LED→FRONT (4 of 6 Ø2.54; mid-pair skipped).
+Boss top Z = **12 mm**. Flat LEDs-up ([`../MOUNTING.md`](../MOUNTING.md)); 4 of 6 Ø2.54; mid-pair skipped.
 
 | Boss | Gerber (mm) | Outer X (mm) | Outer Y (mm) |
 | --- | ---: | ---: | ---: |
-| H1 | (17.907, −28.194) | **112.20** | **134.05** |
-| H2 | (120.777, −3.048) | **137.35** | **31.17** |
-| H3 | (3.640, −107.950) | **32.44** | **148.31** |
-| H4 | (120.777, −107.950) | **32.44** | **31.17** |
+| H1 | (17.907, −28.194) | **65.91** | **61.19** |
+| H2 | (120.777, −3.048) | **168.78** | **36.05** |
+| H3 | (3.640, −107.950) | **51.64** | **140.95** |
+| H4 | (120.777, −107.950) | **168.78** | **140.95** |
 
-**Δ from H1:** H2=(+25.15, −102.87) · H3=(−79.76, +14.27) · H4=(−79.76, −102.87) mm.
+**Δ from H1:** H2=(+102.87, −25.15) · H3=(−14.27, +79.76) · H4=(+102.87, +79.76) mm.
 
 Each: sketch Ø**7 mm** → extrude to Z=12 → Ø**3.2 mm** cut.
 
@@ -62,11 +62,9 @@ Sketch on plane **X = 0 mm**. Extrude **−cut** through wall.
 
 Pitch between SOL centers = **25 mm** in Y.
 
-## 6. FRONT — LED window
+## 6. FRONT — no LED window
 
-1. Sketch on Y = 0 mm: rectangle **40 × 10 mm**, center **(X = 110 mm, Z = 50 mm)**.  
-2. Extrude **−cut** through.  
-3. Optional acrylic recess ~**1.5 mm** deep inside.
+LEDs face **up**; window is in the **lid** ([`LID.md`](LID.md) · [`../LED_WINDOW.md`](../LED_WINDOW.md)).
 
 ## 7. BACK — hinge bosses (M2)
 

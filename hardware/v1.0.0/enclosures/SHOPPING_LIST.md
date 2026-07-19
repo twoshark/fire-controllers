@@ -104,7 +104,7 @@ Select **24AWG / 100ft**. Do **not** use CAT5/6.
 
 ---
 
-## Cart 5 — Panel / hardware · **$68.64**
+## Cart 5 — Panel / hardware · **$61.65**
 
 | Qty | Item | Unit | Ext | Link |
 | ---: | --- | ---: | ---: | --- |
@@ -113,7 +113,7 @@ Select **24AWG / 100ft**. Do **not** use CAT5/6.
 | 1 | QTEATAK C14 panel inlet **with cover** · **2-pack** | $5.99 | $5.99 | https://www.amazon.com/gp/product/B081C32LWG |
 | 2 | KCD4 DPST **IP65** rocker 30×22 (Metabee) | $1.20 | $2.40 | https://www.metabee.com/waterproof-baot-rocker-switch-kcd4-4pin-on-off-16a-250vac-dpst-square-green-led.html |
 | 1 | ATO **20 A** blade fuses · **20 pcs** | $4.39 | $4.39 | https://www.amazon.com/20pcs-Standard-Fuses-Blade-Automotive/dp/B0CLGTWZHZ |
-| 1 | Clear acrylic 8×10 × **1 mm** · **2-pack** (LED windows) | $6.99 | $6.99 | https://www.amazon.com/Extruded-Plexiglass-Protective-Projects-Watercolor/dp/B0D4QVJRLT |
+| — | LED windows | **print clear** · 4× inserts | $0 | [`LED_WINDOW.md`](LED_WINDOW.md) |
 | 1 | WOD closed-cell foam tape 1/8"×1/4"×75' (lid gaskets) | $13.79 | $13.79 | https://www.amazon.com/WOD-Tape-Weatherstrip-Insulation-Available/dp/B07H33916Y |
 
 Inside boxes: screw / solder / adhesive butt only (no DryConn). Outdoor HLG: owned adhesive HS.
@@ -128,8 +128,8 @@ Inside boxes: screw / solder / adhesive butt only (no DryConn). Outdoor HLG: own
 | 2 Amazon 1" hinges | $5.29 |
 | 3 Lowdoller DT/DTP (+ ship) | $50.00 |
 | 4 Cable | $185.08 |
-| 5 Panel / hardware | $68.64 |
-| **Est. checkout** | **~$468.81** (+ Lowdoller ship) |
+| 5 Panel / hardware | $61.65 |
+| **Est. checkout** | **~$461.82** (+ Lowdoller ship) |
 
 Session audit: [`PARTS_REVIEW.md`](PARTS_REVIEW.md). TE flange add-on: [`COST_OPTIONS.md`](COST_OPTIONS.md) **C**.
 
@@ -141,7 +141,8 @@ Session audit: [`PARTS_REVIEW.md`](PARTS_REVIEW.md). TE flange add-on: [`COST_OP
 - [ ] bociloy 1" ×8 · caliper holes vs [`MOUNTING.md`](MOUNTING.md)  
 - [ ] Lowdoller: **2× DTP** + **8× DT** (5 sign + 3 mp)  
 - [ ] KWANGIL **100 ft** + M12 4-set + dust caps + C14 + SJTW + 12 AWG  
-- [ ] KCD4 IP65, fuse, acrylic, foam  
+- [ ] KCD4 IP65, fuse, foam · print 4× clear LED inserts  
+
 - [ ] On hand: heat-sets · screws · C13–C14 · arcade · heatshrink  
 - [ ] Crimp DTP06-2S on each HLG DC · HS seal · ≤4 ft  
 - [ ] Mount HLGs shaded · FG earthed · `F9` **20 A** seated  

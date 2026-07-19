@@ -16,7 +16,7 @@ Every enclosure is **two solids**. Export separately.
 | sign-output | [`sign-output/BODY.md`](sign-output/BODY.md) | [`sign-output/LID.md`](sign-output/LID.md) |
 | mp-output | [`mp-output/BODY.md`](mp-output/BODY.md) | [`mp-output/LID.md`](mp-output/LID.md) |
 
-Optional separate prints: DT/DTP retainer clips. **Do not print hinges** (buy bociloy ~25 mm / “1 inch” SS butt).
+Optional separate prints: DT/DTP retainer clips · **clear LED window inserts** ([`LED_WINDOW.md`](LED_WINDOW.md)). **Do not print hinges** (buy bociloy ~25 mm / “1 inch” SS butt).
 
 ---
 
@@ -29,11 +29,12 @@ X = left → right   (0 … L) mm
 Y = front → back   (0 … W) mm
 Z = bottom → up    (0 … H) mm
 
-FRONT wall = Y = 0 mm
+FRONT wall = Y = 0 mm   (no LED cutout — LEDs face up)
 BACK  wall = Y = W mm
 LEFT  wall = X = 0 mm
 RIGHT wall = X = L mm
 Floor top  = Z = 3.0 mm
+Lid top    = LED window with per-channel dividers
 ```
 
 Wall / floor thickness **3.0 mm**. Inner cavity starts at **(3, 3, 3) mm** and is **(L−6) × (W−6) mm** in XY.
@@ -72,5 +73,6 @@ Boss recipe: sketch outer circle on floor → extrude **+join** to height → sk
 | --- | --- |
 | BODY | Open cavity facing **up** (+Z) |
 | LID | Gasket groove facing **up** |
+| LED clear insert | Optical face on bed (clear PETG/PLA) |
 
 PETG/ABS · **0.2 mm** layer · 3–4 walls · 25–40% infill. Bed ≤ **256 × 256 mm**.

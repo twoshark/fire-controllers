@@ -26,14 +26,14 @@ Same size as sign-output; only **SOL0..2** (3 channels).
 
 ## 3. Floor bosses — output PCB (M2)
 
-Boss top Z = **12 mm**. Same as sign-output.
+Boss top Z = **12 mm**. Flat LEDs-up — same as sign-output ([`../MOUNTING.md`](../MOUNTING.md)).
 
 | Boss | Gerber (mm) | Outer X (mm) | Outer Y (mm) |
 | --- | ---: | ---: | ---: |
-| H1 | (17.907, −28.194) | **112.20** | **134.05** |
-| H2 | (120.777, −3.048) | **137.35** | **31.17** |
-| H3 | (3.640, −107.950) | **32.44** | **148.31** |
-| H4 | (120.777, −107.950) | **32.44** | **31.17** |
+| H1 | (17.907, −28.194) | **65.91** | **61.19** |
+| H2 | (120.777, −3.048) | **168.78** | **36.05** |
+| H3 | (3.640, −107.950) | **51.64** | **140.95** |
+| H4 | (120.777, −107.950) | **168.78** | **140.95** |
 
 Each: Ø**7 mm** → Z=12 → Ø**3.2 mm** cut.
 
@@ -55,10 +55,9 @@ Sketch on X = 0 mm · extrude **−cut**:
 
 Do **not** cut SOL3/SOL4.
 
-## 6. FRONT — LED window
+## 6. FRONT — no LED window
 
-1. Sketch on Y = 0 mm: **40 × 10 mm** centered at **(X = 110 mm, Z = 50 mm)**.  
-2. Extrude **−cut** through.
+LEDs face **up**; window is in the **lid** ([`LID.md`](LID.md) · [`../LED_WINDOW.md`](../LED_WINDOW.md)).
 
 ## 7. Hinge bosses (M2)
 

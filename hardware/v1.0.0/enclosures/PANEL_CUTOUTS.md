@@ -30,7 +30,7 @@ Floor origins / boss XY: [`MOUNTING.md`](MOUNTING.md). Face map: input **M12 LEF
 | `J5` USB-C | 48.9 | −73.8 | open lid |
 | `SW1`/`SW2` | ≈77.7 | −64 / −57 | RESET/BOOT |
 
-LED edge (`X≈79`) → LED window wall.
+LED edge (`X≈79`) → under **lid** window (LEDs face up).
 
 ### Output connector mids
 
@@ -42,7 +42,7 @@ LED edge (`X≈79`) → LED window wall.
 | `J5a`/`J5b` | 60.6 / 90.0 | −5.3 / −5.2 | OUT0..7 |
 | `J2` | 118.6 | −33.7 | RS-485 |
 | `J7` USB-C | 70.0 | −107.1 | open lid |
-| LEDs | ≈117.2 | −85.2…−53.7 | LED window |
+| LEDs | ≈117.2 | −85.2…−53.7 | lid LED window |
 
 ---
 
@@ -56,7 +56,7 @@ LED edge (`X≈79`) → LED window wall.
 | 12 V | DTP04-2P in pocket | pocket **≈18 × 22** + lip | **25 A**; IP67 mated |
 | SOL | DT04-2P in pocket | pocket **≈16 × 18** + lip | 13 A; pitch ≥25 |
 | Arcade | EG STARTS | **Ø28** (verify ring; may be Ø24) | sign **hex ring** bbox ~**110×110**; mp pitch ≥50 |
-| LED window | PC + foam gasket | **40 × 10** | not open slot |
+| LED window (lid) | Clear print + foam · 10 cells + dividers | recess **9.4 × 38.4** | [`LED_WINDOW.md`](LED_WINDOW.md) |
 
 ### Fixed heights / pitches
 

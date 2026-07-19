@@ -35,14 +35,14 @@ PSU keep-out: **(13, 18) mm** → **(64, 80.5) mm**.
 
 ## 4. Floor bosses — input PCB (M2)
 
-Boss top Z = **12 mm**. Same CW LED→FRONT map as sign-input; origin shifted.
+Boss top Z = **12 mm**. Flat LEDs-up map ([`../MOUNTING.md`](../MOUNTING.md)); origin shifted vs sign-input.
 
 | Boss | Gerber (mil) | Outer X (mm) | Outer Y (mm) |
 | --- | ---: | ---: | ---: |
-| H1 | **1020, −725** | **128.58** | **90.15** |
-| H2 | **3115, −160** | **142.93** | **36.94** |
-| H3 | **925, −2955** | **71.94** | **92.56** |
-| H4 | **3115, −2960** | **71.81** | **36.94** |
+| H1 | **1020, −725** | **123.91** | **56.41** |
+| H2 | **3115, −160** | **177.12** | **42.06** |
+| H3 | **925, −2955** | **121.50** | **113.06** |
+| H4 | **3115, −2960** | **177.12** | **113.18** |
 
 Δ from H1 same as sign-input. Each: Ø**7 mm** → Z=12 → Ø**3.2 mm** cut.
 
@@ -56,11 +56,9 @@ Sketch on plane X = 0 mm. Extrude **−cut** through **3 mm** wall. Centers (Y, 
 | KCD4 | **(55, 50)** | rect **30 × 22** |
 | M12-5 | **(80, 50)** | circle Ø**16.2** |
 
-## 6. FRONT — LED window
+## 6. FRONT — no LED window
 
-1. Sketch on Y = 0 mm: rectangle **40 × 10 mm**, center **(X = 100 mm, Z = 50 mm)**.  
-2. Extrude **−cut** through wall.  
-3. Optional inner recess ~**1.5 mm** for acrylic + foam.
+LEDs face **up**; window is in the **lid** ([`LID.md`](LID.md) · [`../LED_WINDOW.md`](../LED_WINDOW.md)).
 
 ## 7. BACK — hinge bosses (M2)
 

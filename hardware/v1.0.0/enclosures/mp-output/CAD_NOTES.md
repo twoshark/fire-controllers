@@ -6,7 +6,8 @@ XY = **outer base**; sketch → extrude/cut. Kill 12 V: unplug HLG. [`../CAD_PAR
 | Export | Role |
 | --- | --- |
 | `mp-output-body.stl` | Box · DTP + M12 + SOL0..2 · PCB |
-| `mp-output-lid.stl` | Same geometry class as sign-output lid |
+| `mp-output-lid.stl` | Lid · LED window + dividers (same as sign-output) |
+| `mp-output-led-window.stl` | Clear insert — [`../LED_WINDOW.md`](../LED_WINDOW.md) |
 
 | Dim | mm |
 | --- | ---: |

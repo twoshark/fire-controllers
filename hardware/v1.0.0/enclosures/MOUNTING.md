@@ -25,13 +25,15 @@ Gerber source (2026-07-18): `hardware/v1.0.0/{input/easyeda,output/eda-exports,i
 
 ## Coordinate frames
 
-**Outer L × W × H** = enclosure **+X × +Y × +Z** (left→right × front→back × up). FRONT = LED window wall (Y≈0).
+**Outer L × W × H** = enclosure **+X × +Y × +Z** (left→right × front→back × up).  
+**LED window is on the lid (top)** — LEDs point **+Z**. FRONT wall has **no** LED cutout.
 
 **Gerber / PnP:**
 
 ```text
 +X right · +Y down (Y negative) · LED block at high X
 Outline ≈ X∈[0,W], Y∈[−H,0]
+Component / LED side faces +Z (up) toward the lid
 ```
 
 **Enclosure floor:**
@@ -41,26 +43,25 @@ Origin = inner floor, front-left (inside wall)
 +X right · +Y back · +Z up
 ```
 
-**PCB placement** — LED edge (Gerber max **X**) → FRONT. **Must be a proper rotation (det +1), not a mirror.**
+**PCB placement — flat, LEDs up (det +1, no side-wall aim):**
 
 ```text
-enc_x = ox + Y_gerber
-enc_y = oy + (X_led − X_gerber)
+enc_x = ox + X_gerber
+enc_y = oy − Y_gerber
 
-X_led = board outline max X  (input 83.058 · output 123.952)
-(ox, oy) = enclosure position of Gerber (X_led, 0)  // front corner on LED edge at Y=0
+(ox, oy) = enclosure position of Gerber (0, 0)
 ```
 
-Outer floor XY = inner + **3** (wall).
+Outer floor XY = inner + **3** (wall). LED column → **RIGHT** side of the cavity; lid window above it — [`LED_WINDOW.md`](LED_WINDOW.md).
 
-| Box | Inner L×W | `(ox, oy)` inner | Board left @ | Why |
-| --- | ---: | ---: | ---: | --- |
-| sign-input | 214×174 | **(148.994, 40)** | X=70 | RS-15 LEFT; PCB to its right |
-| mp-input | 194×154 | **(143.994, 30)** | X=65 | Same, tighter |
-| sign-output | 214×164 | **(137.395, 25)** | X=25 | Clearance |
-| mp-output | 214×164 | **(137.395, 25)** | X=25 | Same |
+| Box | Inner L×W | `(ox, oy)` inner | Why |
+| --- | ---: | ---: | --- |
+| sign-input | 214×174 | **(110, 45)** | RS-15 LEFT; PCB RIGHT clears arcade hex |
+| mp-input | 194×154 | **(95, 35)** | Same; LED X clears arcade CH2 |
+| sign-output | 214×164 | **(45, 30)** | Clearance |
+| mp-output | 214×164 | **(45, 30)** | Same |
 
-**Bug fixed 2026-07-18:** prior formula `enc_x = ox − Y_gerber` had Jacobian det **−1** (mirrored the board). Imported STEP models could not match. Keep ≥10 mm wall clearance to PCB outline.
+**Supersedes 2026-07-18 CW (LED→FRONT wall).** That map aimed LEDs at the FRONT face; optical axis is now **+Z**. Keep ≥10 mm wall clearance to PCB outline.
 
 ---
 
@@ -93,23 +94,23 @@ Outline **W = 83.06**. Skip `(43.180, −54.483)`.
 
 | Boss | Gerber mil | Outer X | Outer Y | Δ from H1 (mm) |
 | --- | ---: | ---: | ---: | --- |
-| H1 | 1020, −725 | **133.58** | **100.15** | — |
-| H2 | 3115, −160 | **147.93** | **46.94** | (+14.35, −53.21) |
-| H3 | 925, −2955 | **76.94** | **102.56** | (−56.64, +2.41) |
-| H4 | 3115, −2960 | **76.81** | **46.94** | (−56.77, −53.21) |
+| H1 | 1020, −725 | **138.91** | **66.41** | — |
+| H2 | 3115, −160 | **192.12** | **52.06** | (+53.21, −14.35) |
+| H3 | 925, −2955 | **136.50** | **123.06** | (−2.41, +56.64) |
+| H4 | 3115, −2960 | **192.12** | **123.18** | (+53.21, +56.77) |
 
-PCB footprint (inner): X[70, 149] × Y[40, 123].
+PCB footprint (inner): X[110, 193] × Y[45, 124]. Lid LED pocket **(192.3, 81.5)**.
 
 ### mp-input · outer = inner + 3
 
 | Boss | Gerber mil | Outer X | Outer Y |
 | --- | ---: | ---: | ---: |
-| H1 | 1020, −725 | **128.58** | **90.15** |
-| H2 | 3115, −160 | **142.93** | **36.94** |
-| H3 | 925, −2955 | **71.94** | **92.56** |
-| H4 | 3115, −2960 | **71.81** | **36.94** |
+| H1 | 1020, −725 | **123.91** | **56.41** |
+| H2 | 3115, −160 | **177.12** | **42.06** |
+| H3 | 925, −2955 | **121.50** | **113.06** |
+| H4 | 3115, −2960 | **177.12** | **113.18** |
 
-Same Δ-from-H1 as sign-input. Footprint (inner): X[65, 144] × Y[30, 113].
+Same Δ-from-H1 as sign-input. Footprint (inner): X[95, 178] × Y[35, 114]. Lid LED pocket **(177.3, 71.5)**.
 
 ---
 
@@ -141,14 +142,14 @@ Outline **W = 123.95**. Skip mid-pair and fuse NPTH `(10.541, −5.461)`.
 
 | Boss | Gerber mm | Outer X | Outer Y | Δ from H1 (mm) |
 | --- | ---: | ---: | ---: | --- |
-| H1 | (17.907, −28.194) | **112.20** | **134.05** | — |
-| H2 | (120.777, −3.048) | **137.35** | **31.17** | (+25.15, −102.87) |
-| H3 | (3.640, −107.950) | **32.44** | **148.31** | (−79.76, +14.27) |
-| H4 | (120.777, −107.950) | **32.44** | **31.17** | (−79.76, −102.87) |
+| H1 | (17.907, −28.194) | **65.91** | **61.19** | — |
+| H2 | (120.777, −3.048) | **168.78** | **36.05** | (+102.87, −25.15) |
+| H3 | (3.640, −107.950) | **51.64** | **140.95** | (−14.27, +79.76) |
+| H4 | (120.777, −107.950) | **168.78** | **140.95** | (+102.87, +79.76) |
 
-PCB footprint (inner): X[25, 137.4] × Y[25, 149]. Mid Ø2.54 pair skipped.
+PCB footprint (inner): X[45, 169] × Y[30, 142]. Mid Ø2.54 pair skipped. Lid LED pocket **(165.2, 102.5)**.
 
-Face map (CW, LED→FRONT): LEDs → **FRONT** · `J1` → **BACK** · load connectors toward **LEFT**/back per board.
+Face map (flat, LEDs up): LEDs → **lid / RIGHT** · `J1` → **LEFT** · panel still **DTP BACK** · **SOL + M12 LEFT** (harness length OK).
 
 ---
 

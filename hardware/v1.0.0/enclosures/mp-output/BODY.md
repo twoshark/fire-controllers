@@ -26,16 +26,16 @@ Same size as sign-output; only **SOL0..2** (3 channels).
 
 ## 3. Floor bosses — output PCB (M2)
 
-Boss top Z = **12 mm**. Same as sign-output (same PCB / placement).
+Boss top Z = **12 mm**. Same as sign-output.
 
 | Boss | Gerber (mm) | Outer X (mm) | Outer Y (mm) |
 | --- | ---: | ---: | ---: |
-| H1 | (17.907, −28.194) | **56.19** | **134.04** |
-| H2 | (120.777, −3.048) | **31.05** | **31.17** |
-| H3 | (3.640, −107.950) | **135.95** | **148.31** |
-| H4 | (120.777, −107.950) | **135.95** | **31.17** |
+| H1 | (17.907, −28.194) | **112.20** | **134.05** |
+| H2 | (120.777, −3.048) | **137.35** | **31.17** |
+| H3 | (3.640, −107.950) | **32.44** | **148.31** |
+| H4 | (120.777, −107.950) | **32.44** | **31.17** |
 
-Each: Ø**7 mm** → extrude to Z = 12 mm → Ø**3.2 mm** cut.
+Each: Ø**7 mm** → Z=12 → Ø**3.2 mm** cut.
 
 ## 4. BACK — DTP pocket
 

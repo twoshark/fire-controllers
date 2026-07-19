@@ -41,23 +41,26 @@ Origin = inner floor, front-left (inside wall)
 +X right · +Y back · +Z up
 ```
 
-**PCB placement** — LED edge (max X) → FRONT:
+**PCB placement** — LED edge (Gerber max **X**) → FRONT. **Must be a proper rotation (det +1), not a mirror.**
 
 ```text
-enc_x = ox + (−Y_gerber)
-enc_y = oy + (W − X_gerber)
+enc_x = ox + Y_gerber
+enc_y = oy + (X_led − X_gerber)
+
+X_led = board outline max X  (input 83.058 · output 123.952)
+(ox, oy) = enclosure position of Gerber (X_led, 0)  // front corner on LED edge at Y=0
 ```
 
-`(ox, oy)` = enclosure position of Gerber **(W, 0)** = board front-left.
+Outer floor XY = inner + **3** (wall).
 
-| Box | Inner L×W | `(ox, oy)` | Why |
-| --- | ---: | ---: | --- |
-| sign-input | 214×174 | **(75, 40)** | RS-15 LEFT (X≈10–61); PCB right of PSU |
-| mp-input | 194×154 | **(70, 30)** | Same pack, tighter |
-| sign-output | 214×164 | **(25, 25)** | Max clearance; aft clearance ~15 |
-| mp-output | 214×164 | **(25, 25)** | Same |
+| Box | Inner L×W | `(ox, oy)` inner | Board left @ | Why |
+| --- | ---: | ---: | ---: | --- |
+| sign-input | 214×174 | **(148.994, 40)** | X=70 | RS-15 LEFT; PCB to its right |
+| mp-input | 194×154 | **(143.994, 30)** | X=65 | Same, tighter |
+| sign-output | 214×164 | **(137.395, 25)** | X=25 | Clearance |
+| mp-output | 214×164 | **(137.395, 25)** | X=25 | Same |
 
-Keep ≥10 mm wall clearance to PCB outline.
+**Bug fixed 2026-07-18:** prior formula `enc_x = ox − Y_gerber` had Jacobian det **−1** (mirrored the board). Imported STEP models could not match. Keep ≥10 mm wall clearance to PCB outline.
 
 ---
 
@@ -86,27 +89,27 @@ Outline **W = 83.06**. Skip `(43.180, −54.483)`.
 | H3 | **23.495** | **−75.057** |
 | H4 | **79.121** | **−75.184** |
 
-### sign-input @ (75, 40) inner · outer = inner + 3
+### sign-input · outer = inner + 3
 
-| Boss | Gerber mil | Inner X | Inner Y | Outer X | Outer Y |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| H1 | 1020, −725 | 93.41 | 97.15 | **96.41** | **100.15** |
-| H2 | 3115, −160 | 79.06 | 43.94 | **82.06** | **46.94** |
-| H3 | 925, −2955 | 150.06 | 99.56 | **153.06** | **102.56** |
-| H4 | 3115, −2960 | 150.18 | 43.94 | **153.18** | **46.94** |
+| Boss | Gerber mil | Outer X | Outer Y | Δ from H1 (mm) |
+| --- | ---: | ---: | ---: | --- |
+| H1 | 1020, −725 | **133.58** | **100.15** | — |
+| H2 | 3115, −160 | **147.93** | **46.94** | (+14.35, −53.21) |
+| H3 | 925, −2955 | **76.94** | **102.56** | (−56.64, +2.41) |
+| H4 | 3115, −2960 | **76.81** | **46.94** | (−56.77, −53.21) |
 
-PCB outline on floor (inner): X[75, 154] × Y[40, 123]. Re-verified vs drill 2026-07-18.
+PCB footprint (inner): X[70, 149] × Y[40, 123].
 
-### mp-input @ (70, 30) inner · outer = inner + 3
+### mp-input · outer = inner + 3
 
-| Boss | Gerber mil | Inner X | Inner Y | Outer X | Outer Y |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| H1 | 1020, −725 | 88.41 | 87.15 | **91.41** | **90.15** |
-| H2 | 3115, −160 | 74.06 | 33.94 | **77.06** | **36.94** |
-| H3 | 925, −2955 | 145.06 | 89.56 | **148.06** | **92.56** |
-| H4 | 3115, −2960 | 145.18 | 33.94 | **148.18** | **36.94** |
+| Boss | Gerber mil | Outer X | Outer Y |
+| --- | ---: | ---: | ---: |
+| H1 | 1020, −725 | **128.58** | **90.15** |
+| H2 | 3115, −160 | **142.93** | **36.94** |
+| H3 | 925, −2955 | **71.94** | **92.56** |
+| H4 | 3115, −2960 | **71.81** | **36.94** |
 
-PCB outline (inner): X[70, 149] × Y[30, 113].
+Same Δ-from-H1 as sign-input. Footprint (inner): X[65, 144] × Y[30, 113].
 
 ---
 
@@ -134,18 +137,18 @@ Outline **W = 123.95**. Skip mid-pair and fuse NPTH `(10.541, −5.461)`.
 | H3 | **3.640** | **−107.950** |
 | H4 | **120.777** | **−107.950** |
 
-### sign/mp-output @ (25, 25) inner · outer = inner + 3
+### sign/mp-output · outer = inner + 3
 
-| Boss | Gerber mm | Inner X | Inner Y | Outer X | Outer Y |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| H1 | (17.907, −28.194) | 53.19 | 131.04 | **56.19** | **134.04** |
-| H2 | (120.777, −3.048) | 28.05 | 28.17 | **31.05** | **31.17** |
-| H3 | (3.640, −107.950) | 132.95 | 145.31 | **135.95** | **148.31** |
-| H4 | (120.777, −107.950) | 132.95 | 28.17 | **135.95** | **31.17** |
+| Boss | Gerber mm | Outer X | Outer Y | Δ from H1 (mm) |
+| --- | ---: | ---: | ---: | --- |
+| H1 | (17.907, −28.194) | **112.20** | **134.05** | — |
+| H2 | (120.777, −3.048) | **137.35** | **31.17** | (+25.15, −102.87) |
+| H3 | (3.640, −107.950) | **32.44** | **148.31** | (−79.76, +14.27) |
+| H4 | (120.777, −107.950) | **32.44** | **31.17** | (−79.76, −102.87) |
 
-PCB outline (inner): X[25, 137.4] × Y[25, 148.9]. Mid Ø2.54 pair skipped. Re-verified vs drill 2026-07-18.
+PCB footprint (inner): X[25, 137.4] × Y[25, 149]. Mid Ø2.54 pair skipped.
 
-Face map (after transform): `J5`/`J6` → **LEFT** · `J1` → **BACK** · LEDs → **FRONT** · `J2` (RS-485) → **LEFT** near front.
+Face map (CW, LED→FRONT): LEDs → **FRONT** · `J1` → **BACK** · load connectors toward **LEFT**/back per board.
 
 ---
 

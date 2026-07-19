@@ -44,16 +44,18 @@ Keep-out footprint for the PSU body: rectangle **(13, 23) mm** → **(64, 85.5) 
 
 ## 4. Floor bosses — input PCB (M2)
 
-Standoff: boss top at **Z ≥ 12 mm** (~9 mm up from floor).  
-Verified from Gerber Ø2.54 drill → LED-edge→FRONT transform → outer XY (2026-07-18).
+Standoff: boss top at **Z ≥ 12 mm**.  
+**CW rotation** (not mirror): LEDs → FRONT. See [`../MOUNTING.md`](../MOUNTING.md).
 
 | Boss | Gerber (mil) | Outer X (mm) | Outer Y (mm) | Notes |
 | --- | ---: | ---: | ---: | --- |
-| H1 | **1020, −725** | **96.41** | **100.15** | nearest `J1` |
-| H2 | **3115, −160** | **82.06** | **46.94** | LED edge |
-| H3 | **925, −2955** | **153.06** | **102.56** | |
-| H4 | **3115, −2960** | **153.18** | **46.94** | LED edge |
-| — | 1700, −2145 | — | — | **no boss** (5th hole) |
+| H1 | **1020, −725** | **133.58** | **100.15** | nearest `J1` |
+| H2 | **3115, −160** | **147.93** | **46.94** | LED / front |
+| H3 | **925, −2955** | **76.94** | **102.56** | |
+| H4 | **3115, −2960** | **76.81** | **46.94** | LED / front |
+| — | 1700, −2145 | — | — | **no boss** |
+
+**Check on imported board (from H1):** H2=(+14.35, −53.21) · H3=(−56.64, +2.41) · H4=(−56.77, −53.21) mm.
 
 For each H1–H4:
 

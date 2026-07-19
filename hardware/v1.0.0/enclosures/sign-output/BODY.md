@@ -26,16 +26,18 @@ No AC inlet / rocker — power is DTP from outdoor HLG.
 
 ## 3. Floor bosses — output PCB (M2)
 
-Boss top Z = **12 mm**. Verified from output Gerber Ø2.54 (4 of 6; mid-pair skipped).
+Boss top Z = **12 mm**. CW LED→FRONT (4 of 6 Ø2.54; mid-pair skipped).
 
 | Boss | Gerber (mm) | Outer X (mm) | Outer Y (mm) |
 | --- | ---: | ---: | ---: |
-| H1 | (17.907, −28.194) | **56.19** | **134.04** |
-| H2 | (120.777, −3.048) | **31.05** | **31.17** |
-| H3 | (3.640, −107.950) | **135.95** | **148.31** |
-| H4 | (120.777, −107.950) | **135.95** | **31.17** |
+| H1 | (17.907, −28.194) | **112.20** | **134.05** |
+| H2 | (120.777, −3.048) | **137.35** | **31.17** |
+| H3 | (3.640, −107.950) | **32.44** | **148.31** |
+| H4 | (120.777, −107.950) | **32.44** | **31.17** |
 
-Each: sketch Ø**7 mm** on floor → extrude to Z = 12 mm → sketch Ø**3.2 mm** → extrude **−cut**.
+**Δ from H1:** H2=(+25.15, −102.87) · H3=(−79.76, +14.27) · H4=(−79.76, −102.87) mm.
+
+Each: sketch Ø**7 mm** → extrude to Z=12 → Ø**3.2 mm** cut.
 
 ## 4. BACK wall — DTP 12 V pocket
 

@@ -35,16 +35,16 @@ PSU keep-out: **(13, 18) mm** → **(64, 80.5) mm**.
 
 ## 4. Floor bosses — input PCB (M2)
 
-Boss top Z = **12 mm**. Same Gerber holes as sign-input; `(ox,oy)` shifted.
+Boss top Z = **12 mm**. Same CW LED→FRONT map as sign-input; origin shifted.
 
 | Boss | Gerber (mil) | Outer X (mm) | Outer Y (mm) |
 | --- | ---: | ---: | ---: |
-| H1 | **1020, −725** | **91.41** | **90.15** |
-| H2 | **3115, −160** | **77.06** | **36.94** |
-| H3 | **925, −2955** | **148.06** | **92.56** |
-| H4 | **3115, −2960** | **148.18** | **36.94** |
+| H1 | **1020, −725** | **128.58** | **90.15** |
+| H2 | **3115, −160** | **142.93** | **36.94** |
+| H3 | **925, −2955** | **71.94** | **92.56** |
+| H4 | **3115, −2960** | **71.81** | **36.94** |
 
-Each: Ø**7 mm** extrude to Z = 12 mm → Ø**3.2 mm** cut. No boss for Gerber (1700, −2145) mil.
+Δ from H1 same as sign-input. Each: Ø**7 mm** → Z=12 → Ø**3.2 mm** cut.
 
 ## 5. LEFT wall cutouts
 

@@ -1,45 +1,82 @@
-# mp-output — BODY (box without lid)
+# mp-output — BODY
 
-Export: `mp-output-body.stl` · Print: open face **up**.  
-Shared: [`../CAD_PARTS.md`](../CAD_PARTS.md) · [`../MOUNTING.md`](../MOUNTING.md).
-
-Same envelope and PCB as sign-output; **3 SOL** pockets only (SOL0..2).
+Export: `mp-output-body.stl` · Print cavity **up**.  
+Coords: **outer base (0,0)** = front-left. [`../CAD_PARTS.md`](../CAD_PARTS.md).  
+Same size as sign-output; only **SOL0..2** (3 channels).
 
 ## Envelope
 
-| Dim | mm |
+| | mm |
 | --- | ---: |
-| Outer L × W × H | **220 × 170 × 85** |
+| L × W × H | **220 × 170 × 85** |
 | Wall / floor | **3.0** |
-| Inner L × W × H | **214 × 164 × 79** |
 
-## Build steps
+---
 
-1. **Outer** 220 × 170 × 85 · open-top cavity 214 × 164 × 79.  
-2. **Output PCB** @ `(25, 25)` · Z=12 · same H1–H4 as sign-output:
+## 1. Outer box
 
-| Boss | Inner X | Inner Y |
+1. Sketch rectangle **220 × 170** from **(0, 0)**.  
+2. Extrude **+join** to Z=**85**.
+
+## 2. Hollow cavity
+
+1. Sketch on Z=3: rectangle from **(3, 3)** size **214 × 164**.  
+2. Extrude **−cut** through the top.
+
+## 3. Floor bosses — output PCB (M2)
+
+Boss top Z=**12**:
+
+| Boss | X | Y |
 | --- | ---: | ---: |
-| H1 | 53.2 | 131.0 |
-| H2 | 28.0 | 28.2 |
-| H3 | 132.9 | 145.3 |
-| H4 | 132.9 | 28.2 |
+| H1 | **56.2** | **134.0** |
+| H2 | **31.0** | **31.2** |
+| H3 | **135.9** | **148.3** |
+| H4 | **135.9** | **31.2** |
 
-3. **BACK** — DTP pocket ≈18×22 · CL H **40** · mid-X · retainer clip.  
-4. **LEFT**:
+Each: Ø**7** → extrude to Z=12 → Ø**3.2** cut.
 
-| Feature | Cutout | CL H | Y |
-| --- | --- | ---: | ---: |
-| M12-5 | Ø16.2 | **50** | **30** |
-| SOL0 | ≈16 × 18 | **40** | **55** |
-| SOL1 | same | **40** | **80** |
-| SOL2 | same | **40** | **105** |
+## 4. BACK — DTP pocket
 
-Do **not** cut SOL3/SOL4 (day-1 mp = 3 channels).  
-5. **FRONT** LED 40×10 @ CL H 50.  
-6. **Hinges** pins **(40, 160)** / **(174, 160)** · M2 @ mid-pin Y+7.5.  
-7. **Latch M3** **(8, 8)** / **(206, 8)**.
+1. Sketch on Y=170: rect ≈**18 × 22**, center **(X=110, Z=40)**.  
+2. Extrude **−cut** through. Retainer clip separate.
 
-## Not on body
+## 5. LEFT — M12 + SOL0..2 only
 
-Lid → [`LID.md`](LID.md). HLG is OTS outdoor — not inside this print.
+Sketch on X=0 · extrude **−cut**:
+
+| Feature | Center (Y, Z) | Shape |
+| --- | ---: | --- |
+| M12-5 | **(30, 50)** | Ø**16.2** |
+| SOL0 | **(55, 40)** | ≈**16 × 18** |
+| SOL1 | **(80, 40)** | ≈**16 × 18** |
+| SOL2 | **(105, 40)** | ≈**16 × 18** |
+
+Do **not** cut SOL3/SOL4.
+
+## 6. FRONT — LED window
+
+1. Sketch on Y=0: **40 × 10** centered at **(110, Z=50)**.  
+2. Extrude **−cut** through.
+
+## 7. Hinge bosses (M2)
+
+| Hinge | Pin mid (X, Y) | Boss (X, Y) |
+| --- | ---: | ---: |
+| A | **(43, 163)** | **(43, 155.5)** |
+| B | **(177, 163)** | **(177, 155.5)** |
+
+Ø**7** → Ø**3.2** cut.
+
+## 8. Latch inserts (M3)
+
+| Latch | X | Y |
+| --- | ---: | ---: |
+| L | **11** | **11** |
+| R | **209** | **11** |
+
+Ø**9** → Ø**4.2** cut.
+
+## 9. Export
+
+`mp-output-body.stl`. Lid → [`LID.md`](LID.md).

@@ -1,24 +1,46 @@
 # mp-output — LID
 
-Export: `mp-output-lid.stl` · Print: groove **up**.  
-Shared: [`../CAD_PARTS.md`](../CAD_PARTS.md).
-
-Identical feature set to [`../sign-output/LID.md`](../sign-output/LID.md) (same L×W and hinge/latch XY).
+Export: `mp-output-lid.stl` · Print **groove up**.  
+Coords: **outer (0,0)** = front-left. [`../CAD_PARTS.md`](../CAD_PARTS.md).  
+Same geometry as [`../sign-output/LID.md`](../sign-output/LID.md) — you can duplicate that model.
 
 ## Envelope
 
-| Dim | mm |
+| | mm |
 | --- | ---: |
-| Outer L × W | **220 × 170** |
-| Thickness | **4–5** |
-| Arcade | **none** |
+| L × W | **220 × 170** |
+| Thickness | **5** |
 
-## Build steps
+---
 
-1. Plate 220 × 170 × 4–5.  
-2. Gasket groove 3.5 × 2.0 (BACK inboard of hinges).  
-3. Hinge lids @ **(40, 160)** / **(174, 160)** · M2 mid-pin · 7.5 mm in.  
-4. Latch M3 @ **(8, 8)** / **(206, 8)**.  
-5. No arcade / panel holes on lid.
+## 1. Lid plate
 
-You may reuse the sign-output lid model as a linked copy if your CAD tool supports it — geometry matches.
+1. Sketch rectangle **220 × 170** from **(0, 0)**.  
+2. Extrude **+join** to Z=**5**.
+
+## 2. Gasket groove
+
+1. Sketch inset loop on Z=5, width **3.5**, BACK inboard of hinges.  
+2. Extrude **−cut** **2.0** mm.
+
+## 3. Hinge bosses (M2)
+
+| Hinge | Pin mid (X, Y) | Boss (X, Y) |
+| --- | ---: | ---: |
+| A | **(43, 163)** | **(43, 155.5)** |
+| B | **(177, 163)** | **(177, 155.5)** |
+
+Underside: Ø**7** → Ø**3.2** cut.
+
+## 4. Latch clearance (M3)
+
+| Latch | X | Y |
+| --- | ---: | ---: |
+| L | **11** | **11** |
+| R | **209** | **11** |
+
+Ø**3.4** through-cut. Optional counterbore.
+
+## 5. Export
+
+`mp-output-lid.stl`. No arcade holes.

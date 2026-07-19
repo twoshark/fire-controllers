@@ -1,7 +1,7 @@
 # sign-output — CAD index
 
 **Print two parts:** [`BODY.md`](BODY.md) · [`LID.md`](LID.md).  
-Workflow: [`../CAD_PARTS.md`](../CAD_PARTS.md). Kill 12 V: unplug **HLG-240H-12** ([`../POWER_OTS.md`](../POWER_OTS.md)).
+XY = **outer base**; sketch → extrude/cut. Kill 12 V: unplug HLG. [`../CAD_PARTS.md`](../CAD_PARTS.md).
 
 | Export | Role |
 | --- | --- |

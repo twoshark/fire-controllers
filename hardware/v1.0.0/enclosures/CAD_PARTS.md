@@ -1,11 +1,11 @@
-# CAD parts — what to model
+# CAD parts — modeling guide
 
-Every enclosure is **two printed solids**. Model and export them separately.
+Every enclosure is **two solids**. Export separately.
 
-| Part | File stem | What it is |
+| Part | File | What |
 | --- | --- | --- |
-| **BODY** | `{unit}-body` | Open-top box · floor · walls · panel cutouts · internal bosses |
-| **LID** | `{unit}-lid` | Flat lid · gasket groove · hinge bosses · latches · (inputs: arcade holes) |
+| **BODY** | `{unit}-body.stl` | Open-top box |
+| **LID** | `{unit}-lid.stl` | Lid that closes the body |
 
 | Unit | BODY | LID |
 | --- | --- | --- |
@@ -14,77 +14,64 @@ Every enclosure is **two printed solids**. Model and export them separately.
 | sign-output | [`sign-output/BODY.md`](sign-output/BODY.md) | [`sign-output/LID.md`](sign-output/LID.md) |
 | mp-output | [`mp-output/BODY.md`](mp-output/BODY.md) | [`mp-output/LID.md`](mp-output/LID.md) |
 
-Optional third print (not lid/body): **DT/DTP retainer clips** — separate small parts; see [`PANEL_CUTOUTS.md`](PANEL_CUTOUTS.md). Do **not** print hinges (prefab bociloy 1").
-
-Shared numbers: [`MOUNTING.md`](MOUNTING.md) · [`PANEL_CUTOUTS.md`](PANEL_CUTOUTS.md) · [`SEALING.md`](SEALING.md) · [`CAD_VERIFICATION.md`](CAD_VERIFICATION.md).
+Optional separate prints: DT/DTP retainer clips. **Do not print hinges** (buy bociloy 1").
 
 ---
 
-## Coordinate frame (all units)
+## Coordinate system (all units)
+
+**All XY in BODY/LID docs are on the outer base** — front-left corner of the finished part footprint = **(0, 0)**.
 
 ```text
-Outer envelope: L × W × H  =  +X × +Y × +Z
-Origin: outer front-left-bottom corner (unless a BODY/LID doc says inner floor)
-FRONT = Y≈0 = LED window wall
-BACK  = Y = W
-LEFT  = X≈0
-RIGHT = X = L
-UP    = +Z
+X = left → right   (0 … L)
+Y = front → back   (0 … W)
+Z = bottom → up    (0 … H)
+
+FRONT wall = Y = 0
+BACK  wall = Y = W
+LEFT  wall = X = 0
+RIGHT wall = X = L
+Floor top  = Z = wall (3.0)
 ```
 
-Inner cavity ≈ outer − **2× wall** (wall **3.0** mm → −6 mm on L and W).
+Wall / floor thickness **3.0 mm**. Inner cavity starts at **(3, 3, 3)** and is **(L−6) × (W−6)** in XY.
+
+Panel cutout **heights** = hole center **Z** from the outer bottom (Z=0).  
+Panel **Y** = hole center along the wall from the front (Y=0).
 
 ---
 
-## Modeling order (any CAD tool)
+## CAD vocabulary used in the docs
 
-### BODY
-
-1. Outer solid L×W×H  
-2. Shell / subtract inner (wall 3.0; floor 3.0) → open top  
-3. Floor bosses (PCB M2, RS-15 M3 if input)  
-4. Side cutouts (panel features)  
-5. LED window pocket on FRONT  
-6. Body-side hinge bosses (BACK, internal)  
-7. Front flange / latch M3 inserts (mate with lid)  
-8. Export `{unit}-body.stl` · print **open face up**
-
-### LID
-
-1. Outer plate L×W × thickness (typ. **4–5** mm)  
-2. Underside gasket groove (3.5 W × 2.0 D) — continuous FRONT/LEFT/RIGHT; BACK inboard of hinges  
-3. Lid-side hinge bosses (BACK)  
-4. Latch clearance / through for M3 at FRONT  
-5. Inputs only: arcade button holes  
-6. Optional: buttons-PCB M2 bosses underside  
-7. Export `{unit}-lid.stl` · print **groove up**
-
----
-
-## Common feature recipes
-
-| Feature | Recipe |
+| Phrase | Meaning |
 | --- | --- |
-| Wall | **3.0** mm |
-| PCB standoff | Boss H **≥12** · hole Ø**3.2** · OD **≥7** · M2 heat-set |
-| M3 boss (latch / RS-15) | Hole Ø**4.2** · OD **≥9** · H **≥6** |
-| bociloy hinge (body + lid) | Pin at BACK · M2 boss mid-pin · **Y = 7.5** into cavity · [`MOUNTING.md`](MOUNTING.md) |
-| LED window | **40 × 10** aperture · recess for 1 mm acrylic + foam |
-| M12-5 | Through **Ø16.2** |
-| C14 | **27.5 × 20** (or flange pack — measure) |
-| KCD4 + boot | **30 × 22** |
-| DT pocket | ≈**16 × 18** + lip · clip retain (separate part) |
-| DTP pocket | ≈**18 × 22** + lip · clip retain |
-| Gasket | Groove in **lid** · 20–30% crush on foam/silicone tape |
+| **Sketch on plane P** | Create a 2D sketch on that face/plane |
+| **Rectangle / circle** | Draw the shape in the sketch |
+| **Extrude +join** | Extrude solid that adds material |
+| **Extrude −cut** | Extrude that removes material (through-hole or pocket) |
+| **Shell** | Hollow a solid, keep wall thickness |
+| **Boss** | Cylinder (or tapered cylinder) standing up from the floor/underside with a hole for a heat-set insert |
+
+Tool-agnostic: Fusion, FreeCAD, Onshape, OpenSCAD — same operations.
+
+---
+
+## Insert hole sizes
+
+| Insert | Sketch circle Ø | Boss outer Ø | Boss height |
+| --- | ---: | ---: | ---: |
+| M2 heat-set | **3.2** | **≥7** | **≥5** (PCB bosses: top at Z≥**12**) |
+| M3 heat-set | **4.2** | **≥9** | **≥6** |
+
+Boss recipe: sketch **outer circle** on floor → extrude **+join** to height → sketch **inner circle** on boss top → extrude **−cut** through boss (and optionally into floor a little for insert depth).
 
 ---
 
 ## Print
 
-| Part | Orientation | Notes |
-| --- | --- | --- |
-| BODY | Cavity open **up** | No supports if DFAM OK |
-| LID | Groove **up** | Arcade holes vertical |
-| Material | PETG or ABS | 0.2 mm · 3–4 perimeters · 25–40% |
+| Part | Orientation |
+| --- | --- |
+| BODY | Open cavity facing **up** (+Z) |
+| LID | Gasket groove facing **up** |
 
-Bed ≤ **256 × 256**. Largest body footprint **220 × 180** (sign-input).
+PETG/ABS · 0.2 mm · 3–4 walls · 25–40% infill. Bed ≤ 256×256.

@@ -1,51 +1,84 @@
-# mp-input — BODY (box without lid)
+# mp-input — BODY
 
-Export: `mp-input-body.stl` · Print: open face **up**.  
-Shared: [`../CAD_PARTS.md`](../CAD_PARTS.md) · [`../MOUNTING.md`](../MOUNTING.md).
+Export: `mp-input-body.stl` · Print cavity **up**.  
+Coords: **outer base (0,0)** = front-left. [`../CAD_PARTS.md`](../CAD_PARTS.md).
 
 ## Envelope
 
-| Dim | mm |
+| | mm |
 | --- | ---: |
-| Outer L × W × H | **200 × 160 × 90** |
+| L × W × H | **200 × 160 × 90** |
 | Wall / floor | **3.0** |
-| Inner L × W × H | **194 × 154 × 84** |
 
-## Build steps
+---
 
-1. **Outer** 200 × 160 × 90.  
-2. **Cavity** open-top: inner 194 × 154 × 84 (floor Z=3).  
-3. **RS-15-12** — footprint (10, 15) → (61, 77.5); M3 @ **(35.5, 26.5)** / **(35.5, 65.6)**.  
-4. **Input PCB** @ `(70, 30)` · Z=12 · M2:
+## 1. Outer box
 
-| Boss | Inner X | Inner Y |
+1. Sketch XY Z=0: rectangle **200 × 160** from **(0, 0)**.  
+2. Extrude **+join** to Z=**90**.
+
+## 2. Hollow cavity
+
+1. Sketch on Z=3: rectangle from **(3, 3)** size **194 × 154**.  
+2. Extrude **−cut** through the top.
+
+## 3. Floor bosses — RS-15 (M3)
+
+| Boss | X | Y |
 | --- | ---: | ---: |
-| H1 | 88.4 | 87.2 |
-| H2 | 74.1 | 33.9 |
-| H3 | 145.1 | 89.6 |
-| H4 | 145.2 | 33.9 |
+| M3-A | **38.5** | **29.5** |
+| M3-B | **38.5** | **68.6** |
 
-Channels D4..D8 unused in wiring — still mount full board.  
-5. **LEFT** cutouts (CL H from outer bottom · Y from FRONT):
+Each: sketch Ø**9** on floor → extrude **+join** +6 → sketch Ø**4.2** → extrude **−cut**.  
+PSU keep-out: **(13, 18)** → **(64, 80.5)**.
 
-| Feature | Cutout | CL H | Y |
-| --- | --- | ---: | ---: |
-| C14 | 27.5 × 20 | **35** | **30** |
-| KCD4+boot | 30 × 22 | **50** | **55** |
-| M12-5 | Ø16.2 | **50** | **80** |
+## 4. Floor bosses — input PCB (M2)
 
-6. **FRONT** LED **40 × 10** @ CL H **50**, mid-X + acrylic recess.  
-7. **Hinges** (body leaf) pin mid:
+Boss top Z=**12**. Centers (outer XY):
 
-| Hinge | Inner (X, Y) |
-| --- | ---: |
-| A | **(35, 150)** |
-| B | **(159, 150)** |
+| Boss | X | Y |
+| --- | ---: | ---: |
+| H1 | **91.4** | **90.2** |
+| H2 | **77.1** | **36.9** |
+| H3 | **148.1** | **92.6** |
+| H4 | **148.2** | **36.9** |
 
-M2 @ mid-pin · Y+7.5 into cavity.  
-8. **Latch M3** body @ ≈ **(8, 8)** and **(186, 8)**.  
-9. Retainer clip for M12 (separate print).
+Each: Ø**7** extrude to Z=12 → Ø**3.2** cut (M2).
 
-## Not on body
+## 5. LEFT wall cutouts
 
-Arcade layout → [`LID.md`](LID.md).
+Sketch on plane **X=0**. Extrude **−cut** through wall. Centers (Y, Z):
+
+| Feature | Center (Y, Z) | Shape |
+| --- | ---: | --- |
+| C14 | **(30, 35)** | rect **27.5 × 20** |
+| KCD4 | **(55, 50)** | rect **30 × 22** |
+| M12-5 | **(80, 50)** | circle Ø**16.2** |
+
+## 6. FRONT — LED window
+
+1. Sketch on Y=0: rectangle **40 × 10**, center **(X=100, Z=50)**.  
+2. Extrude **−cut** through wall.  
+3. Optional inner recess for acrylic + foam.
+
+## 7. BACK — hinge bosses (M2)
+
+| Hinge | Pin mid (X, Y) | Boss (X, Y) = pin − 7.5 in Y |
+| --- | ---: | ---: |
+| A | **(38, 153)** | **(38, 145.5)** |
+| B | **(162, 153)** | **(162, 145.5)** |
+
+Each: Ø**7** boss → Ø**3.2** cut.
+
+## 8. FRONT — latch inserts (M3)
+
+| Latch | X | Y |
+| --- | ---: | ---: |
+| L | **11** | **11** |
+| R | **189** | **11** |
+
+Ø**9** boss → Ø**4.2** cut.
+
+## 9. Export
+
+`mp-input-body.stl`. Arcade holes → [`LID.md`](LID.md).

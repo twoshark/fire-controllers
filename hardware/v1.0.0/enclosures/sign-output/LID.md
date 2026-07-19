@@ -1,31 +1,46 @@
 # sign-output — LID
 
-Export: `sign-output-lid.stl` · Print: groove **up**.  
-Shared: [`../CAD_PARTS.md`](../CAD_PARTS.md) · [`../MOUNTING.md`](../MOUNTING.md).
+Export: `sign-output-lid.stl` · Print **groove up**.  
+Coords: **outer (0,0)** = front-left. [`../CAD_PARTS.md`](../CAD_PARTS.md).  
+**No arcade holes.**
 
 ## Envelope
 
-| Dim | mm |
+| | mm |
 | --- | ---: |
-| Outer L × W | **220 × 170** |
-| Thickness | **4–5** |
-| Arcade | **none** |
+| L × W | **220 × 170** |
+| Thickness | **5** |
 
-## Build steps
+---
 
-1. **Plate** 220 × 170 × 4–5.  
-2. **Gasket groove** 3.5 × 2.0 — FRONT/LEFT/RIGHT continuous; BACK inboard of hinges.  
-3. **Hinge lid leaf** pins:
+## 1. Lid plate
 
-| Hinge | (X, Y) |
-| --- | ---: |
-| A | **(40, 160)** |
-| B | **(174, 160)** |
+1. Sketch rectangle **220 × 170** from **(0, 0)**.  
+2. Extrude **+join** to Z=**5**.
 
-M2 mid-pin · 7.5 mm into cavity.  
-4. **Latch** M3 through @ ≈ **(8, 8)** / **(206, 8)**.  
-5. No button holes · no panel cutouts on lid.
+## 2. Gasket groove
 
-## Mate check
+1. Sketch on Z=5: inset loop, width **3.5**, BACK path inboard of hinges.  
+2. Extrude **−cut** **2.0** mm deep.
 
-Lid opens toward FRONT ≥90°. Hinges internal. Access to `F9` / USB-C / RESET·BOOT when open.
+## 3. Hinge bosses (M2)
+
+| Hinge | Pin mid (X, Y) | Boss (X, Y) |
+| --- | ---: | ---: |
+| A | **(43, 163)** | **(43, 155.5)** |
+| B | **(177, 163)** | **(177, 155.5)** |
+
+Underside: Ø**7** extrude → Ø**3.2** cut.
+
+## 4. Latch clearance (M3)
+
+| Latch | X | Y |
+| --- | ---: | ---: |
+| L | **11** | **11** |
+| R | **209** | **11** |
+
+Sketch Ø**3.4** → extrude **−cut** through. Optional counterbore.
+
+## 5. Export
+
+`sign-output-lid.stl`. Opening the lid must clear USB-C / `F9` / RESET·BOOT on the PCB.

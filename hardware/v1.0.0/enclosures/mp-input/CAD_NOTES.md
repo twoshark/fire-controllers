@@ -1,7 +1,7 @@
 # mp-input — CAD index
 
 **Print two parts:** [`BODY.md`](BODY.md) · [`LID.md`](LID.md).  
-Workflow: [`../CAD_PARTS.md`](../CAD_PARTS.md).
+XY = **outer base**; sketch → extrude/cut. Workflow: [`../CAD_PARTS.md`](../CAD_PARTS.md).
 
 | Export | Role |
 | --- | --- |

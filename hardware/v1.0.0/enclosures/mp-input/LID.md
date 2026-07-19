@@ -1,47 +1,64 @@
 # mp-input — LID
 
-Export: `mp-input-lid.stl` · Print: groove **up**.  
-Shared: [`../CAD_PARTS.md`](../CAD_PARTS.md) · [`../MOUNTING.md`](../MOUNTING.md).
+Export: `mp-input-lid.stl` · Print **groove up**.  
+Coords: **outer (0,0)** = front-left. [`../CAD_PARTS.md`](../CAD_PARTS.md).
 
 ## Envelope
 
-| Dim | mm |
+| | mm |
 | --- | ---: |
-| Outer L × W | **200 × 160** |
-| Thickness | **4–5** |
-| Button holes | **Ø28** (verify ring) |
+| L × W | **200 × 160** |
+| Thickness | **5** |
 
-Ring center ≈ outer **(100, 80)**. Pitch **≥50**.
+---
 
-## Build steps
+## 1. Lid plate
 
-1. **Plate** 200 × 160 × 4–5.  
-2. **Gasket groove** 3.5 × 2.0 — FRONT/LEFT/RIGHT continuous; BACK inboard of hinges.  
-3. **Hinge lid leaf** pins:
+1. Sketch rectangle **200 × 160** from **(0, 0)**.  
+2. Extrude **+join** to Z=**5**.
 
-| Hinge | (X, Y) |
-| --- | ---: |
-| A | **(35, 150)** |
-| B | **(159, 150)** |
+## 2. Gasket groove
 
-M2 mid-pin · 7.5 mm into cavity.  
-4. **Latch** M3 through @ ≈ **(8, 8)** / **(186, 8)**.  
-5. **Arcade** — 4× Ø28: ALL center + triangle
+1. Sketch on Z=5: closed loop inset ~4 mm; groove width **3.5**; depth cut **2.0**.  
+2. On BACK, keep groove **inboard of hinges** (clear Y≈153 region).  
+3. Extrude **−cut** 2.0 mm.
 
-| Button | ΔX | ΔY |
+## 3. Hinge bosses (M2)
+
+| Hinge | Pin mid (X, Y) | Boss (X, Y) |
 | --- | ---: | ---: |
-| ALL | 0 | 0 |
-| CH1 | 0 | −50 |
-| CH2 | +43.3 | +25 |
-| CH3 | −43.3 | +25 |
+| A | **(38, 153)** | **(38, 145.5)** |
+| B | **(162, 153)** | **(162, 145.5)** |
+
+Underside: Ø**7** extrude → Ø**3.2** cut.
+
+## 4. Latch clearance (M3)
+
+| Latch | X | Y |
+| --- | ---: | ---: |
+| L | **11** | **11** |
+| R | **189** | **11** |
+
+Sketch Ø**3.4** → extrude **−cut** through. Optional head counterbore.
+
+## 5. Arcade button holes
+
+Ø**28** through (verify ring). Ring center **(100, 80)**:
+
+| Button | Center X | Center Y |
+| --- | ---: | ---: |
+| ALL | **100.0** | **80.0** |
+| CH1 | **100.0** | **30.0** |
+| CH2 | **143.3** | **105.0** |
+| CH3 | **56.7** | **105.0** |
+
+Each: sketch circle → extrude **−cut** through lid.
 
 ```text
             [CH1]
       [CH3]  [ALL]  [CH2]
 ```
 
-6. Optional buttons-PCB M2 bosses underside.
+## 6. Export
 
-## Mate check
-
-Same as sign-input: hinge clear, ≥90° open, gasket crush 20–30%.
+`mp-input-lid.stl`.

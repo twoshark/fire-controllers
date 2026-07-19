@@ -1,7 +1,8 @@
 # sign-input — CAD index
 
 **Print two parts:** [`BODY.md`](BODY.md) (box) · [`LID.md`](LID.md) (lid).  
-Workflow: [`../CAD_PARTS.md`](../CAD_PARTS.md). Refs: [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md) · [`../SEALING.md`](../SEALING.md).
+All XY in those files are **outer-base** (0,0)=front-left; steps are sketch → extrude/cut.  
+Workflow: [`../CAD_PARTS.md`](../CAD_PARTS.md). Refs: [`../MOUNTING.md`](../MOUNTING.md) · [`../PANEL_CUTOUTS.md`](../PANEL_CUTOUTS.md).
 
 | Export | Role |
 | --- | --- |

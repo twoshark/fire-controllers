@@ -1,57 +1,88 @@
-# sign-output — BODY (box without lid)
+# sign-output — BODY
 
-Export: `sign-output-body.stl` · Print: open face **up**.  
-Shared: [`../CAD_PARTS.md`](../CAD_PARTS.md) · [`../MOUNTING.md`](../MOUNTING.md) · [`../POWER_OTS.md`](../POWER_OTS.md).
-
-**No** C14 / KCD4 on this box — 12 V from outdoor **HLG-240H-12** via DTP.
+Export: `sign-output-body.stl` · Print cavity **up**.  
+Coords: **outer base (0,0)** = front-left. [`../CAD_PARTS.md`](../CAD_PARTS.md).  
+No AC inlet / rocker — power is DTP from outdoor HLG.
 
 ## Envelope
 
-| Dim | mm |
+| | mm |
 | --- | ---: |
-| Outer L × W × H | **220 × 170 × 85** |
+| L × W × H | **220 × 170 × 85** |
 | Wall / floor | **3.0** |
-| Inner L × W × H | **214 × 164 × 79** |
 
-## Build steps
+---
 
-1. **Outer** 220 × 170 × 85.  
-2. **Cavity** open-top: 214 × 164 × 79.  
-3. **Output PCB** @ `(25, 25)` · Z=12 · M2 bosses:
+## 1. Outer box
 
-| Boss | Inner X | Inner Y |
+1. Sketch rectangle **220 × 170** from **(0, 0)** on Z=0.  
+2. Extrude **+join** to Z=**85**.
+
+## 2. Hollow cavity
+
+1. Sketch on Z=3: rectangle from **(3, 3)** size **214 × 164**.  
+2. Extrude **−cut** through the top.
+
+## 3. Floor bosses — output PCB (M2)
+
+Boss top Z=**12**. Centers (outer XY):
+
+| Boss | X | Y |
 | --- | ---: | ---: |
-| H1 | 53.2 | 131.0 |
-| H2 | 28.0 | 28.2 |
-| H3 | 132.9 | 145.3 |
-| H4 | 132.9 | 28.2 |
+| H1 | **56.2** | **134.0** |
+| H2 | **31.0** | **31.2** |
+| H3 | **135.9** | **148.3** |
+| H4 | **135.9** | **31.2** |
 
-Outline keep-out ≈ X[25, 137.4] × Y[25, 148.9]. LED edge → FRONT.  
-4. **BACK** — DTP04-2P pocket ≈**18 × 22** + lip · CL H **40** · mid-X. Separate retainer clip.  
-5. **LEFT** cutouts (CL H · Y from FRONT):
+Each: sketch Ø**7** on floor → extrude to Z=12 → sketch Ø**3.2** → extrude **−cut**.
 
-| Feature | Cutout | CL H | Y |
-| --- | --- | ---: | ---: |
-| M12-5 | Ø16.2 | **50** | **30** |
-| SOL0 | ≈16 × 18 pocket | **40** | **55** |
-| SOL1 | same | **40** | **80** |
-| SOL2 | same | **40** | **105** |
-| SOL3 | same | **40** | **130** |
-| SOL4 | same | **40** | **155** |
+## 4. BACK wall — DTP 12 V pocket
 
-Pitch ≥25. Day-1 uses SOL0..4 only (5 channels).  
-6. **FRONT** LED **40 × 10** @ CL H **50**, mid-X + acrylic recess.  
-7. **Hinges** (body) pin mid:
+On plane **Y = 170** (BACK outer):
 
-| Hinge | Inner (X, Y) |
-| --- | ---: |
-| A | **(40, 160)** |
-| B | **(174, 160)** |
+1. Sketch rectangle ≈**18 × 22** (X×Z), center at **(X=110, Z=40)**.  
+2. Extrude **−cut** through the wall.  
+3. Optional: add a shallow inner lip; retain the connector with a **separate printed clip** (do not rely on an unsupported overhang).
 
-M2 mid-pin · 7.5 mm into cavity.  
-8. **Latch M3** @ ≈ **(8, 8)** / **(206, 8)**.  
-9. Service clear under open lid: USB-C, SWD, `F9`.
+## 5. LEFT wall — M12 + SOL0..4
 
-## Not on body
+Sketch on plane **X=0**. Extrude **−cut** through wall.
 
-No arcade holes. Lid = plain service cover → [`LID.md`](LID.md).
+| Feature | Center (Y, Z) | Shape |
+| --- | ---: | --- |
+| M12-5 | **(30, 50)** | circle Ø**16.2** |
+| SOL0 | **(55, 40)** | rect ≈**16 × 18** |
+| SOL1 | **(80, 40)** | rect ≈**16 × 18** |
+| SOL2 | **(105, 40)** | rect ≈**16 × 18** |
+| SOL3 | **(130, 40)** | rect ≈**16 × 18** |
+| SOL4 | **(155, 40)** | rect ≈**16 × 18** |
+
+Pitch between SOL centers = **25** mm in Y. Use retainer clips for DT housings.
+
+## 6. FRONT — LED window
+
+1. Sketch on Y=0: rectangle **40 × 10**, center **(X=110, Z=50)**.  
+2. Extrude **−cut** through.  
+3. Optional acrylic recess on the inside.
+
+## 7. BACK — hinge bosses (M2)
+
+| Hinge | Pin mid (X, Y) | Boss (X, Y) |
+| --- | ---: | ---: |
+| A | **(43, 163)** | **(43, 155.5)** |
+| B | **(177, 163)** | **(177, 155.5)** |
+
+Each: Ø**7** → extrude → Ø**3.2** cut.
+
+## 8. FRONT — latch inserts (M3)
+
+| Latch | X | Y |
+| --- | ---: | ---: |
+| L | **11** | **11** |
+| R | **209** | **11** |
+
+Ø**9** → Ø**4.2** cut.
+
+## 9. Export
+
+`sign-output-body.stl`. Plain lid → [`LID.md`](LID.md).
